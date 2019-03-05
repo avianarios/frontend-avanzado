@@ -1,3 +1,16 @@
-<p>
-  signin works!
-</p>
+<div *ngIf="!enviado">
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <label>
+      usuario: <input type="text" formControlName="usuario">
+    </label>
+    <label>
+      clave: <input type="text" formControlName="clave">
+    </label>
+    <button type="submit" [disabled]="!loginForm.valid">Enviar</button>
+    <button (click)="recordar()" type="button">Recordar clave</button>
+    <!--<a routerLink="/forgot-password"> Recuperar contraseña</a>-->
+  </form>
+</div>
+<div *ngIf="enviado">
+  enviado
+</div>

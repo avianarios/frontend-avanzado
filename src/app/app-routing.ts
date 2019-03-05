@@ -1,7 +1,24 @@
+/*import { NgModule } from '@angular/core';
 import { Routes } from '@angular/router';
+
+import { SigninComponent } from './views/signin/signin.component';
+
+export const rootRouterConfig: Routes = [
+  { path: '', redirectTo: './app-root', pathMatch: 'full' },
+  { path: 'app-signin', component: SigninComponent}
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }*/
+
+
 /* import { AdminLayoutComponent } from './shared/components/layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './shared/components/layouts/auth-layout/auth-layout.component';
 import { AuthGuard } from './shared/services/auth/auth.guard'; */
+import { Routes } from '@angular/router';
 
 export const rootRouterConfig: Routes = [
   {
@@ -25,10 +42,37 @@ export const rootRouterConfig: Routes = [
     loadChildren: './views/signup/signup.module#SignupModule',
     data: { title: 'Signup' }
   },
+
+//puesto por mí
+  {
+    path: 'dashboard',
+    loadChildren: './views/dashboard/dashboard.module#DashboardModule',
+    data: { title: 'Dashboard', breadcrumb: 'DASHBOARD' }
+  },
+  {
+    path: 'profile',
+    loadChildren: './views/profile/profile.module#ProfileModule',
+    data: { title: 'Perfil', breadcrumb: 'Perfil' }
+  },
+
+  {
+    path: 'profile/resumen',
+    loadChildren: './views/profile/resumen/resumen.module#ResumenModule',
+    data: { title: 'Perfil resumido', breadcrumb: 'Perfil resumido' }
+  },
+
+  {
+    path: 'profile/personal',
+    loadChildren: './views/profile/personal/personal.module#PersonalModule',
+    data: { title: 'Edición de datos personales', breadcrumb: 'Edición de datos personales' }
+  },
+
+//fin puesto por mí
+
   {
     path: 'admin',
-    /*  component: AdminLayoutComponent, */
-    /* canActivate: [AuthGuard], */
+    //  component: AdminLayoutComponent,
+    // canActivate: [AuthGuard],
     children: [
       {
         path: 'dashboard',

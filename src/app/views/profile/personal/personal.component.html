@@ -1,10 +1,10 @@
 <section id="formulario">
-<!--<div *ngIf="editar">-->
-  <form [formGroup]="formDatosPersonales" (ngSubmit)="guardar()">
+  <form [formGroup]="formDatosPersonales">
   <ul>
     <li>
       <label>
-        Nombre: <input [className]="editar ? 'editable' : 'noEditable'" type="text" formControlName="nombre">
+        Nombre:
+         <input [className]="editar ? 'editable' : 'noEditable'" type="text" formControlName="nombre">
         <div *ngIf="formDatosPersonales.controls['nombre'].hasError('required')" class="error">Campo obligatorio</div>
         <div *ngIf="formDatosPersonales.controls['nombre'].hasError('minlength')" class="error">Mínimo 3 letras</div>
         <div *ngIf="formDatosPersonales.controls['nombre'].hasError('cadenaLimpia')" class="error">No debe haber caracteres especiales ni espacios en blanco al comienzo o al final</div>
@@ -23,8 +23,8 @@
       </label>
     </li><li>
       <label>
-        Fecha de nacimiento: <input [className]="editar ? 'editable' : 'noEditable'" type="text" formControlName="fechaNacimiento">
-        <div *ngIf="formDatosPersonales.controls['fechaNacimiento'].hasError('fechaIncorrecta')" class="error">El formato de fecha correcto es: DD/MM/AAAA</div>
+        Fecha de nacimiento: <input [className]="editar ? 'editable' : 'noEditable'" type="text" formControlName="nacimiento">
+        <div *ngIf="formDatosPersonales.controls['nacimiento'].hasError('fechaIncorrecta')" class="error">El formato de fecha correcto es: DD/MM/AAAA</div>
       </label>
     </li><li>
       <label>
@@ -69,63 +69,21 @@
       </label>
     </li><li>
       <label>
-        Sobre mí: <input [className]="editar ? 'editable' : 'noEditable'" type="text" formControlName="sobreMi">
+        Sobre mí: <input [className]="editar ? 'editable' : 'noEditable'" type="text" formControlName="mas">
       </label>
     </li><li>
       <label>
-        Otras competencias: <input [className]="editar ? 'editable' : 'noEditable'" type="text" formControlName="otrasCompetencias">
+        Otras competencias: <input [className]="editar ? 'editable' : 'noEditable'" type="text" formControlName="competencias">
       </label>
     </li><li>
       <label>
-        Permiso de conducción: <input [className]="editar ? 'editable' : 'noEditable'" type="text" formControlName="permisoConduccion">
+        Permiso de conducción: <input [className]="editar ? 'editable' : 'noEditable'" type="text" formControlName="conducir">
       </label>
     </li>
-
     <li>
-
-    <table id="tablaEnvíos">
-      <caption id="títuloTabla">Formación académica</caption>
-      <thead id="encabezado">
-        <tr>
-          <th scope="col">Nivel</th>
-          <th scope="col">Título</th>
-          <th scope="col">Centro</th>
-          <th scope="col">Fecha</th>
-          <th scope="col">Certificado</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr *ngFor="let elemento of formacion">
-            <td *ngFor="let campo of elemento">
-              {{campo}}
-<!--              <input [className]="editar ? 'editable' : 'noEditable'" type="text" formControlName="campo">-->
-
-                <!--<input [className]="editar ? 'editable' : 'noEditable'" type="text" [formControl]=""{{ campo }}"">-->
-              </td>
-            </tr>
-<!--          <div *ngFor="let item of listaProvincias | keyvalue">
-          <td>{{item.key}}:{{item.value}}</td></div>-->
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="6">Según la información consultada el 18/10/2018</td>
-        </tr>
-      </tfoot>
-    </table>
-      </li>
-
-
-
-
-
-    <li>
-      <div *ngIf="editar">
-        <button type="submit" [disabled]="!formDatosPersonales.valid">Guardar</button>
+        <button (click)="guardarCambios()" [disabled]="!formDatosPersonales.valid">Guardar</button>
         <button (click)="cancelarEdicion()">Cancelar edidión</button>
-      </div>
-      <div *ngIf="!editar">
-        <button (click)="editarForm()" type="button">Editar</button>
-      </div>
+        <button (click)="ir('/dashboard')">Volver atrás</button>
     </li>
       <!--<a routerLink="/forgot-password"> Recuperar contraseña</a>-->
     </ul>

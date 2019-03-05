@@ -1,0 +1,76 @@
+<div *ngIf="!editarPersonales">
+
+  <table border=1>
+    <caption id="títuloTabla">Información personal</caption>
+    <thead class="encabezado">
+      <tr>
+        <th scople="col" *ngFor="let elemento of llavesDatosPersonales">
+        {{elemento}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td *ngFor="let elemento of valoresDatosPersonales">
+          {{elemento}}
+        </td>
+        </tr>
+    </tbody>
+    <tfoot>
+    <button (click)="ir('/personal')" type="button">Editar</button>
+    <button [disabled]="editarPersonales" (click)="editarFormulario()" type="button">Editar en línea</button>
+    </tfoot>
+  </table>
+</div>
+
+
+  <table border=1>
+    <caption id="títuloTabla">Formación académica</caption>
+    <thead class="encabezado">
+        <tr>
+          <th scope="col" *ngFor="let elemento of llavesDatosFormacion">
+          {{elemento}}</th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let elemento of valoresDatosFormacion">
+        <td *ngFor="let campo of elemento">
+        {{campo}}</td></tr>
+    </tbody>
+    <tfoot>
+    <button (click)="ir('formacion')" type="button">Editar</button>
+    </tfoot>
+  </table>
+
+  <table border=1>
+    <caption id="títuloTabla">Experiencia laboral</caption>
+    <thead class="encabezado">
+        <tr>
+          <th scope="col" *ngFor="let elemento of llavesDatosExperiencia">
+          {{elemento}}</th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let elemento of valoresDatosExperiencia">
+        <td *ngFor="let campo of elemento">
+        {{campo}}</td></tr>
+    </tbody>
+    <tfoot>
+    <button (click)="ir('experiencia')" type="button">Editar</button>
+    </tfoot>
+  </table>
+
+
+  <table border=1>
+    <caption id="títuloTabla">Idiomas</caption>
+    <thead class="encabezado">
+        <tr>
+          <th scope="col" *ngFor="let elemento of llavesDatosIdiomas">
+          {{elemento}}</th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let elemento of valoresDatosIdiomas">
+        <td *ngFor="let campo of elemento">
+        {{campo}}</td></tr>
+    </tbody>
+    <tfoot>
+    <button (click)="ir('idiomas')" type="button">Editar</button>
+    </tfoot>
+  </table>
