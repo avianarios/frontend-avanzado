@@ -56,9 +56,9 @@ export const rootRouterConfig: Routes = [
   },
 
   {
-    path: 'profile/resumen',
-    loadChildren: './views/profile/resumen/resumen.module#ResumenModule',
-    data: { title: 'Perfil resumido', breadcrumb: 'Perfil resumido' }
+    path: 'profile/alumno',
+    loadChildren: './views/profile/alumno/alumno.module#AlumnoModule',
+    data: { title: 'Perfil del alumno', breadcrumb: 'Perfil del alumno' }
   },
 
   {

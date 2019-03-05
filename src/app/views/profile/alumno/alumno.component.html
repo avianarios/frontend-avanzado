@@ -1,0 +1,174 @@
+<!--<div *ngIf="!editarPersonalesPersonales">
+
+  <table border=1>
+    <caption id="títuloTabla">Información personal</caption>
+    <thead class="encabezado">
+      <tr>
+        <th scople="col" *ngFor="let elemento of llavesDatosPersonales">
+        {{elemento}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td *ngFor="let elemento of valoresDatosPersonales">
+          {{elemento}}
+        </td>
+        </tr>
+    </tbody>
+    <tfoot>
+    <button (click)="ir('/personal')" type="button">Editar</button>
+    <button [disabled]="editarPersonales" (click)="editarFormulario()" type="button">Editar en línea</button>
+    </tfoot>
+  </table>
+</div>
+
+
+<div *ngIf="editarPersonales">-->
+  <section id="formulario">
+    <form [formGroup]="formDatosPersonales">
+    <ul>
+      <li>
+        <label>
+          Nombre:
+           <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="nombre">
+          <div *ngIf="formDatosPersonales.controls['nombre'].hasError('required')" class="error">Campo obligatorio</div>
+          <div *ngIf="formDatosPersonales.controls['nombre'].hasError('minlength')" class="error">Mínimo 3 letras</div>
+          <div *ngIf="formDatosPersonales.controls['nombre'].hasError('cadenaLimpia')" class="error">No debe haber caracteres especiales ni espacios en blanco al comienzo o al final</div>
+        </label>
+      </li><li>
+        <label>
+          Apellidos: <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="apellidos">
+          <div *ngIf="formDatosPersonales.controls['apellidos'].hasError('required')" class="error">Campo obligatorio</div>
+          <div *ngIf="formDatosPersonales.controls['apellidos'].hasError('minlength')" class="error">Mínimo 3 letras</div>
+          <div *ngIf="formDatosPersonales.controls['apellidos'].hasError('cadenaLimpia')" class="error">No debe haber caracteres especiales ni espacios en blanco al comienzo o al final</div>
+        </label>
+      </li><li>
+        <label>
+          Correo: <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="correo">
+          <div *ngIf="formDatosPersonales.controls['correo'].hasError('email')" class="error">Formato incorrecto</div>
+        </label>
+      </li><li>
+        <label>
+          Fecha de nacimiento: <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="nacimiento">
+          <div *ngIf="formDatosPersonales.controls['nacimiento'].hasError('fechaIncorrecta')" class="error">El formato de fecha correcto es: DD/MM/AAAA</div>
+        </label>
+      </li><li>
+        <label>
+          Teléfono: <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="telefono">
+          <div *ngIf="formDatosPersonales.controls['telefono'].hasError('noSoloNumeros')" class="error">El teléfono sólo puede contener números</div>
+        </label>
+      </li><li>
+        <label>
+          Teléfono (alternativo): <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="telefonoAlt">
+          <div *ngIf="formDatosPersonales.controls['telefonoAlt'].hasError('noSoloNumeros')" class="error">El teléfono sólo puede contener números</div>
+        </label>
+      </li><li>
+        <label>
+          Tipo de documento:
+          <select formControlName="tipoDocumento">
+            <option *ngFor="let documento of tipoDocumentos"
+            [value]="documento">{{documento}}</option>
+          </select>
+        </label>
+      </li><li>
+        <label>
+          numeroDocumento: <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="numeroDocumento">
+          <div *ngIf="formDatosPersonales.controls['numeroDocumento'].hasError('pasaporteIncorrecto')" class="error">El formato del pasaporte correcto es: 3 letras, 6 dígitos y 1 letra (opcional)</div>
+          <div *ngIf="formDatosPersonales.controls['numeroDocumento'].hasError('NIFIncorrecto')" class="error">El formato del NIF correcto es: 8 números y 1 letra (No todas las combinaciones son posibles)</div>
+          <div *ngIf="formDatosPersonales.controls['numeroDocumento'].hasError('NIEIncorrecto')" class="error">El formato del NIE correcto es: 1 letra, 7 números y 1 letra (No todas las combinaciones son posibles)</div>
+        </label>
+      </li><li>
+        <label>
+          Dirección: <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="direccion">
+        </label>
+      </li><li>
+        <label>
+          Provincia:
+          <select formControlName="provincia">
+            <option *ngFor="let nombre of listaProvincias"
+            [value]="nombre">{{nombre}}</option>
+          </select>
+        </label>
+      </li><li>
+        <label>
+          Municipio: <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="municipio">
+        </label>
+      </li><li>
+        <label>
+          Sobre mí: <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="mas">
+        </label>
+      </li><li>
+        <label>
+          Otras competencias: <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="competencias">
+        </label>
+      </li><li>
+        <label>
+          Permiso de conducción: <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="conducir">
+        </label>
+      </li>
+      <li>
+          <button (click)="editarFormulario()" [disabled]="editarPersonales">Editar</button>
+          <button (click)="guardarCambios()" [disabled]="!editarPersonales || !formDatosPersonales.valid">Guardar cambios</button>
+          <button (click)="cancelarEdicion()" [disabled]="!editarPersonales">Cancelar edidión</button>
+      </li>
+        <!--<a routerLink="/forgot-password"> Recuperar contraseña</a>-->
+      </ul>
+    </form>
+  </section>
+<!--</div>-->
+
+
+
+  <table border=1>
+    <caption id="títuloTabla">Formación académica</caption>
+    <thead class="encabezado">
+        <tr>
+          <th scope="col" *ngFor="let elemento of llavesDatosFormacion">
+          {{elemento}}</th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let elemento of valoresDatosFormacion">
+        <td *ngFor="let campo of elemento">
+        {{campo}}</td></tr>
+    </tbody>
+    <tfoot>
+    <button (click)="ir('formacion')" type="button">Editar</button>
+    </tfoot>
+  </table>
+
+  <table border=1>
+    <caption id="títuloTabla">Experiencia laboral</caption>
+    <thead class="encabezado">
+        <tr>
+          <th scope="col" *ngFor="let elemento of llavesDatosExperiencia">
+          {{elemento}}</th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let elemento of valoresDatosExperiencia">
+        <td *ngFor="let campo of elemento">
+        {{campo}}</td></tr>
+    </tbody>
+    <tfoot>
+    <button (click)="ir('experiencia')" type="button">Editar</button>
+    </tfoot>
+  </table>
+
+
+  <table border=1>
+    <caption id="títuloTabla">Idiomas</caption>
+    <thead class="encabezado">
+        <tr>
+          <th scope="col" *ngFor="let elemento of llavesDatosIdiomas">
+          {{elemento}}</th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let elemento of valoresDatosIdiomas">
+        <td *ngFor="let campo of elemento">
+        {{campo}}</td></tr>
+    </tbody>
+    <tfoot>
+    <button (click)="ir('idiomas')" type="button">Editar</button>
+    </tfoot>
+  </table>
+
+  <button (click)="ir('/dashboard')">Volver atrás</button>

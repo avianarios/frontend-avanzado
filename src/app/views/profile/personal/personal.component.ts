@@ -47,7 +47,7 @@ export class PersonalComponent implements OnInit {
       competencias: new FormControl(''),
       conducir: new FormControl('')
     });
-    //this.crearValidador();
+    this.crearValidador();
 
     this._usuarios.devolverUsuarios().subscribe(data => {
       this.usuarios=data;
