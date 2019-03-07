@@ -17,49 +17,49 @@
     </tbody>
     <tfoot>
     <button (click)="ir('/personal')" type="button">Editar</button>
-    <button [disabled]="editarPersonales" (click)="editarFormulario()" type="button">Editar en línea</button>
+    <button [disabled]="editandoPersonales" (click)="editarPersonales()" type="button">Editar en línea</button>
     </tfoot>
   </table>
 </div>
 
 
-<div *ngIf="editarPersonales">-->
+<div *ngIf="editandoPersonales">-->
   <section id="formulario">
     <form [formGroup]="formDatosPersonales">
     <ul>
       <li>
         <label>
           Nombre:
-           <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="nombre">
+           <input [className]="editandoPersonales ? 'editable' : 'noEditable'" type="text" formControlName="nombre">
           <div *ngIf="formDatosPersonales.controls['nombre'].hasError('required')" class="error">Campo obligatorio</div>
           <div *ngIf="formDatosPersonales.controls['nombre'].hasError('minlength')" class="error">Mínimo 3 letras</div>
           <div *ngIf="formDatosPersonales.controls['nombre'].hasError('cadenaLimpia')" class="error">No debe haber caracteres especiales ni espacios en blanco al comienzo o al final</div>
         </label>
       </li><li>
         <label>
-          Apellidos: <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="apellidos">
+          Apellidos: <input [className]="editandoPersonales ? 'editable' : 'noEditable'" type="text" formControlName="apellidos">
           <div *ngIf="formDatosPersonales.controls['apellidos'].hasError('required')" class="error">Campo obligatorio</div>
           <div *ngIf="formDatosPersonales.controls['apellidos'].hasError('minlength')" class="error">Mínimo 3 letras</div>
           <div *ngIf="formDatosPersonales.controls['apellidos'].hasError('cadenaLimpia')" class="error">No debe haber caracteres especiales ni espacios en blanco al comienzo o al final</div>
         </label>
       </li><li>
         <label>
-          Correo: <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="correo">
+          Correo: <input [className]="editandoPersonales ? 'editable' : 'noEditable'" type="text" formControlName="correo">
           <div *ngIf="formDatosPersonales.controls['correo'].hasError('email')" class="error">Formato incorrecto</div>
         </label>
       </li><li>
         <label>
-          Fecha de nacimiento: <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="nacimiento">
+          Fecha de nacimiento: <input [className]="editandoPersonales ? 'editable' : 'noEditable'" type="text" formControlName="nacimiento">
           <div *ngIf="formDatosPersonales.controls['nacimiento'].hasError('fechaIncorrecta')" class="error">El formato de fecha correcto es: DD/MM/AAAA</div>
         </label>
       </li><li>
         <label>
-          Teléfono: <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="telefono">
+          Teléfono: <input [className]="editandoPersonales ? 'editable' : 'noEditable'" type="text" formControlName="telefono">
           <div *ngIf="formDatosPersonales.controls['telefono'].hasError('noSoloNumeros')" class="error">El teléfono sólo puede contener números</div>
         </label>
       </li><li>
         <label>
-          Teléfono (alternativo): <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="telefonoAlt">
+          Teléfono (alternativo): <input [className]="editandoPersonales ? 'editable' : 'noEditable'" type="text" formControlName="telefonoAlt">
           <div *ngIf="formDatosPersonales.controls['telefonoAlt'].hasError('noSoloNumeros')" class="error">El teléfono sólo puede contener números</div>
         </label>
       </li><li>
@@ -72,14 +72,14 @@
         </label>
       </li><li>
         <label>
-          numeroDocumento: <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="numeroDocumento">
+          numeroDocumento: <input [className]="editandoPersonales ? 'editable' : 'noEditable'" type="text" formControlName="numeroDocumento">
           <div *ngIf="formDatosPersonales.controls['numeroDocumento'].hasError('pasaporteIncorrecto')" class="error">El formato del pasaporte correcto es: 3 letras, 6 dígitos y 1 letra (opcional)</div>
           <div *ngIf="formDatosPersonales.controls['numeroDocumento'].hasError('NIFIncorrecto')" class="error">El formato del NIF correcto es: 8 números y 1 letra (No todas las combinaciones son posibles)</div>
           <div *ngIf="formDatosPersonales.controls['numeroDocumento'].hasError('NIEIncorrecto')" class="error">El formato del NIE correcto es: 1 letra, 7 números y 1 letra (No todas las combinaciones son posibles)</div>
         </label>
       </li><li>
         <label>
-          Dirección: <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="direccion">
+          Dirección: <input [className]="editandoPersonales ? 'editable' : 'noEditable'" type="text" formControlName="direccion">
         </label>
       </li><li>
         <label>
@@ -91,23 +91,23 @@
         </label>
       </li><li>
         <label>
-          Municipio: <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="municipio">
+          Municipio: <input [className]="editandoPersonales ? 'editable' : 'noEditable'" type="text" formControlName="municipio">
         </label>
       </li><li>
         <label>
-          Sobre mí: <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="mas">
+          Sobre mí: <input [className]="editandoPersonales ? 'editable' : 'noEditable'" type="text" formControlName="mas">
         </label>
       </li><li>
         <label>
-          Otras competencias: <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="competencias">
+          Otras competencias: <input [className]="editandoPersonales ? 'editable' : 'noEditable'" type="text" formControlName="competencias">
         </label>
       </li><li>
         <label>
-          Permiso de conducción: <input [className]="editarPersonales ? 'editable' : 'noEditable'" type="text" formControlName="conducir">
+          Permiso de conducción: <input [className]="editandoPersonales ? 'editable' : 'noEditable'" type="text" formControlName="conducir">
         </label>
       </li>
       <li>
-          <button (click)="editarFormulario()" [disabled]="editarPersonales">Editar</button>
+          <button (click)="editarPersonales()" [disabled]="editandoPersonales">Editar</button>
           <button (click)="guardarCambios()" [disabled]="!editarPersonales || !formDatosPersonales.valid">Guardar cambios</button>
           <button (click)="cancelarEdicion()" [disabled]="!editarPersonales">Cancelar edidión</button>
       </li>
@@ -117,25 +117,59 @@
   </section>
 <!--</div>-->
 
+<form [formGroup]="formDatosFormacion" (ngSubmit)="submit()">
+<div formArrayName="datosTitulo"
+  *ngFor="let datos of formDatosFormacion.get('datosTitulo').controls; let i = index;">
+  <div [formGroupName]="i">
+    <input [className]="editandoFormacion ? 'editable' : 'noEditable'" formControlName="nivel">
+    <input [className]="editandoFormacion ? 'editable' : 'noEditable'" formControlName="titulo">
+    <input [className]="editandoFormacion ? 'editable' : 'noEditable'" formControlName="centro">
+    <input [className]="editandoFormacion ? 'editable' : 'noEditable'" formControlName="fecha">
+    <input [className]="editandoFormacion ? 'editable' : 'noEditable'" formControlName="certificado">
+  </div>
+  <button type="button" (click)="editarFormacion(i)">Editar</button>
+
+</div>
+<button type="button" (click)="anyadirTitulo()">Añadir</button>
+<button type="submit">Submit (look at console)</button>
+<button (click)="guardarCambios()" [disabled]="!editarPersonales || !formDatosPersonales.valid">Guardar cambios</button>
+</form>
 
 
+<form [formGroup]="formDatosFormacionAntiguo">
   <table border=1>
     <caption id="títuloTabla">Formación académica</caption>
     <thead class="encabezado">
         <tr>
           <th scope="col" *ngFor="let elemento of llavesDatosFormacion">
-          {{elemento}}</th></tr>
+          {{elemento}}</th>
+        <th scope="col">acciones</th>
+        </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let elemento of valoresDatosFormacion">
+      <tr *ngFor="let elemento of valoresDatosFormacion; let i = index">
         <td *ngFor="let campo of elemento">
-        {{campo}}</td></tr>
-    </tbody>
-    <tfoot>
-    <button (click)="ir('formacion')" type="button">Editar</button>
-    </tfoot>
-  </table>
+          {{campo}}</td>
+        <td>
+          <button (click)="editarFormacion(i)">Editar</button>
+          <button (click)="borrarFormacion(i)">Borrar</button>
+        <td>
+      </tr>
+  <tr *ngIf="editandoFormacion">
+      <td> <input [className]="editandoFormacion ? 'editable' : 'noEditable'" type="text" formControlName="nivel"> </td>
+      <td> <input [className]="editandoFormacion ? 'editable' : 'noEditable'" type="text" formControlName="titulo"> </td>
+      <td> <input [className]="editandoFormacion ? 'editable' : 'noEditable'" type="text" formControlName="centro"> </td>
+      <td> <input [className]="editandoFormacion ? 'editable' : 'noEditable'" type="text" formControlName="fecha"> </td>
+      <td> <input [className]="editandoFormacion ? 'editable' : 'noEditable'" type="text" formControlName="certificado"> </td>
+      <td> <button (click)="guardarFormacion()" type="button">Guardar</button><button (click)="cancelarEdicion()" type="button">Cancelar</button> </td>
+  </tr>
+      <tr><td colspan=6><button (click)="anyadirFormacion()" type="button">Añadir</button></td></tr>
+</table>
+</form>
 
+
+
+<!--
   <table border=1>
     <caption id="títuloTabla">Experiencia laboral</caption>
     <thead class="encabezado">
@@ -172,3 +206,4 @@
   </table>
 
   <button (click)="ir('/dashboard')">Volver atrás</button>
+-->

@@ -50,14 +50,14 @@ let  alumnos =  [
               {
                 nivel: 'Ciclo formativo',
                 titulo: 'Desarrollo de aplicaciones web',
-                centro: 'IES Politécnico Jesús Marin',
+                centro: 'IES Salduba',
                 fecha: '15/07/2018',
                 certificado: 'no'
               },
               {
                 nivel: 'Ciclo formativo',
                 titulo: 'Administracion de sistemas informaticos y redes',
-                centro: 'IES Politécnico Jesús Marin',
+                centro: 'IES Pedro Espinosa',
                 fecha: '15/07/2018',
                 certificado: 'si'
               }
