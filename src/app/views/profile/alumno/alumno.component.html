@@ -121,9 +121,8 @@
 [class.noEditable]="i!==this.cual || this.editandoFormacion"-->
 
 <form [formGroup]="formDatosFormacion" (ngSubmit)="submit()">
-  <div formArrayName="datosTitulo">
-{{formDatosFormacion.get('datosTitulo').controls}}
-    <div *ngFor="let datos of formDatosFormacion.get('datosTitulo').controls; let i = index;">
+  <div formArrayName="datos">
+    <div *ngFor="let datos of formDatosFormacion.get('datos').controls; let i = index;">
       <div [formGroupName]="i">
         <input type="text" formControlName="nivel" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoFormacion, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoFormacion}">
         <input type="text" formControlName="titulo" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoFormacion, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoFormacion}">
@@ -131,12 +130,13 @@
         <input type="text" formControlName="fecha" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoFormacion, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoFormacion}">
         <input type="text" formControlName="certificado" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoFormacion, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoFormacion}">
         <button type="button" [disabled]="editandoCampo" (click)="editarCampo('formacion', i)">Editar</button>
-        <button type="button" [disabled]="editandoCampo" (click)="borrarFormacion(i)">Borrar</button>
+        <button type="button" [disabled]="editandoCampo" (click)="borrar(this.formDatosFormacion, i)">Borrar</button>
         <button (click)="terminarEdicion('formacion')" [disabled]="!editandoFormacion || i!==this.numElementoEnEdicion">Terminar edidión</button>
       </div>
     </div>
   </div>
-  <button type="button" (click)="anyadirElemento ('formacion','')" [disabled]="editandoCampo">Añadir título</button>
+  <button type="button" (click)="anyadirElemento ('formacion', '')" [disabled]="editandoCampo">Añadir título</button>
+  <button type="button" (click)="anyadirElemento2 (this.formDatosFormacion, '', crearTitulo2)" [disabled]="editandoCampo">Añadir título 2</button>
 <!--  <button (click)="guardarCambios()" [disabled]="!editarPersonales || !formDatosPersonales.valid">Guardar cambios</button>-->
 </form>
 
@@ -165,15 +165,15 @@
   [class.noEditable]="i!==this.cual || this.editandoFormacion"-->
 
 <form [formGroup]="formDatosExperiencia" (ngSubmit)="submit()">
-  <div formArrayName="datosExperiencia">
-    <div *ngFor="let datos of formDatosExperiencia.get('datosExperiencia').controls; let i = index;">
+  <div formArrayName="datos">
+    <div *ngFor="let datos of formDatosExperiencia.get('datos').controls; let i = index;">
       <div [formGroupName]="i">
 <!--        <input type="text" formControlName="empresa" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoExperiencia, 'noEditable': i!==this.numElementoEnEdicion}">-->
         <input type="text" formControlName="empresa" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoExperiencia, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoExperiencia}">
         <input type="text" formControlName="cargo" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoExperiencia, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoExperiencia}">
         <input type="text" formControlName="fecha" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoExperiencia, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoExperiencia}">
         <button type="button" [disabled]="editandoCampo" (click)="editarCampo('experiencia', i)">Editar</button>
-        <button type="button" [disabled]="editandoCampo" (click)="borrarFormacion(i)">Borrar</button>
+        <button type="button" [disabled]="editandoCampo" (click)="borrar(this.formDatosExperiencia, i)">Borrar</button>
         <button (click)="terminarEdicion('experiencia')" [disabled]="!editandoExperiencia || i!==this.numElementoEnEdicion">Terminar edidión</button>
       </div>
     </div>
@@ -214,15 +214,15 @@
 
 
 <form [formGroup]="formDatosIdiomas" (ngSubmit)="submit()">
-  <div formArrayName="datosIdiomas">
-    <div *ngFor="let datos of formDatosIdiomas.get('datosIdiomas').controls; let i = index;">
+  <div formArrayName="datos">
+    <div *ngFor="let datos of formDatosIdiomas.get('datos').controls; let i = index;">
       <div [formGroupName]="i">
 <!--        <input type="text" formControlName="empresa" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoIdiomas, 'noEditable': i!==this.numElementoEnEdicion}">-->
         <input type="text" formControlName="nivel" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoIdiomas, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoIdiomas}">
         <input type="text" formControlName="nombre" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoIdiomas, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoIdiomas}">
         <input type="text" formControlName="fecha" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoIdiomas, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoIdiomas}">
         <button type="button" [disabled]="editandoCampo" (click)="editarCampo('idiomas', i)">Editar</button>
-        <button type="button" [disabled]="editandoCampo" (click)="borrarIdiomas(i)">Borrar</button>
+        <button type="button" [disabled]="editandoCampo" (click)="borrar(this.formDatosIdiomas, i)">Borrar</button>
         <button (click)="terminarEdicion('idiomas')" [disabled]="!editandoIdiomas || i!==this.numElementoEnEdicion">Terminar edidión</button>
       </div>
     </div>

@@ -33,7 +33,7 @@ export class AlumnoComponent implements OnInit {
   editandoExperiencia:boolean=false;
   editandoIdiomas:boolean=false;
 
-  llavesDatosPersonales: any []=[];
+/*  llavesDatosPersonales: any []=[];
   valoresDatosPersonales: any []=[];
   llavesDatosFormacion: any []=[];
   valoresDatosFormacion: any []=[];
@@ -41,25 +41,24 @@ export class AlumnoComponent implements OnInit {
   valoresDatosExperiencia: any []=[];
   llavesDatosIdiomas: any []=[];
   valoresDatosIdiomas: any []=[];
-  items: any []=[];
+  items: any []=[];*/
 
   constructor(private _builder: FormBuilder, private _usuarios: UsuariosService, private _sesion: SesionService, private _router: Router) { }
 
   ngOnInit() {
-
     this.crearFormularios();
     this.crearValidadores();
     this._usuarios.devolverUsuarios().subscribe(data => {
-        data.forEach(alumno => {
+        data.forEach(elemento => {
   //CAMBIAR POR EL DE ABAJO        if (alumno.correo===this._sesion.usuarioSesion()){
-          if (alumno['identificacion'].usuario==='avm'){
-            this.alumno_actual=alumno;
+          if (elemento['identificacion'].usuario==='avm'){
+            this.alumno_actual=elemento;
 //              this.datosPersonales=alumno['datosPersonales'];
 
 /*              this.llavesDatosPersonales=(Object.keys(alumno['datosPersonales']));
               this.valoresDatosPersonales=(Object.values(alumno['datosPersonales']));*/
 
-              this.llavesDatosFormacion=Object.keys(this.alumno_actual['formacion']['0']);
+/*              this.llavesDatosFormacion=Object.keys(this.alumno_actual['formacion']['0']);
               this.alumno_actual['formacion'].forEach(dato=>{
                 this.valoresDatosFormacion.push(Object.values(dato));
               });
@@ -72,7 +71,7 @@ export class AlumnoComponent implements OnInit {
               this.llavesDatosIdiomas=Object.keys(this.alumno_actual['idiomas']['0']);
               this.alumno_actual['idiomas'].forEach(dato=>{
                 this.valoresDatosIdiomas.push(Object.values(dato));
-              });
+              });*/
 
               this.rellenaFormularios();
               this.terminarEdicion("todos");
@@ -101,39 +100,35 @@ export class AlumnoComponent implements OnInit {
       conducir: new FormControl('')
     });
 
-//hay que crear el formulario para que no de error el navegador al renderizar el html, pero aún no han llegado los datos, por lo que se inserta una fila vacía (que habrá que borrar)
     this.formDatosFormacion= this._builder.group({
-      datosTitulo: new FormArray([])
-      //      datosTitulo: this._builder.array([this.crearTitulo(undefined)])
+      datos: new FormArray([])
     });
 
-
     this.formDatosExperiencia= this._builder.group({
-      datosExperiencia: new FormArray([])
+      datos: new FormArray([])
     });
 
     this.formDatosIdiomas= this._builder.group({
-      datosIdiomas: new FormArray([])
+      datos: new FormArray([])
     });
 
 /*CÓMO AÑADIR UN SOLO CAMPO Y DESHABILITARLO
     this.formDatosFormacion = new FormGroup({
-          datosTitulo: new FormArray([])
+          datos: new FormArray([])
         });
 
 /*        const nivel = new FormControl('', Validators.required);
-        (<FormArray>this.formDatosFormacion2.get('datosTitulo')).push(nivel);
-        (<FormArray>this.formDatosFormacion2.get('datosTitulo')).controls[0].setValue('adios');
+        (<FormArray>this.formDatosFormacion2.get('datos')).push(nivel);
+        (<FormArray>this.formDatosFormacion2.get('datos')).controls[0].setValue('adios');
 
 
-    (<FormArray>this.formDatosFormacion2.get('datosTitulo'))
+    (<FormArray>this.formDatosFormacion2.get('datos'))
       .controls
       .forEach(control => {
         control.disable();
       })*/
 
 /*FIN*/
-
 
   }
 
@@ -144,42 +139,72 @@ export class AlumnoComponent implements OnInit {
           this.formDatosPersonales.controls[llave].setValue(this.alumno_actual['datosPersonales'][llave]);
       }
       /*rellena el formulario de datos de formación*/
+
+//      this.anyadirElemento (this.formDatosFormacion, this.alumno_actual['formacion']);
+//this.anyadirElemento3 ("formacion", this.alumno_actual['formacion'], this.crearTitulo);
+
+//this.anyadirElemento2 (this.formDatosFormacion, this.alumno_actual['formacion'], this.crearTitulo2);
+
       this.anyadirElemento ("formacion", this.alumno_actual['formacion']);
       this.anyadirElemento ("experiencia", this.alumno_actual['experiencia']);
       this.anyadirElemento ("idioma", this.alumno_actual['idiomas']);
+  }
+
+/*VOY POR AQUÍ. INTENTANDO FUSIONAR*/
+
+  anyadirElemento2(form, matriz, funcion){
+  console.log (form);
+    (form.controls['datos'] as FormArray).push(funcion(form, matriz));
+  }
+
+  crearTitulo2 (form, datos){
+    console.log (form);
+    console.log (datos);
+    if (datos===undefined){
+      this.numElementoEnEdicion=((<FormArray>form.controls['datos']).controls.length);
+      this.editandoFormacion=true;
+      this.editandoCampo=true;
+    }
+    return this._builder.group({
+      nivel: [''],
+      titulo: [''],
+      centro: [''],
+      fecha: [''],
+      certificado: ['']
+    })
   }
 
   anyadirElemento(tipo, matriz){
     switch (tipo){
       case "formacion":
         if  (matriz===undefined)
-        (this.formDatosFormacion.controls['datosTitulo'] as FormArray).push(this.crearTitulo(["", "", "", "", ""]));
+        (this.formDatosFormacion.controls['datos'] as FormArray).push(this.crearTitulo(["", "", "", "", ""]));
         else
         if ((Object.keys (matriz)[0])==="0"){ //si la primera llave es un número es porque se le ha pasado una matriz con más de un título donde cada fila es un título
           for (let i=0; i<matriz.length; i++)
-            (this.formDatosFormacion.controls['datosTitulo'] as FormArray).push(this.crearTitulo(matriz[i]));
+            (this.formDatosFormacion.controls['datos'] as FormArray).push(this.crearTitulo(matriz[i]));
         }else  //solo se le ha pasado un título
-          (this.formDatosFormacion.controls['datosTitulo'] as FormArray).push(this.crearTitulo(matriz));
+          (this.formDatosFormacion.controls['datos'] as FormArray).push(this.crearTitulo(matriz));
         break;
       case "experiencia":
         if  (matriz===undefined)
-        (this.formDatosExperiencia.controls['datosExperiencia'] as FormArray).push(this.crearExperiencia(["", "", "", "", ""]));
+        (this.formDatosExperiencia.controls['datos'] as FormArray).push(this.crearExperiencia(["", "", ""]));
         else
         if ((Object.keys (matriz)[0])==="0"){ //si la primera llave es un número es porque se le ha pasado una matriz con más de un título donde cada fila es un título
           for (let i=0; i<matriz.length; i++)
-            (this.formDatosExperiencia.controls['datosExperiencia'] as FormArray).push(this.crearExperiencia(matriz[i]));
+            (this.formDatosExperiencia.controls['datos'] as FormArray).push(this.crearExperiencia(matriz[i]));
         }else  //solo se le ha pasado un título
-          (this.formDatosExperiencia.controls['datosExperiencia'] as FormArray).push(this.crearExperiencia(matriz));
+          (this.formDatosExperiencia.controls['datos'] as FormArray).push(this.crearExperiencia(matriz));
         break;
       case "idioma":
         if  (matriz===undefined)
-        (this.formDatosIdiomas.controls['datosIdiomas'] as FormArray).push(this.crearIdioma(["", "", "", "", ""]));
+        (this.formDatosIdiomas.controls['datos'] as FormArray).push(this.crearIdioma(["", "", ""]));
         else
         if ((Object.keys (matriz)[0])==="0"){ //si la primera llave es un número es porque se le ha pasado una matriz con más de un título donde cada fila es un título
           for (let i=0; i<matriz.length; i++)
-            (this.formDatosIdiomas.controls['datosIdiomas'] as FormArray).push(this.crearIdioma(matriz[i]));
+            (this.formDatosIdiomas.controls['datos'] as FormArray).push(this.crearIdioma(matriz[i]));
         }else  //solo se le ha pasado un título
-          (this.formDatosIdiomas.controls['datosIdiomas'] as FormArray).push(this.crearIdioma(matriz));
+          (this.formDatosIdiomas.controls['datos'] as FormArray).push(this.crearIdioma(matriz));
         break;
 
       default:
@@ -190,7 +215,7 @@ export class AlumnoComponent implements OnInit {
 
   crearTitulo(datosTitulo){
       if (datosTitulo.nivel===undefined){
-        this.numElementoEnEdicion=((<FormArray>this.formDatosFormacion.controls['datosTitulo']).controls.length);
+        this.numElementoEnEdicion=((<FormArray>this.formDatosFormacion.controls['datos']).controls.length);
         this.editandoFormacion=true;
         this.editandoCampo=true;
       }
@@ -205,7 +230,7 @@ export class AlumnoComponent implements OnInit {
 
   crearExperiencia(datosExperiencia){
     if (datosExperiencia.nivel===undefined){
-      this.numElementoEnEdicion=((<FormArray>this.formDatosExperiencia.controls['datosExperiencia']).controls.length);
+      this.numElementoEnEdicion=((<FormArray>this.formDatosExperiencia.controls['datos']).controls.length);
       this.editandoExperiencia=true;
       this.editandoCampo=true;
     }
@@ -218,7 +243,7 @@ export class AlumnoComponent implements OnInit {
 
   crearIdioma(datosIdioma){
     if (datosIdioma.nivel===undefined){
-      this.numElementoEnEdicion=((<FormArray>this.formDatosIdiomas.controls['datosIdiomas']).controls.length);
+      this.numElementoEnEdicion=((<FormArray>this.formDatosIdiomas.controls['datos']).controls.length);
       this.editandoIdiomas=true;
       this.editandoCampo=true;
     }
@@ -243,9 +268,8 @@ export class AlumnoComponent implements OnInit {
   });
 }*/
 
-  borrarFormacion(cual){
-    console.log (this.formDatosFormacion.controls);
-    (this.formDatosFormacion.controls['datosTitulo'] as FormArray).removeAt(cual);
+  borrar(form, elemento){
+    (form.controls['datos'] as FormArray).removeAt(elemento);
   }
 
   terminarEdicion(cual){
@@ -262,7 +286,7 @@ export class AlumnoComponent implements OnInit {
         this.editandoFormacion=false;
         this.numElementoEnEdicion=-1;
         this.formDatosFormacion.disable();
-/*        (<FormArray>this.formDatosFormacion.get('datosTitulo'))
+/*        (<FormArray>this.formDatosFormacion.get('datos'))
           .controls
           .forEach(control => {
             control.disable();
@@ -300,24 +324,24 @@ editarCampo (form, elemento){
     case "formacion":
       this.numElementoEnEdicion=elemento;
       this.editandoFormacion=true;
-  /*    (<FormArray>this.formDatosFormacion.get('datosTitulo'))
+  /*    (<FormArray>this.formDatosFormacion.get('datos'))
         .controls
         .forEach(control => {
           control.enable();
         });
-        ((<FormArray>this.formDatosFormacion.get('datosTitulo')).controls[elemento]).disable();*/
-        ((<FormArray>this.formDatosFormacion.get('datosTitulo')).controls[elemento]).enable();
+        ((<FormArray>this.formDatosFormacion.get('datos')).controls[elemento]).disable();*/
+        ((<FormArray>this.formDatosFormacion.get('datos')).controls[elemento]).enable();
         //this.formDatosFormacion.disable();
       break;
     case "experiencia":
       this.editandoExperiencia=true;
       this.numElementoEnEdicion=elemento;
-      ((<FormArray>this.formDatosExperiencia.get('datosExperiencia')).controls[elemento]).enable();
+      ((<FormArray>this.formDatosExperiencia.get('datos')).controls[elemento]).enable();
       break;
     case "idiomas":
       this.editandoIdiomas=true;
       this.numElementoEnEdicion=elemento;
-      ((<FormArray>this.formDatosIdiomas.get('datosIdiomas')).controls[elemento]).enable();
+      ((<FormArray>this.formDatosIdiomas.get('datos')).controls[elemento]).enable();
       break;
   }
 }

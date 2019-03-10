@@ -62,9 +62,9 @@ export const rootRouterConfig: Routes = [
   },
 
   {
-    path: 'profile/personal',
-    loadChildren: './views/profile/personal/personal.module#PersonalModule',
-    data: { title: 'Edición de datos personales', breadcrumb: 'Edición de datos personales' }
+    path: 'profile/empresa',
+    loadChildren: './views/profile/empresa/empresa.module#EmpresaModule',
+    data: { title: 'Edición de datos de empresa', breadcrumb: 'Edición de datos de empresa' }
   },
 
 //fin puesto por mí

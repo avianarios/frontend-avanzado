@@ -7,30 +7,11 @@
 import {InMemoryDbService} from 'angular-in-memory-web-api';
 export class FakeBackendService implements InMemoryDbService{
     createDb(){
-      let  alumnos2 =  [
-        {
-   id: 1,
-   description: "desc1",
-   identificacion: {
-     usuario: 'ajvazquez',
-     clave: 'asdf',
-     correo: 'asdf@asdf.es'
-   }
- },
- {
-   id: 2,
-   description: "desc2",
-   identificacion: {
-     usuario: 'ajvazquez',
-     clave: 'asdf',
-     correo: 'asdf@asdf.es'
-   }
- }
-];
 
-let  alumnos =  [
+let  usuarios =  [
         {
           id:1,
+          tipo: 'alumno',
           identificacion: {
             usuario: 'avm',
             clave: 'avm'
@@ -130,6 +111,7 @@ let  alumnos =  [
         },
         {
         id: 2,
+        tipo: 'alumno',
         identificacion: {
           usuario: 'dpp',
           clave: 'dpp'
@@ -227,10 +209,58 @@ let  alumnos =  [
               }
             ]
           }
-        }
+        },
+
+        {
+          id:3,
+          tipo: 'empresa',
+          identificacion: {
+            usuario:'acme',
+            clave:'acme'
+          },
+          generales: {
+            nombre: 'Prefabricados acme',
+            razon: 'ACME SL',
+            cif: '1234a',
+            direccion: 'calle pez nº2',
+            provincia: 'granada',
+            municipio: 'granada',
+            url: 'www.acme.es'
+          },
+          contacto: {
+            nombre: 'gonzalo',
+            apellidos: 'gonzález de la gonzalera',
+            correo: 'jgg@acme.es'
+          }
+        },
+        {
+          id:4,
+          tipo: 'empresa',
+          identificacion: {
+            usuario:'puleva',
+            clave:'puleva'
+          },
+          generales: {
+            nombre: 'Puleva',
+            razon: 'puleva foods',
+            cif: '5678b',
+            direccion: 'calle tiburón nº2',
+            provincia: 'granada',
+            municipio: 'granada',
+            url: 'www.puleva.es'
+          },
+          contacto: {
+            nombre: 'chiquito',
+            apellidos: 'de la calzada',
+            correo: 'chiquitodelacalzada@pecador.es'
+          }
+        },
+
+
+
       ];
 
-      return {alumnos:alumnos};
+      return {usuarios:usuarios};
     }
 }
 
