@@ -22,6 +22,9 @@ export class AlumnoComponent implements OnInit {
 
   tipoDocumentos=['NIF', 'Pasaporte', 'NIE'];
 
+  nombreIdiomas=["Español", "Inglés", "Francés", "Aleḿan", "Italiano"];
+  nivelIdioma=['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+
   formDatosPersonales: FormGroup;
   formDatosFormacion: FormGroup;
   formDatosExperiencia: FormGroup;
@@ -46,40 +49,44 @@ export class AlumnoComponent implements OnInit {
   constructor(private _builder: FormBuilder, private _usuarios: UsuariosService, private _sesion: SesionService, private _router: Router) { }
 
   ngOnInit() {
-    this.crearFormularios();
-    this.crearValidadores();
-    this._usuarios.devolverUsuarios().subscribe(data => {
-        data.forEach(elemento => {
-  //CAMBIAR POR EL DE ABAJO        if (alumno.correo===this._sesion.usuarioSesion()){
-          if (elemento['identificacion'].usuario==='avm'){
-            this.alumno_actual=elemento;
-//              this.datosPersonales=alumno['datosPersonales'];
+    if (!this._sesion.sesionEstaIniciada())
+      this._router.navigateByUrl('/signin');
+    else{
+      this.crearFormularios();
+      this.crearValidadores();
+      this._usuarios.devolverUsuarios().subscribe(data => {
+          data.forEach(elemento => {
+    //CAMBIAR POR EL DE ABAJO        if (alumno.correo===this._sesion.usuarioSesion()){
+            if (elemento['identificacion'].usuario==='avm'){
+              this.alumno_actual=elemento;
+  //              this.datosPersonales=alumno['datosPersonales'];
 
-/*              this.llavesDatosPersonales=(Object.keys(alumno['datosPersonales']));
-              this.valoresDatosPersonales=(Object.values(alumno['datosPersonales']));*/
+  /*              this.llavesDatosPersonales=(Object.keys(alumno['datosPersonales']));
+                this.valoresDatosPersonales=(Object.values(alumno['datosPersonales']));*/
 
-/*              this.llavesDatosFormacion=Object.keys(this.alumno_actual['formacion']['0']);
-              this.alumno_actual['formacion'].forEach(dato=>{
-                this.valoresDatosFormacion.push(Object.values(dato));
-              });
+  /*              this.llavesDatosFormacion=Object.keys(this.alumno_actual['formacion']['0']);
+                this.alumno_actual['formacion'].forEach(dato=>{
+                  this.valoresDatosFormacion.push(Object.values(dato));
+                });
 
-              this.llavesDatosExperiencia=Object.keys(this.alumno_actual['experiencia']['0']);
-              this.alumno_actual['experiencia'].forEach(dato=>{
-                this.valoresDatosExperiencia.push(Object.values(dato));
-              });
+                this.llavesDatosExperiencia=Object.keys(this.alumno_actual['experiencia']['0']);
+                this.alumno_actual['experiencia'].forEach(dato=>{
+                  this.valoresDatosExperiencia.push(Object.values(dato));
+                });
 
-              this.llavesDatosIdiomas=Object.keys(this.alumno_actual['idiomas']['0']);
-              this.alumno_actual['idiomas'].forEach(dato=>{
-                this.valoresDatosIdiomas.push(Object.values(dato));
-              });*/
+                this.llavesDatosIdiomas=Object.keys(this.alumno_actual['idiomas']['0']);
+                this.alumno_actual['idiomas'].forEach(dato=>{
+                  this.valoresDatosIdiomas.push(Object.values(dato));
+                });*/
 
-              this.rellenaFormularios();
-              this.terminarEdicion("todos");
-              this.escucharCambios();
-//              this.borrarFormacion(0);
-            }
+                this.rellenaFormularios();
+                this.terminarEdicion("todos");
+                this.escucharCambios();
+  //              this.borrarFormacion(0);
+              }
+            });
           });
-        });
+      }
   }
 
   crearFormularios(){
@@ -223,6 +230,7 @@ export class AlumnoComponent implements OnInit {
         nivel: [datosTitulo.nivel],
         titulo: [datosTitulo.titulo],
         centro: [datosTitulo.centro],
+        familia: [datosTitulo.familia],
         fecha: [datosTitulo.fecha],
         certificado: [datosTitulo.certificado]
       })
@@ -248,8 +256,8 @@ export class AlumnoComponent implements OnInit {
       this.editandoCampo=true;
     }
     return this._builder.group({
+      idioma: [datosIdioma.idioma],
       nivel: [datosIdioma.nivel],
-      nombre: [datosIdioma.nombre],
       fecha: [datosIdioma.fecha]
     });
   }

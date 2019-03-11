@@ -11,7 +11,7 @@ import { SesionService } from '../../shared/services/sesion.service';
   styleUrls: ['./signin.component.scss']
 })
 export class SigninComponent implements OnInit{
-  alumnos: any[] = [];
+  usuarios: any[] = [];
   datosPersonales: any[]=[];
   autenticado:boolean=false;
   enviado:boolean=false;
@@ -23,10 +23,10 @@ export class SigninComponent implements OnInit{
   constructor(private _builder: FormBuilder, private _usuariosService: UsuariosService, private _router: Router, private _sesion: SesionService) { }
 
   login(){
-    for (let alumno of this.alumnos){
-      if ((alumno['identificacion'].usuario===this.loginForm.value.usuario) && (alumno['identificacion'].clave===this.loginForm.value.clave)){
+    for (let usuario of this.usuarios){
+      if ((usuario['identificacion'].usuario===this.loginForm.value.usuario) && (usuario['identificacion'].clave===this.loginForm.value.clave)){
         this.autenticado=true;
-        this._sesion.iniciarSesion(alumno['identificacion'].usuario);
+        this._sesion.iniciarSesion(usuario['identificacion'].usuario, usuario.tipo);
         this._router.navigateByUrl('/dashboard');
       }
     }
@@ -38,7 +38,7 @@ export class SigninComponent implements OnInit{
 
   ngOnInit(){
     this._usuariosService.devolverUsuarios().subscribe(data => {
-      this.alumnos = data;
+      this.usuarios = data;
     });
   }
 }

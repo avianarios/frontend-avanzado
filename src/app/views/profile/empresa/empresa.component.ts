@@ -15,6 +15,7 @@ export class EmpresaComponent implements OnInit {
   usuario_actual: any[]=[];
   listaProvincias=['Almería', 'Cádiz', 'Córdoba', 'Granada', 'Jaén', 'Huelva', 'Málaga', 'Sevilla'];
   formDatosGenerales: FormGroup;
+  editandoEmpresa:boolean=false;
 
   constructor(private _builder: FormBuilder, private _usuarios: UsuariosService, private _sesion: SesionService, private _router: Router) { }
 
@@ -28,7 +29,7 @@ export class EmpresaComponent implements OnInit {
       municipio: new FormControl(''),
       url: new FormControl(''),
       nombre_contacto: new FormControl(''),
-      apellidos_contacto: new FormControl(''),
+      apellidos: new FormControl(''),
       telefono: new FormControl('', noSoloNumeros),
       correo: new FormControl('', Validators.email)
     });
@@ -37,9 +38,11 @@ export class EmpresaComponent implements OnInit {
 //      this.usuarios=data;
       data.forEach(elemento=> {
 //        if (alumno.correo===this._sesion.usuarioSesion()){
-        if (elemento['identificacion'].usuario==='acme')
+        if (elemento['identificacion'].usuario==='acme'){
           this.usuario_actual=elemento;
-        this.rellenaFormularios();
+          this.rellenaFormularios();
+          this.terminarEdicion();
+        }
       });
     });
   }
@@ -47,7 +50,6 @@ export class EmpresaComponent implements OnInit {
 
   rellenaFormularios(){
     for (let llave in this.usuario_actual['generales']){
-    console.log (llave);
         this.formDatosGenerales.controls[llave].setValue(this.usuario_actual['generales'][llave]);
       }
 
@@ -56,6 +58,19 @@ export class EmpresaComponent implements OnInit {
       this.anyadirElemento ("idioma", this.alumno_actual['idiomas']);*/
   }
 
+  editarCampo (){
+    this.editandoEmpresa=true;
+    this.formDatosGenerales.enable();
+  }
+
+  terminarEdicion(){
+    this.editandoEmpresa=false;
+    this.formDatosGenerales.disable();
+  }
+
+  ir(donde){
+    this._router.navigateByUrl(donde);
+  }
 
 /*
   escucharCambios(){

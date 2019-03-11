@@ -127,6 +127,7 @@
         <input type="text" formControlName="nivel" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoFormacion, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoFormacion}">
         <input type="text" formControlName="titulo" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoFormacion, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoFormacion}">
         <input type="text" formControlName="centro" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoFormacion, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoFormacion}">
+        <input type="text" formControlName="familia" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoFormacion, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoFormacion}">
         <input type="text" formControlName="fecha" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoFormacion, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoFormacion}">
         <input type="text" formControlName="certificado" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoFormacion, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoFormacion}">
         <button type="button" [disabled]="editandoCampo" (click)="editarCampo('formacion', i)">Editar</button>
@@ -218,8 +219,17 @@
     <div *ngFor="let datos of formDatosIdiomas.get('datos').controls; let i = index;">
       <div [formGroupName]="i">
 <!--        <input type="text" formControlName="empresa" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoIdiomas, 'noEditable': i!==this.numElementoEnEdicion}">-->
-        <input type="text" formControlName="nivel" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoIdiomas, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoIdiomas}">
-        <input type="text" formControlName="nombre" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoIdiomas, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoIdiomas}">
+<!--        <input type="text" formControlName="nivel" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoIdiomas, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoIdiomas}">-->
+
+        <select formControlName="idioma">
+           <option *ngFor="let id of nombreIdiomas" [ngValue]="id">{{id}}</option>
+         </select>
+
+
+        <select formControlName="nivel">
+           <option *ngFor="let niv of nivelIdioma" [ngValue]="niv">{{niv}}</option>
+         </select>
+
         <input type="text" formControlName="fecha" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoIdiomas, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoIdiomas}">
         <button type="button" [disabled]="editandoCampo" (click)="editarCampo('idiomas', i)">Editar</button>
         <button type="button" [disabled]="editandoCampo" (click)="borrar(this.formDatosIdiomas, i)">Borrar</button>
@@ -227,7 +237,7 @@
       </div>
     </div>
   </div>
-  <button type="button" (click)="anyadirElemento ('idiomas','')" [disabled]="editandoCampo">Añadir idioma</button>
+  <button type="button" (click)="anyadirElemento ('idioma','')" [disabled]="editandoCampo">Añadir idioma</button>
 </form>
 
 <!--
@@ -250,3 +260,4 @@
 
   <button (click)="ir('/dashboard')">Volver atrás</button>
 -->
+<button type="button" (click)="ir ('/dashboard')" [disabled]="editandoCampo">Volver atrás</button>

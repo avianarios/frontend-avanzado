@@ -7,14 +7,16 @@ export class SesionService {
 
   usuario:string;
   sesionIniciada:boolean;
+  tipo_usuario:string;
 
   constructor() {
     this.sesionIniciada=false;
   }
 
-  iniciarSesion(usuario:string){
+  iniciarSesion(usuario:string, tipo_usuario:string){
     this.sesionIniciada=true;
     this.usuario=usuario;
+    this.tipo_usuario=tipo_usuario;
   }
 
   cerrarSesion(){
@@ -27,5 +29,9 @@ export class SesionService {
 
   usuarioSesion(){
     return (this.usuario);
+  }
+
+  tipoUsuario(){
+    return (this.tipo_usuario);
   }
 }

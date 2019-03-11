@@ -1,0 +1,65 @@
+<div *ngIf="!detalleOferta">
+  <table border=1>
+    <caption id="títuloTabla">Ofertas de empleo según perfil</caption>
+    <thead class="encabezado">
+      <tr>
+        <th>Empresa</th>
+        <th>Puesto</th>
+        <th>Familia</th>
+        <th>Fecha</th>
+        <th>Provincia</th>
+        <th>Más detalles</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let oferta of ofertasResumidas; let i=index;">
+        <td *ngFor="let campo of oferta">
+          {{campo}}
+        </td>
+          <td>
+          <button (click)="mostrarDetalle(i)" type="button">Más detalles</button></td>
+        </tr>
+      <tr>
+        <td>
+        </td>
+      </tr>
+
+
+
+    </tbody>
+    <!--<tfoot>
+    <button (click)="ir('/personal')" type="button">Editar</button>
+    <button [disabled]="editandoPersonales" (click)="editarPersonales()" type="button">Editar en línea</button>
+  </tfoot>-->
+  </table>
+</div>
+<div *ngIf="detalleOferta">
+  <table border=1>
+    <caption id="títuloTabla">Ofertas de empleo según perfil</caption>
+    <thead class="encabezado">
+      <tr>
+        <th>Empresa</th>
+        <th>Puesto</th>
+        <th>Descripción</th>
+        <th>Provincia</th>
+        <th>Municipio</th>
+        <th>Familia</th>
+        <th>Títulos</th>
+        <th>Inscribirse</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td *ngFor="let campoOferta of ofertasAmpliadas[this.numOferta]">
+          {{campoOferta}}
+        </td>
+          <td>
+          <button (click)="solicitarEmpleo(this.numOferta)" type="button">inscribirse</button></td>
+      </tr>
+    </tbody>
+<!--    <tfoot>
+    <button (click)="ir('/personal')" type="button">Editar</button>
+  </tfoot>-->
+  </table>
+
+</div>

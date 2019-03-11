@@ -33,12 +33,14 @@ let  usuarios =  [
                 titulo: 'Desarrollo de aplicaciones web',
                 centro: 'IES Salduba',
                 fecha: '15/07/2018',
+                familia: 'Informática y comunicaciones',
                 certificado: 'no'
               },
               {
                 nivel: 'Ciclo formativo',
                 titulo: 'Administracion de sistemas informaticos y redes',
                 centro: 'IES Pedro Espinosa',
+                familia: 'Informática y comunicaciones',
                 fecha: '15/07/2018',
                 certificado: 'si'
               }
@@ -57,57 +59,26 @@ let  usuarios =  [
             ],
           idiomas: [
               {
-                nivel: 'B2',
-                nombre: 'Inglés',
+                idioma: 'Inglés',
+                nivel: 'B1',
                 fecha: '15/07/2018'
               },
               {
-                nivel: 'B2',
-                nombre: 'Francés',
+                idioma: 'Francés',
+                nivel: 'C2',
                 fecha: '15/07/2018'
               }
             ],
-
-          offers: {
-            entities: [
+            inscrito: [
               {
-                cargo: 'Professor Extraescolars programació i robòtica educativa',
-                empresa: 'Eixos Creativa',
-                familia: 'Informática y Comunicaciones',
-                fecha: '30/01/2019'
-              },
-              {
-                cargo: 'Programaador Jr Java',
-                empresa: 'Ki - Works',
-                familia: 'Informática y Comunicaciones',
+                idPuesto: 'p2',
                 fecha: '28/01/2019'
               },
               {
-                cargo: 'Programador.net',
-                empresa: 'Tecnic Consultores',
-                familia: 'Informática y Comunicaciones',
+                idPuesto: 'p5',
                 fecha: '28/01/2019'
-              },
-              {
-                cargo: 'Programador Junior Java Spring boot',
-                empresa: 'GRUPO CMC',
-                familia: 'Informática y Comunicaciones',
-                fecha: '25/01/2019'
-              },
-              {
-                cargo: 'Administrativa',
-                empresa: 'Servium',
-                familia: 'Administración y Gestión',
-                fecha: '25/01/2019'
-              },
-              {
-                cargo: 'DESARROLLADOR/A SOFTWARE',
-                empresa: 'PEPPER',
-                familia: 'Informática y Comunicaciones',
-                fecha: '23/01/2019'
               }
             ]
-          }
         },
         {
         id: 2,
@@ -132,6 +103,7 @@ let  usuarios =  [
               nivel: 'Ciclo formativo',
               titulo: 'Desarrollo de aplicaciones web',
               centro: 'IES Politécnico Jesús Marin',
+              familia: 'Informática y comunicaciones',
               fecha: '15/07/2018',
               certificado: 'no'
             },
@@ -139,6 +111,7 @@ let  usuarios =  [
               nivel: 'Ciclo formativo',
               titulo: 'Administracion de sistemas informaticos y redes',
               centro: 'IES Politécnico Jesús Marin',
+              familia: 'Informática y comunicaciones',
               fecha: '15/07/2018',
               certificado: 'si'
             }
@@ -158,57 +131,27 @@ let  usuarios =  [
 
           idiomas: [
               {
+                idioma: 'Inglés',
                 nivel: 'C1',
-                nombre: 'Inglés',
                 fecha: '15/07/2018'
               },
               {
+                idioma: 'Francés',
                 nivel: 'A2',
-                nombre: 'Francés',
                 fecha: '15/07/2018'
               }
             ],
 
-          offers: {
-            entities: [
+          inscrito: [
               {
-                cargo: 'Professor Extraescolars programació i robòtica educativa',
-                empresa: 'Eixos Creativa',
-                familia: 'Informática y Comunicaciones',
-                fecha: '30/01/2019'
-              },
-              {
-                cargo: 'Programaador Jr Java',
-                empresa: 'Ki - Works',
-                familia: 'Informática y Comunicaciones',
+                idPuesto: 'p1',
                 fecha: '28/01/2019'
               },
               {
-                cargo: 'Programador.net',
-                empresa: 'Tecnic Consultores',
-                familia: 'Informática y Comunicaciones',
+                idPuesto: 'p3',
                 fecha: '28/01/2019'
-              },
-              {
-                cargo: 'Programador Junior Java Spring boot',
-                empresa: 'GRUPO CMC',
-                familia: 'Informática y Comunicaciones',
-                fecha: '25/01/2019'
-              },
-              {
-                cargo: 'Administrativa',
-                empresa: 'Servium',
-                familia: 'Administración y Gestión',
-                fecha: '25/01/2019'
-              },
-              {
-                cargo: 'DESARROLLADOR/A SOFTWARE',
-                empresa: 'PEPPER',
-                familia: 'Informática y Comunicaciones',
-                fecha: '23/01/2019'
               }
             ]
-          }
         },
 
         {
@@ -225,13 +168,44 @@ let  usuarios =  [
             direccion: 'calle pez nº2',
             provincia: 'granada',
             municipio: 'granada',
-            url: 'www.acme.es'
-          },
-          contacto: {
-            nombre: 'gonzalo',
+            url: 'www.acme.es',
+            nombre_contacto: 'gonzalo',
             apellidos: 'gonzález de la gonzalera',
+            telefono: '999999',
             correo: 'jgg@acme.es'
-          }
+          },
+          ofertas: [
+            {
+              idPuesto: 'p1',
+              puesto: 'Profesor de patronaje',
+              familia: 'Corte y confección',
+              fecha: '30/01/2019',
+              descripcion: 'Empresa líder en su sector busca gente joven para trabajar mucho',
+              provincia: 'Granada',
+              municipio: 'La Herradura',
+              titulos: 'Técnico en costura, Técnico de grado básico en hilos y agujas'
+            },
+            {
+              idPuesto: 'p2',
+              puesto: 'Programador juvenil Java',
+              familia: 'Informática y comunicaciones',
+              fecha: '28/01/2019',
+              descripcion: 'Empresa líder en su sector busca gente joven para trabajar mucho',
+              provincia: 'Granada',
+              municipio: 'Albuñuelas',
+              titulos: 'Técnico de programación, Técnico de grado básico en tocateclas'
+              },
+            {
+              idPuesto: 'p3',
+              puesto: 'Programador.net',
+              familia: 'Informática y comunicaciones',
+              fecha: '28/01/2019',
+              descripcion: 'Empresa líder en su sector busca gente joven para trabajar mucho',
+              provincia: 'Granada',
+              municipio: 'Salobreña',
+              titulos: 'Técnico superior en jefatura de proyecto, Técnico de grado medio en programación'
+            }
+          ]
         },
         {
           id:4,
@@ -247,13 +221,44 @@ let  usuarios =  [
             direccion: 'calle tiburón nº2',
             provincia: 'granada',
             municipio: 'granada',
-            url: 'www.puleva.es'
-          },
-          contacto: {
-            nombre: 'chiquito',
+            nombre_contacto: 'chiquito',
             apellidos: 'de la calzada',
+            telefono: '999999',
             correo: 'chiquitodelacalzada@pecador.es'
-          }
+          },
+          ofertas: [
+            {
+              idPuesto: 'p4',
+              puesto: 'Programador Junior Java Spring boot',
+              familia: 'Informática y comunicaciones',
+              fecha: '25/01/2019',
+              descripcion: 'Empresa líder en su sector busca gente joven para trabajar mucho',
+              provincia: 'Málaga',
+              municipio: 'Macharaviaya',
+              titulos: 'Técnico superior en jefatura de proyecto, Técnico de grado medio en programación'
+            },
+            {
+              idPuesto: 'p5',
+              puesto: 'Administrativa',
+              familia: 'Administración y Gestión',
+              fecha: '25/01/2019',
+              descripcion: 'Empresa líder en su sector busca gente joven para trabajar mucho',
+              provincia: 'Málaga',
+              municipio: 'Torrox',
+              titulos: 'Técnico superior en solución de líos, Técnico de grado medio en gestión de citas'
+            },
+            {
+              idPuesto: 'p6',
+              puesto: 'Desarrollador de aplicaciones',
+              familia: 'Informática y comunicaciones',
+              fecha: '23/01/2019',
+              descripcion: 'Empresa líder en su sector busca gente joven para trabajar mucho',
+              provincia: 'Granada',
+              municipio: 'Motril',
+              titulos: 'Técnico superior en jefatura de proyecto, Técnico de grado medio en programación'
+            }
+          ]
+
         },
 
 

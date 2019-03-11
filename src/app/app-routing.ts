@@ -57,14 +57,19 @@ export const rootRouterConfig: Routes = [
 
   {
     path: 'profile/alumno',
-    loadChildren: './views/profile/alumno/alumno.module#AlumnoModule',
+    loadChildren: './views/profile/alumno/alumno.module#AlumnoProfileModule',
     data: { title: 'Perfil del alumno', breadcrumb: 'Perfil del alumno' }
   },
 
   {
     path: 'profile/empresa',
-    loadChildren: './views/profile/empresa/empresa.module#EmpresaModule',
+    loadChildren: './views/profile/empresa/empresa.module#EmpresaProfileModule',
     data: { title: 'Edición de datos de empresa', breadcrumb: 'Edición de datos de empresa' }
+  },
+  {
+    path: 'offers/alumno',
+    loadChildren: './views/offers/alumno/alumno.module#AlumnoOffersModule',
+    data: { title: 'Ofertas', breadcrumb: 'Ofertas' }
   },
 
 //fin puesto por mí

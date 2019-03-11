@@ -5,7 +5,6 @@ import { AlumnoRoutingModule } from './alumno-routing.module';
 import { AlumnoComponent } from './alumno.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
 @NgModule({
   declarations: [AlumnoComponent],
   imports: [
@@ -14,4 +13,4 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule
   ]
 })
-export class AlumnoProfileModule { }
+export class AlumnoOffersModule { }

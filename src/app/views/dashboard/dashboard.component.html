@@ -1,8 +1,15 @@
-<nav>
-  <button (click)="ir('/profile/alumno')" type="button">Alumno</button>
-  <button (click)="ir('/profile/empresa')" type="button">Emmpresa</button>
-<!--  <button (click)="ir('/profile/personal')" type="button">Cambiar perfil personal</button>-->
-<!--<a routerLink="/profile/resumen">Mi perfil</a>
-<a routerLink="/profile">Mi perfil</a>-->
+<div *ngIf="this._sesion.tipoUsuario()==='alumno'">
+  <nav>
+    <button (click)="ir('/profile/alumno')" type="button">Mi perfil</button>
+    <button (click)="ir('/offers/alumno')" type="button">Ofertas de trabajo</button>
+    <!--  <button (click)="ir('/profile/personal')" type="button">Cambiar perfil personal</button>-->
 
-</nav>
+    <!--<a routerLink="/profile/resumen">Mi perfil</a>
+    <a routerLink="/profile">Mi perfil</a>-->
+
+  </nav>
+</div>
+
+<div *ngIf="this._sesion.tipoUsuario()==='empresa'">
+  <button (click)="ir('/profile/empresa')" type="button">Mi perfil</button>
+<div>

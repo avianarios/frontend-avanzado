@@ -8,13 +8,11 @@ import { SesionService } from '../../shared/services/sesion.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  sesionIniciada:boolean;
 
   constructor(private _router:Router, private _sesion: SesionService) { }
 
   ngOnInit() {
-    if (!(this.sesionIniciada=this._sesion.sesionEstaIniciada()))
-//      this.mensaje="Sesión no iniciada";
+    if (!this._sesion.sesionEstaIniciada())
       this._router.navigateByUrl('/signin');
   }
 
