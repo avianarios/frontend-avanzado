@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder
+} from '@angular/forms';
 import { UsuariosService } from '../../shared/services/usuarios.service';
 import { Router } from '@angular/router';
 import { SesionService } from '../../shared/services/sesion.service';
@@ -10,33 +14,64 @@ import { SesionService } from '../../shared/services/sesion.service';
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.scss']
 })
-export class SigninComponent implements OnInit{
+export class SigninComponent implements OnInit {
   usuarios: any[] = [];
-  datosPersonales: any[]=[];
-  autenticado:boolean=false;
-  enviado:boolean=false;
+  datosPersonales: any[] = [];
+  autenticado = false;
+  enviado = false;
   loginForm: FormGroup = this._builder.group({
-    usuario: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    usuario: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3)
+    ]),
     clave: new FormControl('', [Validators.required, Validators.minLength(3)])
   });
 
-  constructor(private _builder: FormBuilder, private _usuariosService: UsuariosService, private _router: Router, private _sesion: SesionService) { }
+  constructor(
+    private _builder: FormBuilder,
+    private _usuariosService: UsuariosService,
+    private _router: Router,
+    private _sesion: SesionService
+  ) {}
 
-  login(){
-    for (let usuario of this.usuarios){
-      if ((usuario['identificacion'].usuario===this.loginForm.value.usuario) && (usuario['identificacion'].clave===this.loginForm.value.clave)){
-        this.autenticado=true;
-        this._sesion.iniciarSesion(usuario['identificacion'].usuario, usuario.tipo);
+  private isUser(user, { username, password }) {
+    return (
+      user['identificacion'].usuario === username &&
+      user['identificacion'].clave === password
+    );
+  }
+
+  login() {
+    const credentials = {
+      username: this.loginForm.value.usuario,
+      password: this.loginForm.value.clave
+    };
+    const user = this.usuarios.find(_user => this.isUser(_user, credentials));
+    if (user) {
+      this.autenticado = true;
+      this._sesion.iniciarSesion(user['identificacion'].usuario, user.tipo);
+      this._router.navigateByUrl('/dashboard');
+    }
+    /*     for (const usuario of this.usuarios) {
+      if (
+        usuario['identificacion'].usuario === this.loginForm.value.usuario &&
+        usuario['identificacion'].clave === this.loginForm.value.clave
+      ) {
+        this.autenticado = true;
+        this._sesion.iniciarSesion(
+          usuario['identificacion'].usuario,
+          usuario.tipo
+        );
         this._router.navigateByUrl('/dashboard');
       }
-    }
+    } */
   }
 
   recordar() {
     this._router.navigateByUrl('/forgot-password');
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this._usuariosService.devolverUsuarios().subscribe(data => {
       this.usuarios = data;
     });
