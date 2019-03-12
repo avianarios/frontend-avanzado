@@ -71,6 +71,10 @@ let  usuarios =  [
             ],
             inscrito: [
               {
+                idPuesto: 'p1',
+                fecha: '28/01/2019'
+              },
+              {
                 idPuesto: 'p2',
                 fecha: '28/01/2019'
               },

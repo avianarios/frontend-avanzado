@@ -1,0 +1,78 @@
+<ng-template *ngIf="this.numOferta==-1; then ofertas; else detalleOferta">
+</ng-template>
+
+<ng-template #ofertas>
+<table border=1>
+  <caption id="títuloTabla">Ofertas de empleo según perfil</caption>
+  <thead class="encabezado">
+    <tr>
+      <th *ngFor="let llave of llavesOfertas; let i=index;">{{llave}}</th>
+      <th>Más detalles</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let oferta of valoresOfertas; let i=index;">
+      <td *ngFor="let campo of oferta">{{campo}}</td>
+      <td><button (click)="mostrarDetalle(i)" type="button">Más detalles</button></td>
+    </tr>
+    <tr>
+      <td>
+        <button (click)="ir('/dashboard')" type="button">Atrás</button>
+      </td>
+    </tr>
+
+
+
+  </tbody>
+  <!--<tfoot>
+  <button (click)="ir('/personal')" type="button">Editar</button>
+  <button [disabled]="editandoPersonales" (click)="editarPersonales()" type="button">Editar en línea</button>
+</tfoot>-->
+</table>
+
+</ng-template>
+
+<ng-template #detalleOferta>
+  <table border=1>
+    <caption id="títuloTabla">Ofertas de empleo según perfil</caption>
+    <thead class="encabezado">
+      <tr>
+        <th *ngFor="let llave of llavesOfertas; let i=index;">{{llave}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td *ngFor="let campo of valoresOfertas[this.numOferta]; let i=index;">
+        {{campo}}</td>
+      </tr>
+      <tr>
+        <td>
+          <button (click)="ir('/dashboard')" type="button">Atrás</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table border=1>
+    <caption id="títuloTabla">Ofertas de empleo según perfil</caption>
+    <thead class="encabezado">
+      <tr>
+<!--        <th *ngFor="let llave of llavesOfertas; let i=index;">{{llave}}</th>-->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let alumno of this.candidatos; let i=index;">
+        <td *ngFor="let campo of alumno; let j=index;">
+        {{campo}}</td>
+      </tr>
+      <tr>
+        <td>
+          <button (click)="ir('/dashboard')" type="button">Atrás</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+</ng-template>

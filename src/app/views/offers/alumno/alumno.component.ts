@@ -3,9 +3,6 @@ import { UsuariosService } from '../../../shared/services/usuarios.service';
 import { SesionService } from '../../../shared/services/sesion.service';
 import { Router } from '@angular/router';
 
-import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
-
-
 @Component({
   selector: 'app-alumno-offers',
   templateUrl: './alumno.component.html',
@@ -14,18 +11,21 @@ import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@ang
 export class AlumnoComponent implements OnInit {
   usuario_actual: any[]=[];
 //  llavesOfertas: Array<any>=[];
-  ofertasResumidas: Array<any>=[];
-  ofertasAmpliadas: Array<any>=[];
+  valoresOfertasResumidas: Array<any>=[];
+  valoresOfertasAmpliadas: Array<any>=[];
 //  tmp: Array<any>=[];
   detalleOferta:boolean=false;
   numOferta:number=-1;
+  codPuestoSolicitado:string;
 
   constructor(private _usuarios: UsuariosService, private _sesion: SesionService, private _router: Router) { }
 
   ngOnInit() {
-    if (!this._sesion.sesionEstaIniciada())
+/*    if (!this._sesion.sesionEstaIniciada())
       this._router.navigateByUrl('/signin');
-    else{
+    else{*/
+
+
       this._usuarios.devolverUsuarios().subscribe(data => {
           data.forEach(usuario => {
             if (usuario['identificacion'].usuario==='avm')
@@ -43,28 +43,27 @@ export class AlumnoComponent implements OnInit {
                 for (let i=0, encontrado=0; i<this.usuario_actual['formacion'].length && !encontrado; i++){
                   if ((this.usuario_actual['formacion'][i].familia)===oferta.familia){
                     encontrado=1;
-//Meto todos los campos
-/*                    Object.values (oferta).forEach (campo=>{
-                      this.tmp.push (campo);
-                    });*/
-//                    this.datosOfertas.push(this.tmp);
-                    this.ofertasResumidas.push([usuario.generales.nombre, oferta.puesto, oferta.familia, oferta.fecha, oferta.provincia]);
-                    this.ofertasAmpliadas.push([usuario.generales.nombre, oferta.puesto, oferta.descripcion, oferta.provincia, oferta.municipio, oferta.familia, oferta.titulos]);
+                    this.valoresOfertasResumidas.push([oferta.idPuesto, usuario.generales.nombre, oferta.puesto, oferta.familia, oferta.fecha, oferta.provincia]);
+                    this.valoresOfertasAmpliadas.push([oferta.idPuesto, usuario.generales.nombre, oferta.puesto, oferta.descripcion, oferta.provincia, oferta.municipio, oferta.familia, oferta.titulos]);
                   }
                 }
             });
           }
         });
       });
-    }
+  //  }
   }
 
   solicitarEmpleo(cual){
-    console.log ("voy a solicitar la oferta", cual);
+    console.log ("voy a solicitar la oferta", cual, "con código", this.valoresOfertasResumidas[cual][0]);
   }
 
   mostrarDetalle(cual){
-    this.detalleOferta=true;
     this.numOferta=cual;
+    this.codPuestoSolicitado=this.valoresOfertasResumidas[cual][0];
+  }
+
+  ir(donde){
+    this._router.navigateByUrl(donde);
   }
 }

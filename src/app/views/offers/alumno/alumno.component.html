@@ -3,6 +3,7 @@
     <caption id="títuloTabla">Ofertas de empleo según perfil</caption>
     <thead class="encabezado">
       <tr>
+        <th>Código oferta</th>
         <th>Empresa</th>
         <th>Puesto</th>
         <th>Familia</th>
@@ -12,15 +13,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let oferta of ofertasResumidas; let i=index;">
-        <td *ngFor="let campo of oferta">
-          {{campo}}
-        </td>
-          <td>
-          <button (click)="mostrarDetalle(i)" type="button">Más detalles</button></td>
-        </tr>
+      <tr *ngFor="let oferta of valoresOfertasResumidas; let i=index;">
+        <td *ngFor="let campo of oferta; let j=index">{{campo}}</td>
+        <td><button (click)="mostrarDetalle(i)" type="button">Más detalles</button></td>
+      </tr>
       <tr>
         <td>
+          <button (click)="ir('/dashboard')" type="button">Atrás</button>
         </td>
       </tr>
 
@@ -33,29 +32,38 @@
   </tfoot>-->
   </table>
 </div>
+
+
 <div *ngIf="detalleOferta">
-  <table border=1>
-    <caption id="títuloTabla">Ofertas de empleo según perfil</caption>
-    <thead class="encabezado">
-      <tr>
-        <th>Empresa</th>
-        <th>Puesto</th>
-        <th>Descripción</th>
-        <th>Provincia</th>
-        <th>Municipio</th>
-        <th>Familia</th>
-        <th>Títulos</th>
-        <th>Inscribirse</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td *ngFor="let campoOferta of ofertasAmpliadas[this.numOferta]">
-          {{campoOferta}}
+    <table border=1>
+      <caption id="títuloTabla">Ofertas de empleo según perfil</caption>
+      <thead class="encabezado">
+        <tr>
+          <td>ID Oferta</td>
+          <td>Empresa</td>
+          <td>Puesto</td>
+          <td>Descripción</td>
+          <td>Provincia</td>
+          <td>Municipio</td>
+          <td>Familia</td>
+          <td>Títulos</td>
+          <td>Inscribirse</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td *ngFor="let campoOferta of valoresOfertasAmpliadas[this.numOferta]; let i=index;">
+              {{campoOferta}}
         </td>
+            <td>
+            <button (click)="solicitarEmpleo(this.numOferta)" type="button">Solicitar</button></td>
+          </tr>
+        <tr>
           <td>
-          <button (click)="solicitarEmpleo(this.numOferta)" type="button">inscribirse</button></td>
-      </tr>
+            <button (click)="ir('/dashboard')" type="button">Atrás</button>
+          </td>
+        </tr>
+      <td>
     </tbody>
 <!--    <tfoot>
     <button (click)="ir('/personal')" type="button">Editar</button>

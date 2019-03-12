@@ -71,6 +71,11 @@ export const rootRouterConfig: Routes = [
     loadChildren: './views/offers/alumno/alumno.module#AlumnoOffersModule',
     data: { title: 'Ofertas', breadcrumb: 'Ofertas' }
   },
+  {
+    path: 'offers/empresa',
+    loadChildren: './views/offers/empresa/empresa.module#EmpresaOffersModule',
+    data: { title: 'Ofertas', breadcrumb: 'Ofertas' }
+  },
 
 //fin puesto por mí
 
