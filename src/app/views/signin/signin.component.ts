@@ -16,9 +16,6 @@ import { SesionService } from '../../shared/services/sesion.service';
 })
 export class SigninComponent implements OnInit {
   usuarios: any[] = [];
-  datosPersonales: any[] = [];
-  autenticado = false;
-  enviado = false;
   loginForm: FormGroup = this._builder.group({
     usuario: new FormControl('', [
       Validators.required,
@@ -29,7 +26,7 @@ export class SigninComponent implements OnInit {
 
   constructor(
     private _builder: FormBuilder,
-    private _usuariosService: UsuariosService,
+    private _usuarios: UsuariosService,
     private _router: Router,
     private _sesion: SesionService
   ) {}
@@ -48,7 +45,6 @@ export class SigninComponent implements OnInit {
     };
     const user = this.usuarios.find(_user => this.isUser(_user, credentials));
     if (user) {
-      this.autenticado = true;
       this._sesion.iniciarSesion(user['identificacion'].usuario, user.tipo);
       this._router.navigateByUrl('/dashboard');
     }
@@ -72,7 +68,7 @@ export class SigninComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._usuariosService.devolverUsuarios().subscribe(data => {
+    this._usuarios.devolverUsuarios().subscribe(data => {
       this.usuarios = data;
     });
   }

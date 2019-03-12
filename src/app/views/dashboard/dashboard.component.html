@@ -1,17 +1,15 @@
-<div *ngIf="this._sesion.tipoUsuario()==='alumno'">
+<ng-template *ngIf="this._sesion.usuarioSesion().tipo==='alumno'; then alumno; else empresa"></ng-template>
+
+<ng-template #alumno>
   <nav>
     <button (click)="ir('/profile/alumno')" type="button">Mi perfil</button>
     <button (click)="ir('/offers/alumno')" type="button">Ofertas de trabajo</button>
-    <!--  <button (click)="ir('/profile/personal')" type="button">Cambiar perfil personal</button>-->
-
-    <!--<a routerLink="/profile/resumen">Mi perfil</a>
-    <a routerLink="/profile">Mi perfil</a>-->
-
+    <!--<a routerLink="/profile/resumen">Mi perfil</a>-->
   </nav>
-</div>
+</ng-template>
 
-<div *ngIf="this._sesion.tipoUsuario()==='empresa'">
+<ng-template #empresa>
   <button (click)="ir('/profile/empresa')" type="button">Mi perfil</button>
   <button (click)="ir('/offers/empresa')" type="button">Mis ofertas</button>
   <button (click)="ir('/configuracion')" type="button">Configurar</button>
-<div>
+</ng-template>

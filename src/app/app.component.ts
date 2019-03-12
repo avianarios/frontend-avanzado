@@ -1,4 +1,4 @@
-/*import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +7,8 @@
 })
 export class AppComponent {
   title = 'UOCJob';
-}*/
-
+}
+/*
 
 import { HttpClient } from '@angular/common/http';
 import { UsuariosService } from './shared/services/usuarios.service';
@@ -82,3 +82,4 @@ console.log (task) ;
   });
   } //delete
  }
+*/

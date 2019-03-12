@@ -49,11 +49,11 @@ export const rootRouterConfig: Routes = [
     loadChildren: './views/dashboard/dashboard.module#DashboardModule',
     data: { title: 'Dashboard', breadcrumb: 'DASHBOARD' }
   },
-  {
+/*  {
     path: 'profile',
     loadChildren: './views/profile/profile.module#ProfileModule',
     data: { title: 'Perfil', breadcrumb: 'Perfil' }
-  },
+  },*/
 
   {
     path: 'profile/alumno',
@@ -99,11 +99,11 @@ export const rootRouterConfig: Routes = [
         loadChildren: './views/favorites/favorites.module#FavoritesModule',
         data: { title: 'Favorites', breadcrumb: 'FAVORITES' }
       },
-      {
+/*      {
         path: 'profile',
         loadChildren: './views/profile/profile.module#ProfileModule',
         data: { title: 'Material', breadcrumb: 'MATERIAL' }
-      },
+      },*/
       {
         path: 'offers',
         loadChildren: './views/offers/offers.module#OffersModule',

@@ -36,16 +36,6 @@ export class AlumnoComponent implements OnInit {
   editandoExperiencia:boolean=false;
   editandoIdiomas:boolean=false;
 
-/*  llavesDatosPersonales: any []=[];
-  valoresDatosPersonales: any []=[];
-  llavesDatosFormacion: any []=[];
-  valoresDatosFormacion: any []=[];
-  llavesDatosExperiencia: any []=[];
-  valoresDatosExperiencia: any []=[];
-  llavesDatosIdiomas: any []=[];
-  valoresDatosIdiomas: any []=[];
-  items: any []=[];*/
-
   constructor(private _builder: FormBuilder, private _usuarios: UsuariosService, private _sesion: SesionService, private _router: Router) { }
 
   ngOnInit() {
@@ -59,33 +49,12 @@ export class AlumnoComponent implements OnInit {
     //CAMBIAR POR EL DE ABAJO        if (alumno.correo===this._sesion.usuarioSesion()){
             if (elemento['identificacion'].usuario==='avm'){
               this.alumno_actual=elemento;
-  //              this.datosPersonales=alumno['datosPersonales'];
-
-  /*              this.llavesDatosPersonales=(Object.keys(alumno['datosPersonales']));
-                this.valoresDatosPersonales=(Object.values(alumno['datosPersonales']));*/
-
-  /*              this.llavesDatosFormacion=Object.keys(this.alumno_actual['formacion']['0']);
-                this.alumno_actual['formacion'].forEach(dato=>{
-                  this.valoresDatosFormacion.push(Object.values(dato));
-                });
-
-                this.llavesDatosExperiencia=Object.keys(this.alumno_actual['experiencia']['0']);
-                this.alumno_actual['experiencia'].forEach(dato=>{
-                  this.valoresDatosExperiencia.push(Object.values(dato));
-                });
-
-                this.llavesDatosIdiomas=Object.keys(this.alumno_actual['idiomas']['0']);
-                this.alumno_actual['idiomas'].forEach(dato=>{
-                  this.valoresDatosIdiomas.push(Object.values(dato));
-                });*/
-
-                this.rellenaFormularios();
-                this.terminarEdicion("todos");
-                this.escucharCambios();
-  //              this.borrarFormacion(0);
-              }
-            });
+              this.rellenaFormularios();
+              this.terminarEdicion("todos");
+              this.escucharCambios();
+            }
           });
+        });
       }
   }
 
@@ -141,45 +110,39 @@ export class AlumnoComponent implements OnInit {
 
   rellenaFormularios(){
       /*rellena el formulario de datos personales*/
-      for (let llave in this.alumno_actual['datosPersonales']){
+      for (let llave in this.alumno_actual['datosPersonales'])
         if (llave in (this.formDatosPersonales.controls))  //puede que hubiera campos en la BBDD que no se mostrasen por pantalla
           this.formDatosPersonales.controls[llave].setValue(this.alumno_actual['datosPersonales'][llave]);
-      }
-      /*rellena el formulario de datos de formación*/
-
-//      this.anyadirElemento (this.formDatosFormacion, this.alumno_actual['formacion']);
-//this.anyadirElemento3 ("formacion", this.alumno_actual['formacion'], this.crearTitulo);
-
-//this.anyadirElemento2 (this.formDatosFormacion, this.alumno_actual['formacion'], this.crearTitulo2);
 
       this.anyadirElemento ("formacion", this.alumno_actual['formacion']);
       this.anyadirElemento ("experiencia", this.alumno_actual['experiencia']);
       this.anyadirElemento ("idioma", this.alumno_actual['idiomas']);
   }
 
-/*VOY POR AQUÍ. INTENTANDO FUSIONAR*/
+  /*VOY POR AQUÍ. INTENTANDO FUSIONAR*/
 
-  anyadirElemento2(form, matriz, funcion){
-  console.log (form);
-    (form.controls['datos'] as FormArray).push(funcion(form, matriz));
-  }
-
-  crearTitulo2 (form, datos){
+    anyadirElemento2(form, matriz, funcion){
     console.log (form);
-    console.log (datos);
-    if (datos===undefined){
-      this.numElementoEnEdicion=((<FormArray>form.controls['datos']).controls.length);
-      this.editandoFormacion=true;
-      this.editandoCampo=true;
+      (form.controls['datos'] as FormArray).push(funcion(form, matriz));
     }
-    return this._builder.group({
-      nivel: [''],
-      titulo: [''],
-      centro: [''],
-      fecha: [''],
-      certificado: ['']
-    })
-  }
+
+    crearTitulo2 (form, datos){
+      console.log (form);
+      console.log (datos);
+      if (datos===undefined){
+        this.numElementoEnEdicion=((<FormArray>form.controls['datos']).controls.length);
+        this.editandoFormacion=true;
+        this.editandoCampo=true;
+      }
+      return this._builder.group({
+        nivel: [''],
+        titulo: [''],
+        centro: [''],
+        fecha: [''],
+        certificado: ['']
+      })
+    }
+/**********************/  
 
   anyadirElemento(tipo, matriz){
     switch (tipo){

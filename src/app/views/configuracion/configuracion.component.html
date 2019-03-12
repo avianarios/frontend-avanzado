@@ -1,3 +1,23 @@
-<p>
-  configuracion works!
-</p>
+<ul><form [formGroup]="formConfiguracion" (ngSubmit)="submit()">
+<li><label>
+Idioma:<select formControlName="idioma">
+  <option *ngFor="let idioma of nombreIdiomas" [value]="idioma">{{idioma}}</option></select>
+</label>
+</li><li>
+<label>Recibir ofertas de las siguientes provincias</label>
+</li><li>
+  <label formArrayName="listaProvincias" *ngFor="let nombre of formConfiguracion.controls['listaProvincias'].controls; let i = index">
+    <input type="checkbox" [formControlName]="i">
+    {{listaProvincias[i].nombre}}
+  </label>
+</li><li>
+  <label>
+    <input type="checkbox" formControlName="selectAll">
+    Marcar/Desmarcar todas
+  </label>
+</li><li>
+
+  <button>Enviar</button>
+  <button (click)="ir('/dashboard')">Volver atrás</button>
+</li>
+</form></ul>
