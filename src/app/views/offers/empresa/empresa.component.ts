@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { UsuariosService } from '../../../shared/services/usuarios.service';
 import { SesionService } from '../../../shared/services/sesion.service';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-empresa-offers',
@@ -17,14 +20,22 @@ export class EmpresaComponent implements OnInit {
   //tengo que dividir a los candidatos en dos matrices, llaves y valores, porque ngfor solo puede iterar por matrices y no por objetos
   llavesCandidatos: Array<any>=[];
   valoresCandidatos: Array<any>=[];
+  formOferta: FormGroup;
+  numElementoEnEdicion:number;
+  editandoOferta:boolean=false;
+  editandoCampo:boolean=false;
+  editandoPersonales:boolean=false;
+  valoresCandidatosSeleccionados: Array<any>=[];
+  valoresCandidatosDescartados: Array<any>=[];
 
-  constructor(private _usuarios: UsuariosService, private _sesion: SesionService, private _router: Router) { }
+  constructor( private _builder: FormBuilder, private _usuarios: UsuariosService, private _sesion: SesionService, private _router: Router) { }
 
   ngOnInit() {
     /*    if (!this._sesion.sesionEstaIniciada())
           this._router.navigateByUrl('/signin');
         else{*/
-        this._usuarios.devolverUsuarios().subscribe(data => {
+          this.crearFormularios();
+          this._usuarios.devolverUsuarios().subscribe(data => {
             data.forEach(usuario => {
               if (usuario['identificacion'].usuario==='acme'){
                 this.usuario_actual=usuario;
@@ -34,17 +45,81 @@ export class EmpresaComponent implements OnInit {
                         this.llavesOfertas.push (llave);
                       });
                     this.valoresOfertas.push (Object.values (oferta));
-                })
+                });
+                this.rellenaFormularios();
+                this.terminarEdicion('ofertas');
               }
             });
           });
   }
 
-  mostrarDetalle(cual){
-    this.numOferta=cual;
+  crearFormularios(){
+    this.formOferta= this._builder.group({
+      datos: new FormArray([])
+    });
+  }
 
-    console.log (this.numOferta);
-    this.codPuestoSolicitado=this.valoresOfertas[cual][0];
+  rellenaFormularios(){
+    this.anyadirElemento ("ofertas", this.usuario_actual['ofertas']);
+  }
+
+    anyadirElemento(tipo, matriz){
+      if  (matriz===undefined)
+        (this.formOferta.controls['datos'] as FormArray).push(this.crearOferta(["", "", "", "", ""]));
+      else
+        if ((Object.keys (matriz)[0])==="0"){ //si la primera llave es un número es porque se le ha pasado una matriz con más de un título donde cada fila es un título
+          for (let i=0; i<matriz.length; i++)
+            (this.formOferta.controls['datos'] as FormArray).push(this.crearOferta(matriz[i]));
+        }else  //solo se le ha pasado un título
+          (this.formOferta.controls['datos'] as FormArray).push(this.crearOferta(matriz));
+    }
+
+
+    crearOferta(datosOferta){
+        if (datosOferta.nivel===undefined){
+          this.numElementoEnEdicion=((<FormArray>this.formOferta.controls['datos']).controls.length);
+          this.editandoOferta=true;
+          this.editandoCampo=true;
+        }
+        return this._builder.group({
+          idPuesto: [datosOferta.idPuesto],
+          puesto: [datosOferta.puesto],
+          familia: [datosOferta.familia],
+          fecha: [datosOferta.fecha],
+          descripcion: [datosOferta.descripcion],
+          provincia: [datosOferta.provincia],
+          municipio: [datosOferta.municipio],
+          titulos: [datosOferta.titulos]
+        })
+    }
+
+    borrar(form, posicion){
+      (form.controls['datos'] as FormArray).removeAt(posicion);
+      this.valoresOfertas.splice(posicion, 1);
+      console.log (this.formOferta);
+    }
+
+    terminarEdicion(cual){
+      this.editandoOferta=false;
+      this.editandoCampo=false;
+//      this.editandoPersonales=false;
+      this.formOferta.disable();
+//          this.numElementoEnEdicion=-1;
+    }
+
+
+    editarCampo (form, elemento){
+      this.editandoCampo=true;
+      this.editandoOferta=true;
+      ((<FormArray>this.formOferta.get('datos')).controls[elemento]).enable();
+      this.numElementoEnEdicion=elemento;
+    }
+
+  gestionarCandidatos(cual){
+    this.valoresCandidatos=[];
+    this.numOferta=cual;
+    this.codPuestoSolicitado=((<FormArray>this.formOferta.get('datos')).controls[cual].value['idPuesto']);
+
     this._usuarios.devolverUsuarios().subscribe(data => {
       data.forEach(usuario => {
         if (usuario['tipo']=="alumno")
@@ -57,17 +132,32 @@ export class EmpresaComponent implements OnInit {
                   this.llavesCandidatos.push (llave)
                 });
               this.valoresCandidatos.push (Object.values (usuario['datosPersonales']));
-console.log (this.llavesCandidatos, this.valoresCandidatos)              ;
-
             }
 /*            usuario['inscrito'].forEach( oferta=>{
             console.log ("está inscrito a", oferta);
           });*/
-          console.log (this.candidatos);
+//          console.log (this.candidatos);
       });
     });
-
 //    console.log (this.numOferta, this.valoresOfertas[cual]);
   }
 
+  irAtras() {
+    this.numOferta=-1;
+  }
+
+  ir(donde){
+    this.numOferta=-1;
+    this._router.navigateByUrl(donde);
+  }
+
+  seleccionar(cual){
+    this.valoresCandidatosSeleccionados.push(this.valoresCandidatos[cual]);
+    this.valoresCandidatos.splice(cual,1);
+  }
+
+  descartar(cual){
+    this.valoresCandidatosDescartados.push(this.valoresCandidatos[cual]);
+    this.valoresCandidatos.splice(cual,1);
+  }
 }

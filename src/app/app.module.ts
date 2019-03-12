@@ -14,8 +14,6 @@ import { SigninComponent } from './views/signin/signin.component';
 import { UsuariosService } from './shared/services/usuarios.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-
-
 @NgModule({
   declarations: [AppComponent],
   imports: [

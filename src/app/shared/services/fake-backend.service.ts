@@ -98,7 +98,7 @@ let  usuarios =  [
           nacimiento: '01/10/1978',
           telefono: '958958958',
           conducir: 'A, B',
-          NIF: '1234567a',
+          NIF: '098765b',
           mas: 'esto es un texto sobre mí',
           otras: 'estas son mis competencias'
         },

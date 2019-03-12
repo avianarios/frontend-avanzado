@@ -16,7 +16,8 @@ export class AlumnoComponent implements OnInit {
 //  tmp: Array<any>=[];
   detalleOferta:boolean=false;
   numOferta:number=-1;
-  codPuestoSolicitado:string;
+  codPuestoSolicitado:string='';
+  valoresOfertasInscritas: Array<any>=[];
 
   constructor(private _usuarios: UsuariosService, private _sesion: SesionService, private _router: Router) { }
 
@@ -24,8 +25,6 @@ export class AlumnoComponent implements OnInit {
 /*    if (!this._sesion.sesionEstaIniciada())
       this._router.navigateByUrl('/signin');
     else{*/
-
-
       this._usuarios.devolverUsuarios().subscribe(data => {
           data.forEach(usuario => {
             if (usuario['identificacion'].usuario==='avm')
@@ -43,8 +42,8 @@ export class AlumnoComponent implements OnInit {
                 for (let i=0, encontrado=0; i<this.usuario_actual['formacion'].length && !encontrado; i++){
                   if ((this.usuario_actual['formacion'][i].familia)===oferta.familia){
                     encontrado=1;
-                    this.valoresOfertasResumidas.push([oferta.idPuesto, usuario.generales.nombre, oferta.puesto, oferta.familia, oferta.fecha, oferta.provincia]);
-                    this.valoresOfertasAmpliadas.push([oferta.idPuesto, usuario.generales.nombre, oferta.puesto, oferta.descripcion, oferta.provincia, oferta.municipio, oferta.familia, oferta.titulos]);
+                    this.valoresOfertasAmpliadas.push([oferta.idPuesto, usuario.generales.nombre, oferta.puesto, oferta.fecha, oferta.provincia, oferta.municipio, oferta.descripcion, oferta.familia, oferta.titulos]);
+                    this.valoresOfertasResumidas.push([oferta.idPuesto, usuario.generales.nombre, oferta.puesto, oferta.fecha, oferta.provincia]);
                   }
                 }
             });
@@ -52,15 +51,29 @@ export class AlumnoComponent implements OnInit {
         });
       });
   //  }
+//  console.log (this.valoresOfertasInscritas.length);
   }
 
   solicitarEmpleo(cual){
-    console.log ("voy a solicitar la oferta", cual, "con código", this.valoresOfertasResumidas[cual][0]);
+    this.valoresOfertasInscritas.push(this.valoresOfertasAmpliadas[cual]);
+    this.valoresOfertasAmpliadas.splice(cual, 1);
+    this.valoresOfertasResumidas.splice(cual, 1);
+    this.codPuestoSolicitado='';
+  }
+
+  cancelarSolicitudEmpleo(cual){
+    this.valoresOfertasAmpliadas.push(this.valoresOfertasInscritas[cual]);
+    this.valoresOfertasResumidas.push([
+      this.valoresOfertasInscritas[cual][0], this.valoresOfertasInscritas[cual][1], this.valoresOfertasInscritas[cual][2], this.valoresOfertasInscritas[cual][3], this.valoresOfertasInscritas[cual][4]]);
+    this.valoresOfertasInscritas.splice(cual, 1);
   }
 
   mostrarDetalle(cual){
-    this.numOferta=cual;
-    this.codPuestoSolicitado=this.valoresOfertasResumidas[cual][0];
+    if (cual!==''){
+      this.numOferta=cual;
+      this.codPuestoSolicitado=this.valoresOfertasResumidas[cual][0];
+    }else
+      this.codPuestoSolicitado=cual;
   }
 
   ir(donde){

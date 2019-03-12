@@ -1,12 +1,12 @@
-<div *ngIf="!detalleOferta">
+<ng-template *ngIf="codPuestoSolicitado===''; then ofertaGeneral; else ofertaDetallada"></ng-template>
+<ng-template #ofertaGeneral>
   <table border=1>
-    <caption id="títuloTabla">Ofertas de empleo según perfil</caption>
+    <caption id="títuloTabla">Ofertas de empleo disponibles para su perfil</caption>
     <thead class="encabezado">
       <tr>
         <th>Código oferta</th>
         <th>Empresa</th>
         <th>Puesto</th>
-        <th>Familia</th>
         <th>Fecha</th>
         <th>Provincia</th>
         <th>Más detalles</th>
@@ -23,28 +23,57 @@
         </td>
       </tr>
 
-
-
     </tbody>
     <!--<tfoot>
     <button (click)="ir('/personal')" type="button">Editar</button>
     <button [disabled]="editandoPersonales" (click)="editarPersonales()" type="button">Editar en línea</button>
   </tfoot>-->
   </table>
-</div>
-
-
-<div *ngIf="detalleOferta">
+  <div *ngIf="this.valoresOfertasInscritas.length>0">
     <table border=1>
-      <caption id="títuloTabla">Ofertas de empleo según perfil</caption>
+      <caption id="títuloTabla">Ofertas de empleo en las que está inscrito</caption>
       <thead class="encabezado">
         <tr>
           <td>ID Oferta</td>
           <td>Empresa</td>
           <td>Puesto</td>
-          <td>Descripción</td>
+          <td>Fecha</td>
           <td>Provincia</td>
           <td>Municipio</td>
+          <td>Descripción</td>
+          <td>Familia</td>
+          <td>Títulos</td>
+          <td>Inscribirse</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let oferta of valoresOfertasInscritas; let i=index;">
+          <td *ngFor="let campoOferta of oferta">
+            {{campoOferta}}
+          </td>
+          <td>
+          <button (click)="cancelarSolicitudEmpleo(i)" type="button">Cancelar solicitud</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+
+</ng-template>
+
+<ng-template #ofertaDetallada>
+    <table border=1>
+      <caption id="títuloTabla">Detalle de oferta de empleo</caption>
+      <thead class="encabezado">
+        <tr>
+          <td>ID Oferta</td>
+          <td>Empresa</td>
+          <td>Puesto</td>
+          <td>Fecha</td>
+          <td>Provincia</td>
+          <td>Municipio</td>
+          <td>Descripción</td>
           <td>Familia</td>
           <td>Títulos</td>
           <td>Inscribirse</td>
@@ -60,7 +89,7 @@
           </tr>
         <tr>
           <td>
-            <button (click)="ir('/dashboard')" type="button">Atrás</button>
+            <button (click)="mostrarDetalle('')" type="button">Atrás</button>
           </td>
         </tr>
       <td>
@@ -69,5 +98,4 @@
     <button (click)="ir('/personal')" type="button">Editar</button>
   </tfoot>-->
   </table>
-
-</div>
+</ng-template>

@@ -2,7 +2,7 @@
 </ng-template>
 
 <ng-template #ofertas>
-<table border=1>
+<!--<table border=1>
   <caption id="títuloTabla">Ofertas de empleo según perfil</caption>
   <thead class="encabezado">
     <tr>
@@ -17,24 +17,51 @@
     </tr>
     <tr>
       <td>
-        <button (click)="ir('/dashboard')" type="button">Atrás</button>
+        <button (click)="irAtras()" type="button">Atrás</button>
       </td>
     </tr>
-
-
-
   </tbody>
-  <!--<tfoot>
+  <tfoot>
   <button (click)="ir('/personal')" type="button">Editar</button>
   <button [disabled]="editandoPersonales" (click)="editarPersonales()" type="button">Editar en línea</button>
-</tfoot>-->
-</table>
+</tfoot>
+</table>-->
+
+<form [formGroup]="formOferta" (ngSubmit)="submit()">
+  <div formArrayName="datos">
+    <div *ngFor="let datos of formOferta.get('datos').controls; let i = index;">
+      <div [formGroupName]="i">
+        <input type="text" formControlName="idPuesto" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoOferta, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoOferta}">
+        <input type="text" formControlName="puesto" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoOferta, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoOferta}">
+        <input type="text" formControlName="familia" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoOferta, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoOferta}">
+        <input type="text" formControlName="fecha" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoOferta, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoOferta}">
+        <input type="text" formControlName="descripcion" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoOferta, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoOferta}">
+        <input type="text" formControlName="provincia" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoOferta, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoOferta}">
+        <input type="text" formControlName="municipio" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoOferta, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoOferta}">
+        <input type="text" formControlName="titulos" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoOferta, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoOferta}">
+        <button type="button" [disabled]="editandoCampo" (click)="editarCampo('ofertas', i)">Editar</button>
+        <button type="button" [disabled]="editandoCampo" (click)="borrar(this.formOferta, i)">Borrar</button>
+        <button (click)="terminarEdicion('oferta')" [disabled]="!editandoOferta || i!==this.numElementoEnEdicion">Terminar edidión</button>
+        <button (click)="gestionarCandidatos(i)" [disabled]="editandoOferta">Gestionar candidatos</button>
+      </div>
+    </div>
+  </div>
+  <button type="button" (click)="anyadirElemento ('formacion', '')" [disabled]="editandoCampo">Añadir título</button>
+<!--  <button (click)="guardarCambios()" [disabled]="!editarPersonales || !formDatosPersonales.valid">Guardar cambios</button>-->
+</form>
+
+
+
+
+
+
+
 
 </ng-template>
 
 <ng-template #detalleOferta>
   <table border=1>
-    <caption id="títuloTabla">Ofertas de empleo según perfil</caption>
+    <caption id="títuloTabla">Oferta de empleo</caption>
     <thead class="encabezado">
       <tr>
         <th *ngFor="let llave of llavesOfertas; let i=index;">{{llave}}</th>
@@ -45,34 +72,65 @@
         <td *ngFor="let campo of valoresOfertas[this.numOferta]; let i=index;">
         {{campo}}</td>
       </tr>
-      <tr>
-        <td>
-          <button (click)="ir('/dashboard')" type="button">Atrás</button>
-        </td>
-      </tr>
     </tbody>
   </table>
 
+  <div *ngIf="this.valoresCandidatos.length>0">
+    <table border=1>
+      <caption id="títuloTabla">Candidatos inscritos a esta oferta</caption>
+      <thead class="encabezado">
+        <tr>
+          <th *ngFor="let llave of llavesCandidatos; let i=index;">{{llave}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let alumno of valoresCandidatos; let i=index;">
+          <td *ngFor="let campo of alumno; let j=index;">
+          {{campo}}</td>
+          <td>
+            <button (click)="descartar(i)" type="button">Descartar</button>
+            <button (click)="seleccionar(i)" type="button">Seleccionar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="this.valoresCandidatosSeleccionados.length>0">
   <table border=1>
-    <caption id="títuloTabla">Ofertas de empleo según perfil</caption>
+    <caption id="títuloTabla">Candidatos seleccionados para esta oferta</caption>
     <thead class="encabezado">
       <tr>
-<!--        <th *ngFor="let llave of llavesOfertas; let i=index;">{{llave}}</th>-->
+        <th *ngFor="let llave of llavesCandidatos; let i=index;">{{llave}}</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let alumno of this.candidatos; let i=index;">
+      <tr *ngFor="let alumno of valoresCandidatosSeleccionados; let i=index;">
         <td *ngFor="let campo of alumno; let j=index;">
         {{campo}}</td>
       </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="this.valoresCandidatosDescartados.length>0">
+  <table border=1>
+    <caption id="títuloTabla">Candidatos descartados para esta oferta</caption>
+    <thead class="encabezado">
       <tr>
-        <td>
-          <button (click)="ir('/dashboard')" type="button">Atrás</button>
-        </td>
+        <th *ngFor="let llave of llavesCandidatos; let i=index;">{{llave}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let alumno of valoresCandidatosDescartados; let i=index;">
+        <td *ngFor="let campo of alumno; let j=index;">
+        {{campo}}</td>
       </tr>
     </tbody>
   </table>
+</div>
 
 
+<button (click)="irAtras()" type="button">Atrás</button>
 
 </ng-template>
