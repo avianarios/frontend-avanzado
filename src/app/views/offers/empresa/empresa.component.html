@@ -23,7 +23,7 @@
   </div>
   <button type="button" (click)="anyadirElemento ('formacion', '')" [disabled]="editandoCampo">Añadir título</button>
   <button (click)="guardarCambios()" [disabled]="!editarPersonales || !formDatosPersonales.valid">Guardar cambios</button>
-  <button (click)="()" [disabled]="!editarPersonales || !formDatosPersonales.valid">Atrás</button>
+  <button (click)="ir('/dashboard')" type="button">Atrás</button>
 </form>
 
 

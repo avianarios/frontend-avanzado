@@ -19,4 +19,9 @@ export class DashboardComponent implements OnInit {
   ir(donde){
     this._router.navigateByUrl(donde);
   }
+
+  cerrarSesion(){
+    this._sesion.cerrarSesion();
+    this.ir ('/signin');
+  }
 }

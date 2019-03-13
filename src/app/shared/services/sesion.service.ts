@@ -19,6 +19,7 @@ export class SesionService {
 
   cerrarSesion(){
     this.sesionIniciada=false;
+    this.usuario= {id:"", tipo:""};
   }
 
   sesionEstaIniciada(){

@@ -17,12 +17,6 @@
         <td *ngFor="let campo of oferta; let j=index">{{campo}}</td>
         <td><button (click)="mostrarDetalle(i)" type="button">Más detalles</button></td>
       </tr>
-      <tr>
-        <td>
-          <button (click)="ir('/dashboard')" type="button">Atrás</button>
-        </td>
-      </tr>
-
     </tbody>
     <!--<tfoot>
     <button (click)="ir('/personal')" type="button">Editar</button>
@@ -57,6 +51,9 @@
       </tbody>
     </table>
   </div>
+
+  <button (click)="ir('/dashboard')" type="button">Atrás</button>
+
 </ng-template>
 
 <ng-template #ofertaDetallada>
