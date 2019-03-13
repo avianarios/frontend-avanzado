@@ -17,13 +17,18 @@ export class EmpresaComponent implements OnInit {
   formDatosGenerales: FormGroup;
   editandoEmpresa:boolean=false;
 
-  constructor(private _builder: FormBuilder, private _usuarios: UsuariosService, private _sesion: SesionService, private _router: Router) { }
+  constructor(
+      private _builder: FormBuilder,
+      private _usuarios: UsuariosService,
+      private _sesion: SesionService,
+      private _router: Router
+    ) { }
 
   ngOnInit() {
+    this.crearFormularios();
     if (!this._sesion.sesionEstaIniciada())
       this._router.navigateByUrl('/signin');
     else{
-      this.crearFormularios();
       this._usuarios.devolverUsuarios().subscribe(grupoUsuarios => {
         for (let i=0; i<grupoUsuarios.length; i++)
 //        data.forEach(usuario=> {    Mejor usar for para salir del bucle en cuanto encuentre al usuario y no tener que recorrerlos todos
@@ -52,6 +57,7 @@ export class EmpresaComponent implements OnInit {
       telefono: new FormControl('', noSoloNumeros),
       correo: new FormControl('', Validators.email)
     });
+
   }
 
   rellenaFormularios(){
@@ -73,23 +79,8 @@ export class EmpresaComponent implements OnInit {
     this._router.navigateByUrl(donde);
   }
 
-/*
-  escucharCambios(){
-    this.formDatosPersonales.valueChanges.subscribe( campo => {
-      this.alumno_actual['datosPersonales'] = Object.assign(this.alumno_actual['datosPersonales'], campo);
-      console.log (this.alumno_actual['datosPersonales']);
-    });
-  }
-
   guardarCambios(){
-      this._usuarios.updateTask(this.alumno_actual);
+    this.usuario_actual['generales']=this.formDatosGenerales.value;
+    this._usuarios.actualizarUsuario(this.usuario_actual);
   }
-
-  editarForm(){
-  //  this.editar=true;
-    Object.keys(this.formDatosPersonales.controls).forEach(campo=>{
-      this.formDatosPersonales.controls[campo].enable();
-    });
-}*/
-
 }

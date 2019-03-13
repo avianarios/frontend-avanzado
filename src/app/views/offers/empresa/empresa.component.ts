@@ -19,7 +19,7 @@ export class EmpresaComponent implements OnInit {
   codPuestoSolicitado:string;
   //tengo que dividir a los candidatos en dos matrices, llaves y valores, porque ngfor solo puede iterar por matrices y no por objetos
   llavesCandidatos: Array<any>=[];
-  valoresCandidatos: Array<any>=[];
+    valoresCandidatos: Array<any>=[];
   formOferta: FormGroup;
   numElementoEnEdicion:number;
   editandoOferta:boolean=false;
@@ -31,26 +31,27 @@ export class EmpresaComponent implements OnInit {
   constructor( private _builder: FormBuilder, private _usuarios: UsuariosService, private _sesion: SesionService, private _router: Router) { }
 
   ngOnInit() {
-    /*    if (!this._sesion.sesionEstaIniciada())
-          this._router.navigateByUrl('/signin');
-        else{*/
-          this.crearFormularios();
-          this._usuarios.devolverUsuarios().subscribe(data => {
-            data.forEach(usuario => {
-              if (usuario['identificacion'].usuario==='acme'){
-                this.usuario_actual=usuario;
-                usuario['ofertas'].forEach (oferta=>{
-                    if (this.llavesOfertas.length===0)   //Las llaves solo hay que guardarlas una vez. Son iguales para todas las ofertas
-                      Object.keys (oferta).forEach (llave =>{
-                        this.llavesOfertas.push (llave);
-                      });
-                    this.valoresOfertas.push (Object.values (oferta));
+    this.crearFormularios();
+    if (!this._sesion.sesionEstaIniciada())
+      this._router.navigateByUrl('/signin');
+    else{
+      this._usuarios.devolverUsuarios().subscribe(grupoUsuarios=> {
+        for (let i=0; i<grupoUsuarios.length; i++)
+//        data.forEach(usuario=> {    Mejor usar for para salir del bucle en cuanto encuentre al usuario y no tener que recorrerlos todos
+          if (this._sesion.usuarioSesion().id===grupoUsuarios[i]['identificacion'].usuario){
+            this.usuario_actual=grupoUsuarios[i];
+            this.usuario_actual['ofertas'].forEach (oferta=>{
+              if (this.llavesOfertas.length===0)   //Las llaves solo hay que guardarlas una vez. Son iguales para todas las ofertas
+                Object.keys (oferta).forEach (llave =>{
+                  this.llavesOfertas.push (llave);
                 });
-                this.rellenaFormularios();
-                this.terminarEdicion('ofertas');
-              }
-            });
+              this.valoresOfertas.push (Object.values (oferta));
           });
+          this.rellenaFormularios();
+          this.terminarEdicion('ofertas');
+        }
+      });
+    }
   }
 
   crearFormularios(){
@@ -102,9 +103,7 @@ export class EmpresaComponent implements OnInit {
     terminarEdicion(cual){
       this.editandoOferta=false;
       this.editandoCampo=false;
-//      this.editandoPersonales=false;
       this.formOferta.disable();
-//          this.numElementoEnEdicion=-1;
     }
 
 
@@ -133,13 +132,8 @@ export class EmpresaComponent implements OnInit {
                 });
               this.valoresCandidatos.push (Object.values (usuario['datosPersonales']));
             }
-/*            usuario['inscrito'].forEach( oferta=>{
-            console.log ("está inscrito a", oferta);
-          });*/
-//          console.log (this.candidatos);
       });
     });
-//    console.log (this.numOferta, this.valoresOfertas[cual]);
   }
 
   irAtras() {
@@ -159,5 +153,9 @@ export class EmpresaComponent implements OnInit {
   descartar(cual){
     this.valoresCandidatosDescartados.push(this.valoresCandidatos[cual]);
     this.valoresCandidatos.splice(cual,1);
+  }
+
+  guardarCambios(){
+
   }
 }

@@ -16,6 +16,7 @@ export class UsuariosService {
   actualizarUsuario(update){
     return this.http.put(this.base_url + this.usuarios_endpoint, update);
   }
+
   //Gets all tasks
    getTasks() {
    return this.http.get<any>(this.base_url + this.usuarios_endpoint);

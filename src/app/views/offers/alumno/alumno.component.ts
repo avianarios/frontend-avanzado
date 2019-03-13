@@ -10,10 +10,8 @@ import { Router } from '@angular/router';
 })
 export class AlumnoComponent implements OnInit {
   usuario_actual: any[]=[];
-//  llavesOfertas: Array<any>=[];
   valoresOfertasResumidas: Array<any>=[];
   valoresOfertasAmpliadas: Array<any>=[];
-//  tmp: Array<any>=[];
   detalleOferta:boolean=false;
   numOferta:number=-1;
   codPuestoSolicitado:string='';
@@ -22,21 +20,14 @@ export class AlumnoComponent implements OnInit {
   constructor(private _usuarios: UsuariosService, private _sesion: SesionService, private _router: Router) { }
 
   ngOnInit() {
-/*    if (!this._sesion.sesionEstaIniciada())
+    if (!this._sesion.sesionEstaIniciada())
       this._router.navigateByUrl('/signin');
-    else{*/
+    else{
       this._usuarios.devolverUsuarios().subscribe(data => {
           data.forEach(usuario => {
-            if (usuario['identificacion'].usuario==='avm')
+            if (usuario['identificacion'].usuario===this._sesion.usuarioSesion()['id'])
               this.usuario_actual=usuario;
             if (usuario.tipo==='empresa'){
-              //obtengo los títulos las columnas de la tabla
-//              if (this.llavesOfertas.length===0){
-//                this.llavesOfertas.push ("empresa");
-/*                Object.keys (usuario['ofertas'][0]).forEach (campo=>{
-                  this.llavesOfertas.push (campo);
-                });*/
-              //}
               usuario['ofertas'].forEach(oferta=>{
                 //compruebo si ese usuario tiene el título necesario para trabajar en la oferta actual
                 for (let i=0, encontrado=0; i<this.usuario_actual['formacion'].length && !encontrado; i++){
@@ -50,10 +41,8 @@ export class AlumnoComponent implements OnInit {
           }
         });
       });
-  //  }
-//  console.log (this.valoresOfertasInscritas.length);
+    }
   }
-
   solicitarEmpleo(cual){
     this.valoresOfertasInscritas.push(this.valoresOfertasAmpliadas[cual]);
     this.valoresOfertasAmpliadas.splice(cual, 1);

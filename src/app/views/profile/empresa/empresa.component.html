@@ -11,7 +11,7 @@
       </label>
     </li><li>
       <label>
-        Apellidos: <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="razon">
+        Razón social: <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="razon">
         <div *ngIf="formDatosGenerales.controls['razon'].hasError('required')" class="error">Campo obligatorio</div>
         <div *ngIf="formDatosGenerales.controls['razon'].hasError('minlength')" class="error">Mínimo 3 letras</div>
         <div *ngIf="formDatosGenerales.controls['razon'].hasError('cadenaLimpia')" class="error">No debe haber caracteres especiales ni espacios en blanco al comienzo o al final</div>
@@ -60,7 +60,7 @@
       </label>
     </li>
     <li>
-        <button (click)="guardarCambios()" [disabled]="!formDatosGenerales.valid">Guardar</button>
+        <button (click)="guardarCambios()" >Guardar</button>
         <button (click)="editarCampo()" [disabled]="editandoEmpresa">Editar</button>
         <button (click)="terminarEdicion()" [disabled]="!editandoEmpresa">Terminar edidión</button>
         <button (click)="ir('/dashboard')">Volver atrás</button>

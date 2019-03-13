@@ -1,28 +1,3 @@
-<!--<div *ngIf="!editarPersonalesPersonales">
-
-  <table border=1>
-    <caption id="títuloTabla">Información personal</caption>
-    <thead class="encabezado">
-      <tr>
-        <th scople="col" *ngFor="let elemento of llavesDatosPersonales">
-        {{elemento}}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td *ngFor="let elemento of valoresDatosPersonales">
-          {{elemento}}
-        </td>
-        </tr>
-    </tbody>
-    <tfoot>
-    <button (click)="ir('/personal')" type="button">Editar</button>
-    <button [disabled]="editandoPersonales" (click)="editarPersonales()" type="button">Editar en línea</button>
-    </tfoot>
-  </table>
-</div>
-
-
 <div *ngIf="editandoPersonales">-->
   <section id="formulario">
     <form [formGroup]="formDatosPersonales">
@@ -142,29 +117,6 @@
 </form>
 
 
-
-
-<!--
-  <table border=1>
-    <caption id="títuloTabla">Experiencia laboral</caption>
-    <thead class="encabezado">
-        <tr>
-          <th scope="col" *ngFor="let elemento of llavesDatosExperiencia">
-          {{elemento}}</th></tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let elemento of valoresDatosExperiencia">
-        <td *ngFor="let campo of elemento">
-        {{campo}}</td></tr>
-    </tbody>
-    <tfoot>
-    <button (click)="ir('experiencia')" type="button">Editar</button>
-    </tfoot>
-  </table>-->
-
-  <!--Otras sintaxis válidas: [ngStyle]="{'background-color': getColor(i)}"
-  [class.noEditable]="i!==this.cual || this.editandoFormacion"-->
-
 <form [formGroup]="formDatosExperiencia" (ngSubmit)="submit()">
   <div formArrayName="datos">
     <div *ngFor="let datos of formDatosExperiencia.get('datos').controls; let i = index;">
@@ -182,37 +134,6 @@
   <button type="button" (click)="anyadirElemento ('experiencia','')" [disabled]="editandoCampo">Añadir experiencia</button>
 </form>
 
-<!--<form [formGroup]="formDatosFormacionAntiguo">
-  <table border=1>
-    <caption id="títuloTabla">Formación académica</caption>
-    <thead class="encabezado">
-        <tr>
-          <th scope="col" *ngFor="let elemento of llavesDatosFormacion">
-          {{elemento}}</th>
-        <th scope="col">acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let elemento of valoresDatosFormacion; let i = index">
-        <td *ngFor="let campo of elemento">
-          {{campo}}</td>
-        <td>
-          <button (click)="editarFormacion(i)">Editar</button>
-          <button (click)="borrarFormacion(i)">Borrar</button>
-        <td>
-      </tr>
-  <tr *ngIf="editandoFormacion">
-      <td> <input [className]="editandoFormacion ? 'editable' : 'noEditable'" type="text" formControlName="nivel"> </td>
-      <td> <input [className]="editandoFormacion ? 'editable' : 'noEditable'" type="text" formControlName="titulo"> </td>
-      <td> <input [className]="editandoFormacion ? 'editable' : 'noEditable'" type="text" formControlName="centro"> </td>
-      <td> <input [className]="editandoFormacion ? 'editable' : 'noEditable'" type="text" formControlName="fecha"> </td>
-      <td> <input [className]="editandoFormacion ? 'editable' : 'noEditable'" type="text" formControlName="certificado"> </td>
-      <td> <button (click)="guardarFormacion()" type="button">Guardar</button><button (click)="cancelarEdicion('formacion')" type="button">Cancelar</button> </td>
-  </tr>
-      <tr><td colspan=6><button (click)="anyadirFormacion()" type="button">Añadir</button></td></tr>
-</table>
-</form>-->
-
 
 <form [formGroup]="formDatosIdiomas" (ngSubmit)="submit()">
   <div formArrayName="datos">
@@ -220,7 +141,6 @@
       <div [formGroupName]="i">
 <!--        <input type="text" formControlName="empresa" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoIdiomas, 'noEditable': i!==this.numElementoEnEdicion}">-->
 <!--        <input type="text" formControlName="nivel" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoIdiomas, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoIdiomas}">-->
-
         <select formControlName="idioma">
            <option *ngFor="let id of nombreIdiomas" [ngValue]="id">{{id}}</option>
          </select>
@@ -261,3 +181,4 @@
   <button (click)="ir('/dashboard')">Volver atrás</button>
 -->
 <button type="button" (click)="ir ('/dashboard')" [disabled]="editandoCampo">Volver atrás</button>
+<button type="button" (click)="guardarCambios()" [disabled]="editandoCampo">Guardar cambios</button>

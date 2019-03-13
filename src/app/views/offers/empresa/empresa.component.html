@@ -2,31 +2,6 @@
 </ng-template>
 
 <ng-template #ofertas>
-<!--<table border=1>
-  <caption id="títuloTabla">Ofertas de empleo según perfil</caption>
-  <thead class="encabezado">
-    <tr>
-      <th *ngFor="let llave of llavesOfertas; let i=index;">{{llave}}</th>
-      <th>Más detalles</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let oferta of valoresOfertas; let i=index;">
-      <td *ngFor="let campo of oferta">{{campo}}</td>
-      <td><button (click)="mostrarDetalle(i)" type="button">Más detalles</button></td>
-    </tr>
-    <tr>
-      <td>
-        <button (click)="irAtras()" type="button">Atrás</button>
-      </td>
-    </tr>
-  </tbody>
-  <tfoot>
-  <button (click)="ir('/personal')" type="button">Editar</button>
-  <button [disabled]="editandoPersonales" (click)="editarPersonales()" type="button">Editar en línea</button>
-</tfoot>
-</table>-->
-
 <form [formGroup]="formOferta" (ngSubmit)="submit()">
   <div formArrayName="datos">
     <div *ngFor="let datos of formOferta.get('datos').controls; let i = index;">
@@ -47,14 +22,9 @@
     </div>
   </div>
   <button type="button" (click)="anyadirElemento ('formacion', '')" [disabled]="editandoCampo">Añadir título</button>
-<!--  <button (click)="guardarCambios()" [disabled]="!editarPersonales || !formDatosPersonales.valid">Guardar cambios</button>-->
+  <button (click)="guardarCambios()" [disabled]="!editarPersonales || !formDatosPersonales.valid">Guardar cambios</button>
+  <button (click)="()" [disabled]="!editarPersonales || !formDatosPersonales.valid">Atrás</button>
 </form>
-
-
-
-
-
-
 
 
 </ng-template>
@@ -129,7 +99,6 @@
     </tbody>
   </table>
 </div>
-
 
 <button (click)="irAtras()" type="button">Atrás</button>
 

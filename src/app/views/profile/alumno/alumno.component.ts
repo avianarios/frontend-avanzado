@@ -14,9 +14,7 @@ import { Router } from '@angular/router';
 export class AlumnoComponent implements OnInit {
   numElementoEnEdicion:number;
   elementoEnEdicion:number;
-
-  usuarios: any[]=[];
-  alumno_actual: any[]=[];
+  usuario_actual: Array<any>=[];
 
   listaProvincias=['Almería', 'Cádiz', 'Córdoba', 'Granada', 'Jaén', 'Huelva', 'Málaga', 'Sevilla'];
 
@@ -39,21 +37,20 @@ export class AlumnoComponent implements OnInit {
   constructor(private _builder: FormBuilder, private _usuarios: UsuariosService, private _sesion: SesionService, private _router: Router) { }
 
   ngOnInit() {
+    this.crearFormularios();
     if (!this._sesion.sesionEstaIniciada())
       this._router.navigateByUrl('/signin');
     else{
-      this.crearFormularios();
       this.crearValidadores();
-      this._usuarios.devolverUsuarios().subscribe(data => {
-          data.forEach(elemento => {
-    //CAMBIAR POR EL DE ABAJO        if (alumno.correo===this._sesion.usuarioSesion()){
-            if (elemento['identificacion'].usuario==='avm'){
-              this.alumno_actual=elemento;
-              this.rellenaFormularios();
-              this.terminarEdicion("todos");
-              this.escucharCambios();
-            }
-          });
+      this._usuarios.devolverUsuarios().subscribe(grupoUsuarios=> {
+        for (let i=0; i<grupoUsuarios.length; i++)
+//        data.forEach(usuario=> {    Mejor usar for para salir del bucle en cuanto encuentre al usuario y no tener que recorrerlos todos
+          if (this._sesion.usuarioSesion().id===grupoUsuarios[i]['identificacion'].usuario){
+            this.usuario_actual=grupoUsuarios[i];
+            this.rellenaFormularios();
+            this.terminarEdicion("todos");
+//            this.escucharCambios();
+          }
         });
       }
   }
@@ -110,20 +107,24 @@ export class AlumnoComponent implements OnInit {
 
   rellenaFormularios(){
       /*rellena el formulario de datos personales*/
-      for (let llave in this.alumno_actual['datosPersonales'])
+      for (let llave in this.usuario_actual['datosPersonales'])
         if (llave in (this.formDatosPersonales.controls))  //puede que hubiera campos en la BBDD que no se mostrasen por pantalla
-          this.formDatosPersonales.controls[llave].setValue(this.alumno_actual['datosPersonales'][llave]);
+          this.formDatosPersonales.controls[llave].setValue(this.usuario_actual['datosPersonales'][llave]);
 
-      this.anyadirElemento ("formacion", this.alumno_actual['formacion']);
-      this.anyadirElemento ("experiencia", this.alumno_actual['experiencia']);
-      this.anyadirElemento ("idioma", this.alumno_actual['idiomas']);
+      this.anyadirElemento ("formacion", this.usuario_actual['formacion']);
+      this.anyadirElemento ("experiencia", this.usuario_actual['experiencia']);
+      this.anyadirElemento ("idioma", this.usuario_actual['idiomas']);
   }
 
   /*VOY POR AQUÍ. INTENTANDO FUSIONAR*/
-
+/*la idea era llamar a la misma función variando los parámetros para ahorrar código:
+ Para crear un idioma: anayadirElemento2(this.formDatosIdiomas, idiomas, crearTituloIdiomas)
+Para crear una formación: anayadirElemento2(this.formDatosFormacion, formacion, crearTituloFormacion)
+Así me ahorro los horrorosos "switch-case"
+ */
     anyadirElemento2(form, matriz, funcion){
     console.log (form);
-      (form.controls['datos'] as FormArray).push(funcion(form, matriz));
+      (form.controls['datos'] as FormArray).push(funcion.bind(form, matriz));
     }
 
     crearTitulo2 (form, datos){
@@ -142,7 +143,7 @@ export class AlumnoComponent implements OnInit {
         certificado: ['']
       })
     }
-/**********************/  
+/**********************/
 
   anyadirElemento(tipo, matriz){
     switch (tipo){
@@ -243,6 +244,14 @@ export class AlumnoComponent implements OnInit {
     (form.controls['datos'] as FormArray).removeAt(elemento);
   }
 
+  guardarCambios(){
+    this.usuario_actual['datosPersonales']=this.formDatosPersonales.value;
+    this.usuario_actual['formacion']=this.formDatosFormacion.value;
+    this.usuario_actual['experiencia']=this.formDatosExperiencia.value;
+    this.usuario_actual['idiomas']=this.formDatosIdiomas.value;
+    this._usuarios.actualizarUsuario(this.usuario_actual);
+  }
+
   terminarEdicion(cual){
     this.editandoCampo=false;
     switch (cual){
@@ -321,15 +330,12 @@ editarCampo (form, elemento){
     this._router.navigateByUrl(donde);
   }
 
-/*  guardarCambios(){
-    this.editandoPersonales=false;
-  }*/
 
-  escucharCambios(){
+/*  escucharCambios(){
     this.formDatosPersonales.valueChanges.subscribe( campo => {
-      this.alumno_actual['datosPersonales'] = Object.assign(this.alumno_actual['datosPersonales'], campo);
+      this.usuario_actual['datosPersonales'] = Object.assign(this.usuario_actual['datosPersonales'], campo);
     });
-  }
+  }*/
 
   crearValidadores(): void {
     this.formDatosPersonales.get('tipoDocumento').valueChanges.subscribe(
