@@ -1,0 +1,25 @@
+<form [formGroup]="formulario" (ngSubmit)="submit()">
+  <table border=1>
+    <caption id="títuloTabla">Experiencia</caption>
+    <thead class="encabezado">
+        <tr>
+          <th>empresa</th>
+          <th>cargo</th>
+          <th>fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody formArrayName="datos">
+    <tr *ngFor="let aux of formulario.get('datos').controls; let i = index;"
+       [formGroupName]="i">
+          <td><input type="text" formControlName="empresa" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
+          <td><input type="text" formControlName="cargo" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
+          <td><input type="text" formControlName="fecha" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
+        <td><button type="button" [disabled]="editandoCampo" (click)="editarCampo(i)">Editar</button>
+        <button type="button" [disabled]="editandoCampo" (click)="borrar(i)">Borrar</button>
+      <button (click)="terminarEdicion('idiomas')" [disabled]="i!==this.numElementoEnEdicion">Terminar edidión</button></td>
+      </tr>
+      <button type="button" (click)="anyadirElemento()" [disabled]="editandoCampo">Añadir formación</button>
+      <button routerLink="/profile/alumno">Volver atrás</button>
+</table>
+</form>

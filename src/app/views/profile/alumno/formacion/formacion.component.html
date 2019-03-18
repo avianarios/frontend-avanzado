@@ -1,0 +1,31 @@
+<form [formGroup]="formulario" (ngSubmit)="submit()">
+  <table border=1>
+    <caption id="títuloTabla">Formación</caption>
+    <thead class="encabezado">
+        <tr>
+          <th>nivel</th>
+          <th>titulo</th>
+          <th>centro</th>
+          <th>familia</th>
+          <th>fecha</th>
+          <th>certificado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody formArrayName="datos">
+    <tr *ngFor="let aux of formulario.get('datos').controls; let i = index;"
+       [formGroupName]="i">
+          <td><input type="text" formControlName="nivel" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
+          <td><input type="text" formControlName="titulo" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
+          <td><input type="text" formControlName="centro" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
+          <td><input type="text" formControlName="familia" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
+          <td><input type="text" formControlName="fecha" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
+          <td><input type="text" formControlName="certificado" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
+        <td><button type="button" [disabled]="editandoCampo" (click)="editarCampo(i)">Editar</button>
+        <button type="button" [disabled]="editandoCampo" (click)="borrar(i)">Borrar</button>
+      <button (click)="terminarEdicion('idiomas')" [disabled]="i!==this.numElementoEnEdicion">Terminar edidión</button></td>
+      </tr>
+      <button type="button" (click)="anyadirElemento()" [disabled]="editandoCampo">Añadir formación</button>
+      <button routerLink="/profile/alumno">Volver atrás</button>
+</table>
+</form>
