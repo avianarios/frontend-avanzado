@@ -29,7 +29,7 @@ export class AlumnoService {
     }));
   }*/
 
-/*  cargaDatos(seccion){
+  cargaDatos(seccion){
     if (!this._sesion.sesionEstaIniciada()){
     return (this.formulario);
       this._router.navigateByUrl('/signin');
@@ -39,8 +39,8 @@ export class AlumnoService {
           if (this._sesion.usuarioSesion().id===grupoUsuarios[i]['identificacion'].usuario){
             this.usuario_actual=grupoUsuarios[i];
             this.seccion_actual=this.usuario_actual[seccion];
-            this.rellenarFormulario();
-            this.terminarEdicion();
+//            this.rellenarFormulario();
+//            this.terminarEdicion();
           }
         });
       }

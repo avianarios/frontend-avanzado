@@ -75,12 +75,5 @@
     </td></tr>
   </tfoot>
 </table>
-
-
-<button type="button" (click)="ir ('/dashboard')" [disabled]="editandoCampo">Volver atrás</button>
-<button type="button" (click)="guardarCambios()" [disabled]="editandoCampo">Guardar cambios</button>
-
-
-<!--<button type="button" (click)="ir('./personales')">Datos personales</button>
-<button type="button" (click)="ir('/idiomas')">Idiomas</button>
-<button type="button" (click)="ir('/formacion')">Formación</button>-->
+  
+<button routerLink="/dashboard">Volver</button>

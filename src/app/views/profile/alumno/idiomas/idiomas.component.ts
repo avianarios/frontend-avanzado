@@ -42,6 +42,8 @@ export class IdiomasComponent implements OnInit {
         for (let i=0; i<grupoUsuarios.length; i++)
           if (this._sesion.usuarioSesion().id===grupoUsuarios[i]['identificacion'].usuario){
             this.usuario_actual=grupoUsuarios[i];
+console.log ("recién en idiomas", this.usuario_actual);
+
             this.seccion_actual=this.usuario_actual['idiomas'];
             this.rellenarFormulario();
             this.terminarEdicion();
@@ -93,7 +95,9 @@ export class IdiomasComponent implements OnInit {
   guardarCambios(){
     this.seccion_actual=this.formulario.value;
     this.usuario_actual['idiomas']=this.formulario.value;
-    this._usuarios.actualizarUsuario(this.usuario_actual);
+    this._usuarios
+      .actualizarUsuario(this.usuario_actual)
+      .subscribe(user => console.log(user));
   }
 
   editarCampo (elemento){

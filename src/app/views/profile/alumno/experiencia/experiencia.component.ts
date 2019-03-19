@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { formatoFecha } from '../../../../shared/validadores';
 import { UsuariosService } from '../../../../shared/services/usuarios.service';
 import { SesionService } from '../../../../shared/services/sesion.service';
 import { Router } from '@angular/router';
@@ -50,6 +51,7 @@ export class ExperienciaComponent implements OnInit {
     }
 
     rellenarFormulario(){
+      console.log (this.formulario);
       if ((Object.keys (this.seccion_actual)[0])==="0"){ //si la primera llave es un número es porque se le ha pasado una matriz con más de un título donde cada fila es un título
         this.seccion_actual.forEach (elemento =>{
           (this.formulario.controls['datos'] as FormArray).push(this.crearElemento(elemento));
@@ -65,10 +67,17 @@ export class ExperienciaComponent implements OnInit {
     crearElemento(datos){
       this.numElementoEnEdicion=((<FormArray>this.formulario.controls['datos']).controls.length);
       this.editandoCampo=true;
-      return this._builder.group({
+
+      /*return this._builder.group({
         empresa: [datos.empresa],
         cargo: [datos.cargo],
         fecha: [datos.fecha]
+      })*/
+
+      return this._builder.group({
+        empresa:  new FormControl(datos.empresa),
+        cargo:  new FormControl(datos.cargo),
+        fecha: new FormControl(datos.fecha, formatoFecha)
       })
   }
 
@@ -87,7 +96,9 @@ export class ExperienciaComponent implements OnInit {
   guardarCambios(){
     this.seccion_actual=this.formulario.value;
     this.usuario_actual['experiencia']=this.formulario.value;
-    this._usuarios.actualizarUsuario(this.usuario_actual);
+    this._usuarios
+      .actualizarUsuario(this.usuario_actual)
+      .subscribe(user => console.log(user));
   }
 
   editarCampo (elemento){

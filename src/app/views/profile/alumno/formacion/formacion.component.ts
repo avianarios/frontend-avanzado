@@ -32,9 +32,14 @@ export class FormacionComponent implements OnInit {
       this._router.navigateByUrl('/signin');
     else{
       this._usuarios.devolverUsuarios().subscribe(grupoUsuarios=> {
+
+console.log (grupoUsuarios);
         for (let i=0; i<grupoUsuarios.length; i++)
           if (this._sesion.usuarioSesion().id===grupoUsuarios[i]['identificacion'].usuario){
             this.usuario_actual=grupoUsuarios[i];
+console.log ("problema: formación datos (array)");
+console.log ("idea: cargar el usuario ACTUAL desde el servicio alumno y consultarle a él. Evito 4 cargas de datos")
+console.log ("recién en formación", this.usuario_actual);
             this.seccion_actual=this.usuario_actual['formacion'];
             this.rellenarFormulario();
             this.terminarEdicion();
@@ -88,9 +93,13 @@ export class FormacionComponent implements OnInit {
   }
 
   guardarCambios(){
+console.log ("antes", this.usuario_actual);
     this.seccion_actual=this.formulario.value;
     this.usuario_actual['formacion']=this.formulario.value;
-    this._usuarios.actualizarUsuario(this.usuario_actual);
+console.log ("después", this.usuario_actual);
+    this._usuarios
+      .actualizarUsuario(this.usuario_actual)
+      .subscribe(user => console.log(user));
   }
 
   editarCampo (elemento){

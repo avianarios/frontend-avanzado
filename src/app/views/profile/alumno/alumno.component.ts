@@ -35,6 +35,7 @@ export class AlumnoComponent implements OnInit {
       this._router.navigateByUrl('/signin');
     else{*/
       this._usuarios.devolverUsuarios().subscribe(grupoUsuarios=> {
+console.log (grupoUsuarios);
         for (let i=0; i<grupoUsuarios.length; i++)
 //        data.forEach(usuario=> {    Mejor usar for para salir del bucle en cuanto encuentre al usuario y no tener que recorrerlos todos
 /*          if (this._sesion.usuarioSesion().id===grupoUsuarios[i]['identificacion'].usuario){
@@ -47,6 +48,8 @@ export class AlumnoComponent implements OnInit {
             Object.values (this.usuario_actual['datosPersonales']).forEach (dato=>{
               this.valoresPersonales.push (dato);
             });
+
+console.log ("aún en alumno component", this.usuario_actual);
 
             this.llavesFormacion.push(Object.keys (this.usuario_actual['formacion'][0]));
             this.usuario_actual['formacion'].forEach (datos=>{
@@ -68,6 +71,9 @@ export class AlumnoComponent implements OnInit {
 //      }
   }
 
+  devolverUsuarioActual(){
+    return this.usuario_actual;
+  }
 
 
 }
