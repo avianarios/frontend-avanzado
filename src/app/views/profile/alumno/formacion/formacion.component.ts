@@ -28,22 +28,19 @@ export class FormacionComponent implements OnInit {
 
   ngOnInit() {
     this.crearFormulario();
-/*    if (!this._sesion.sesionEstaIniciada())
+    if (!this._sesion.sesionEstaIniciada())
       this._router.navigateByUrl('/signin');
-    else{*/
-//      this.crearValidadores();
+    else{
       this._usuarios.devolverUsuarios().subscribe(grupoUsuarios=> {
         for (let i=0; i<grupoUsuarios.length; i++)
-//          if (this._sesion.usuarioSesion().id===grupoUsuarios[i]['identificacion'].usuario){
-
-//            this.usuario_actual=grupoUsuarios[i];
-  this.usuario_actual=grupoUsuarios[0];
+          if (this._sesion.usuarioSesion().id===grupoUsuarios[i]['identificacion'].usuario){
+            this.usuario_actual=grupoUsuarios[i];
             this.seccion_actual=this.usuario_actual['formacion'];
             this.rellenarFormulario();
             this.terminarEdicion();
-//          }
-});
-//}
+          }
+        });
+    }
   }
 
     crearFormulario(){
@@ -82,6 +79,7 @@ export class FormacionComponent implements OnInit {
       this.numElementoEnEdicion=-1;
       this.editandoCampo=false;
       this.formulario.disable();
+      this.guardarCambios();
   }
 
 
@@ -91,7 +89,7 @@ export class FormacionComponent implements OnInit {
 
   guardarCambios(){
     this.seccion_actual=this.formulario.value;
-    this.usuario_actual['idiomas']=this.formulario.value;
+    this.usuario_actual['formacion']=this.formulario.value;
     this._usuarios.actualizarUsuario(this.usuario_actual);
   }
 

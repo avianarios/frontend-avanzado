@@ -28,22 +28,19 @@ export class ExperienciaComponent implements OnInit {
 
   ngOnInit() {
     this.crearFormulario();
-/*    if (!this._sesion.sesionEstaIniciada())
+    if (!this._sesion.sesionEstaIniciada())
       this._router.navigateByUrl('/signin');
-    else{*/
-//      this.crearValidadores();
+    else{
       this._usuarios.devolverUsuarios().subscribe(grupoUsuarios=> {
         for (let i=0; i<grupoUsuarios.length; i++)
-//          if (this._sesion.usuarioSesion().id===grupoUsuarios[i]['identificacion'].usuario){
-
-//            this.usuario_actual=grupoUsuarios[i];
-  this.usuario_actual=grupoUsuarios[0];
+          if (this._sesion.usuarioSesion().id===grupoUsuarios[i]['identificacion'].usuario){
+            this.usuario_actual=grupoUsuarios[i];
             this.seccion_actual=this.usuario_actual['experiencia'];
             this.rellenarFormulario();
             this.terminarEdicion();
-//          }
-});
-//}
+          }
+      });
+    }
   }
 
     crearFormulario(){
@@ -53,7 +50,6 @@ export class ExperienciaComponent implements OnInit {
     }
 
     rellenarFormulario(){
-console.log (this.seccion_actual)      ;
       if ((Object.keys (this.seccion_actual)[0])==="0"){ //si la primera llave es un número es porque se le ha pasado una matriz con más de un título donde cada fila es un título
         this.seccion_actual.forEach (elemento =>{
           (this.formulario.controls['datos'] as FormArray).push(this.crearElemento(elemento));
@@ -80,6 +76,7 @@ console.log (this.seccion_actual)      ;
       this.numElementoEnEdicion=-1;
       this.editandoCampo=false;
       this.formulario.disable();
+      this.guardarCambios();
   }
 
 
@@ -89,6 +86,7 @@ console.log (this.seccion_actual)      ;
 
   guardarCambios(){
     this.seccion_actual=this.formulario.value;
+    this.usuario_actual['experiencia']=this.formulario.value;
     this._usuarios.actualizarUsuario(this.usuario_actual);
   }
 

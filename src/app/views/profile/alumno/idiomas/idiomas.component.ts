@@ -38,7 +38,6 @@ export class IdiomasComponent implements OnInit {
     if (!this._sesion.sesionEstaIniciada())
       this._router.navigateByUrl('/signin');
     else{
-//      this.crearValidadores();
       this._usuarios.devolverUsuarios().subscribe(grupoUsuarios=> {
         for (let i=0; i<grupoUsuarios.length; i++)
           if (this._sesion.usuarioSesion().id===grupoUsuarios[i]['identificacion'].usuario){
@@ -58,16 +57,12 @@ export class IdiomasComponent implements OnInit {
   }
 
   rellenarFormulario(){
-    if (this.seccion_actual===undefined)
-      (this.formulario.controls['datos'] as FormArray).push(this.crearElemento(["", "",""]));
-    else{
-      if ((Object.keys (this.seccion_actual)[0])==="0"){ //si la primera llave es un número es porque se le ha pasado una matriz con más de un título donde cada fila es un título
-        this.seccion_actual.forEach (elemento =>{
-          (this.formulario.controls['datos'] as FormArray).push(this.crearElemento(elemento));
-        });
-      }else  //solo se le ha pasado un título
-        (this.formulario.controls['datos'] as FormArray).push(this.crearElemento(this.seccion_actual));
-    }
+    if ((Object.keys (this.seccion_actual)[0])==="0"){ //si la primera llave es un número es porque se le ha pasado una matriz con más de un título donde cada fila es un título
+      this.seccion_actual.forEach (elemento =>{
+        (this.formulario.controls['datos'] as FormArray).push(this.crearElemento(elemento));
+      });
+    }else  //solo se le ha pasado un título
+      (this.formulario.controls['datos'] as FormArray).push(this.crearElemento(this.seccion_actual));
   }
 
   anyadirElemento(){
