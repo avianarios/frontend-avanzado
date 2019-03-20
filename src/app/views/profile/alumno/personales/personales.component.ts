@@ -53,21 +53,12 @@ export class PersonalesComponent implements OnInit {
     this.crearFormulario();
     if (!this._sesion.sesionEstaIniciada())
       this._router.navigateByUrl('/signin');
-    else {
+    else{
       this.crearValidadores();
-      this._usuarios.devolverUsuarios().subscribe(grupoUsuarios => {
-        for (let i = 0; i < grupoUsuarios.length; i++)
-          if (
-            this._sesion.usuarioSesion().id ===
-            grupoUsuarios[i]['identificacion'].usuario
-          ) {
-            this.usuario_actual = grupoUsuarios[i];
-            this.seccion_actual = this.usuario_actual['datosPersonales'];
-            this.rellenarFormulario();
-            //            this.terminarEdicion();
-            this.editandoFormulario = true;
-          }
-      });
+      this.usuario_actual=this._sesion.usuarioSesion();
+      this.seccion_actual=this.usuario_actual['datosPersonales'];
+      this.rellenarFormulario();
+      this.editandoFormulario = true;
     }
   }
 
@@ -107,11 +98,15 @@ export class PersonalesComponent implements OnInit {
         );
   }
 
-  terminarEdicion() {
-    this.numElementoEnEdicion = -1;
-    this.editandoFormulario = false;
+  deshabilitarFormulario(){
+    this.numElementoEnEdicion=-1;
+    this.editandoFormulario=false;
     this.formulario.disable();
-    this.guardarCambios();
+  }
+
+  terminarEdicion(){
+      this.deshabilitarFormulario();
+      this.guardarCambios();
   }
 
   borrar(form, elemento) {
@@ -128,6 +123,7 @@ export class PersonalesComponent implements OnInit {
 
   editarFormulario() {
     this.editandoFormulario = true;
+    this.formulario.enable();
   }
 
   crearValidadores(): void {

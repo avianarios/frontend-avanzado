@@ -84,7 +84,7 @@
         <button (click)="editarFormulario()" [disabled]="editandoFormulario">Editar</button>
 <!--          <button (click)="guardarCambios()" [disabled]="!editarPersonales || !formulario.valid">Guardar cambios</button>-->
         <button (click)="terminarEdicion()" [disabled]="!editandoFormulario">Terminar edidión</button>
-        <button routerLink="/profile/alumno">Volver atrás</button>
+        <button routerLink="/profile/alumno" [disabled]="editandoFormulario">Volver atrás</button>
     </li>
       <!--<a routerLink="/forgot-password"> Recuperar contraseña</a>-->
     </ul>

@@ -18,25 +18,25 @@
   </tfoot>
 </table>
 
+  <table border=1>
+    <caption id="títuloTabla">Formación</caption>
+    <thead class="encabezado">
+        <tr *ngFor="let llave of llavesFormacion">
+          <th scope="col" *ngFor="let valor of llave">{{valor}}</th>
+        </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let valor of valoresFormacion">
+        <td *ngFor="let campo of valor">
+        {{campo}}</td></tr>
+    </tbody>
+    <tfoot>
+      <tr><td>
+        <button routerLink="./formacion">Editar formación</button>
+      </td></tr>
+    </tfoot>
+  </table>
 
-<table border=1>
-  <caption id="títuloTabla">Formación</caption>
-  <thead class="encabezado">
-      <tr *ngFor="let llave of llavesFormacion">
-        <th scope="col" *ngFor="let valor of llave">{{valor}}</th>
-      </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let valor of valoresFormacion">
-      <td *ngFor="let campo of valor">
-      {{campo}}</td></tr>
-  </tbody>
-  <tfoot>
-    <tr><td>
-      <button routerLink="./formacion">Editar formación</button>
-    </td></tr>
-  </tfoot>
-</table>
 
 <table border=1>
   <caption id="títuloTabla">Experiencia</caption>
@@ -75,5 +75,5 @@
     </td></tr>
   </tfoot>
 </table>
-  
+
 <button routerLink="/dashboard">Volver</button>

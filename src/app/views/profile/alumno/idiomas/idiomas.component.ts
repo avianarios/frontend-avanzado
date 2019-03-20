@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { UsuariosService } from '../../../../shared/services/usuarios.service';
 import { SesionService } from '../../../../shared/services/sesion.service';
-//import { AlumnoService } from '../alumno.service';
+import { AlumnoService } from '../alumno.service';
 import { Router } from '@angular/router';
 //import { formatoFecha } from '../../../../shared/validadores';
 
@@ -26,30 +26,21 @@ export class IdiomasComponent implements OnInit {
     private _builder: FormBuilder,
     private _usuarios: UsuariosService,
     private _sesion: SesionService,
-//    private _alumno: AlumnoService,
+    private _alumno: AlumnoService,
     private _router: Router
   ){}
 
 
   ngOnInit() {
-/*    this.formulario=this._alumno.crearFormulario();
-    this._alumno.cargaDatos('idiomas');*/
     this.crearFormulario();
     if (!this._sesion.sesionEstaIniciada())
       this._router.navigateByUrl('/signin');
     else{
-      this._usuarios.devolverUsuarios().subscribe(grupoUsuarios=> {
-        for (let i=0; i<grupoUsuarios.length; i++)
-          if (this._sesion.usuarioSesion().id===grupoUsuarios[i]['identificacion'].usuario){
-            this.usuario_actual=grupoUsuarios[i];
-console.log ("recién en idiomas", this.usuario_actual);
-
-            this.seccion_actual=this.usuario_actual['idiomas'];
-            this.rellenarFormulario();
-            this.terminarEdicion();
-          }
-        });
-      }
+      this.usuario_actual=this._sesion.usuarioSesion();
+      this.seccion_actual=this.usuario_actual['idiomas'];
+      this.rellenarFormulario();
+      this.deshabilitarFormulario();
+    }
   }
 
   crearFormulario(){
@@ -81,23 +72,38 @@ console.log ("recién en idiomas", this.usuario_actual);
     });
   }
 
+  deshabilitarFormulario(){
+    this.numElementoEnEdicion=-1;
+    this.editandoCampo=false;
+    this.formulario.disable();
+  }
+
   terminarEdicion(){
-      this.numElementoEnEdicion=-1;
-      this.editandoCampo=false;
-      this.formulario.disable();
+      this.deshabilitarFormulario();
       this.guardarCambios();
   }
 
-  borrar(form, elemento){
-    (form.controls['datos'] as FormArray).removeAt(elemento);
+  borrarElemento(posicion){
+    (this.formulario.controls['datos'] as FormArray).removeAt(posicion);
+    this.seccion_actual.splice(posicion, 1);
+    this.guardarCambios();
   }
 
+
   guardarCambios(){
-    this.seccion_actual=this.formulario.value;
-    this.usuario_actual['idiomas']=this.formulario.value;
+    this.usuario_actual['idiomas']=[];
+    this.formulario.controls['datos'].value.forEach(valor=>{
+        this.usuario_actual['idiomas'].push(valor);
+    });
     this._usuarios
       .actualizarUsuario(this.usuario_actual)
-      .subscribe(user => console.log(user));
+      .subscribe(user => {  //hay que suscribirse para que funcione (por cómo funciona el http de angular)
+        console.log ('');
+        if (this.usuario_actual['idiomas'].length===0)
+          this._alumno.cambiarVariable('idiomas', false);
+        else
+          this._alumno.cambiarVariable('idiomas', true);
+    });
   }
 
   editarCampo (elemento){

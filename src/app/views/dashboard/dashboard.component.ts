@@ -14,14 +14,12 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     if (!this._sesion.sesionEstaIniciada())
       this._router.navigateByUrl('/signin');
-  }
-
-  ir(donde){
-    this._router.navigateByUrl(donde);
+/*let kk=(this._sesion.usuarioSesion());
+console.log (kk['identificacion'].usuario);*/
   }
 
   cerrarSesion(){
     this._sesion.cerrarSesion();
-    this.ir ('/signin');
+    this._router.navigateByUrl('/signin');
   }
 }

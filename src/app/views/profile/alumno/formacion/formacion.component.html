@@ -21,11 +21,11 @@
           <td><input type="text" formControlName="familia" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
           <td><input type="text" formControlName="fecha" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
           <td><input type="text" formControlName="certificado" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
-        <td><button type="button" [disabled]="editandoCampo" (click)="editarCampo(i)">Editar</button>
-        <button type="button" [disabled]="editandoCampo" (click)="borrar(i)">Borrar</button>
-      <button (click)="terminarEdicion('idiomas')" [disabled]="i!==this.numElementoEnEdicion">Terminar edidión</button></td>
+        <td><button type="button" (click)="editarCampo(i)" [disabled]="editandoCampo">Editar</button>
+        <button type="button" (click)="borrarElemento(i)" [disabled]="editandoCampo">Borrar</button>
+        <button (click)="terminarEdicion('idiomas')" [disabled]="i!==this.numElementoEnEdicion">Terminar edidión</button></td>
       </tr>
       <button type="button" (click)="anyadirElemento()" [disabled]="editandoCampo">Añadir formación</button>
-      <button routerLink="/profile/alumno">Volver atrás</button>
+      <button routerLink="/profile/alumno" [disabled]="editandoCampo">Volver atrás</button>
 </table>
 </form>

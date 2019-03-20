@@ -3,6 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { UsuariosService } from '../../../../shared/services/usuarios.service';
 import { SesionService } from '../../../../shared/services/sesion.service';
+import { AlumnoService } from '../alumno.service';
 import { Router } from '@angular/router';
 //import { formatoFecha } from '../../../../shared/validadores';
 
@@ -17,12 +18,13 @@ export class FormacionComponent implements OnInit {
   seccion_actual: Array<any>=[];
   numElementoEnEdicion:number;
   editandoCampo:boolean=false;
-
+  kk: Array<any>=[];
 
   constructor(
     private _builder: FormBuilder,
     private _usuarios: UsuariosService,
     private _sesion: SesionService,
+    private _alumno: AlumnoService,
     private _router: Router
   ){}
 
@@ -31,20 +33,10 @@ export class FormacionComponent implements OnInit {
     if (!this._sesion.sesionEstaIniciada())
       this._router.navigateByUrl('/signin');
     else{
-      this._usuarios.devolverUsuarios().subscribe(grupoUsuarios=> {
-
-console.log (grupoUsuarios);
-        for (let i=0; i<grupoUsuarios.length; i++)
-          if (this._sesion.usuarioSesion().id===grupoUsuarios[i]['identificacion'].usuario){
-            this.usuario_actual=grupoUsuarios[i];
-console.log ("problema: formación datos (array)");
-console.log ("idea: cargar el usuario ACTUAL desde el servicio alumno y consultarle a él. Evito 4 cargas de datos")
-console.log ("recién en formación", this.usuario_actual);
-            this.seccion_actual=this.usuario_actual['formacion'];
-            this.rellenarFormulario();
-            this.terminarEdicion();
-          }
-        });
+      this.usuario_actual=this._sesion.usuarioSesion();
+      this.seccion_actual=this.usuario_actual['formacion'];
+      this.rellenarFormulario();
+      this.deshabilitarFormulario();
     }
   }
 
@@ -80,26 +72,39 @@ console.log ("recién en formación", this.usuario_actual);
       })
   }
 
+  deshabilitarFormulario(){
+    this.numElementoEnEdicion=-1;
+    this.editandoCampo=false;
+    this.formulario.disable();
+  }
+
   terminarEdicion(){
-      this.numElementoEnEdicion=-1;
-      this.editandoCampo=false;
-      this.formulario.disable();
+      this.deshabilitarFormulario();
       this.guardarCambios();
   }
 
 
-  borrar(elemento){
-    (this.formulario.controls['datos'] as FormArray).removeAt(elemento);
+  borrarElemento(posicion){
+    (this.formulario.controls['datos'] as FormArray).removeAt(posicion);
+    this.seccion_actual.splice(posicion, 1);
+    this.guardarCambios();
   }
 
   guardarCambios(){
-console.log ("antes", this.usuario_actual);
-    this.seccion_actual=this.formulario.value;
-    this.usuario_actual['formacion']=this.formulario.value;
-console.log ("después", this.usuario_actual);
+    this.usuario_actual['formacion']=[];
+    this.formulario.controls['datos'].value.forEach(valor=>{
+        this.usuario_actual['formacion'].push(valor);
+    });
     this._usuarios
       .actualizarUsuario(this.usuario_actual)
-      .subscribe(user => console.log(user));
+      .subscribe(user => {  //hay que suscribirse para que funcione (por cómo funciona el http de angular)
+        console.log ('');
+        if (this.usuario_actual['formacion'].length===0)
+          this._alumno.cambiarVariable('formacion', false);
+        else
+          this._alumno.cambiarVariable('formacion', true);
+    });
+
   }
 
   editarCampo (elemento){

@@ -8,8 +8,8 @@
 </ng-template>
 
 <ng-template #empresa>
-  <button (click)="ir('/profile/empresa')" type="button">Mi perfil</button>
-  <button (click)="ir('/offers/empresa')" type="button">Mis ofertas</button>
-  <button (click)="ir('/configuracion')" type="button">Configurar</button>
+  <button routerLink="/profile/empresa">Mi perfil</button>
+  <button routerLink="/offers/empresa">Mis ofertas</button>
+  <button routerLink="/configuracion">Configurar</button>
 </ng-template>
 <button (click)="cerrarSesion()" type="button">Cerrar sesión</button>

@@ -4,22 +4,24 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class SesionService {
-  sesionIniciada:boolean;
-  usuario= {id:"", tipo:""};
+  sesionIniciada:boolean=false;
+//  credenciales= {id:"", tipo:""};
+  usuario: Array<any>=[];
 
   constructor() {
-    this.sesionIniciada=false;
+//    this.sesionIniciada=false;
   }
 
-  iniciarSesion(usuario:string, tipo_usuario:string){
+/*  iniciarSesion(usuario:string, tipo_usuario:string){
     this.sesionIniciada=true;
-    this.usuario.id=usuario;
-    this.usuario.tipo=tipo_usuario;
-  }
+    this.credenciales.id=usuario;
+    this.credenciales.tipo=tipo_usuario;
+  }*/
 
   cerrarSesion(){
     this.sesionIniciada=false;
-    this.usuario= {id:"", tipo:""};
+  //  this.credenciales= {id:"", tipo:""};
+    this.usuario=[];
   }
 
   sesionEstaIniciada(){
@@ -27,6 +29,12 @@ export class SesionService {
   }
 
   usuarioSesion(){
-    return (this.usuario);
+      return this.usuario;
+//    return this.credenciales;
+  }
+
+  iniciarSesion (usuario){
+    this.sesionIniciada=true;
+    this.usuario=usuario;
   }
 }

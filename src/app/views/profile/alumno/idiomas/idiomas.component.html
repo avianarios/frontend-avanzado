@@ -26,10 +26,10 @@
 
         <td><input type="text" formControlName="fecha" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
         <td><button type="button" [disabled]="editandoCampo" (click)="editarCampo(i)">Editar</button>
-        <button type="button" [disabled]="editandoCampo" (click)="borrar(this.formulario, i)">Borrar</button>
-      <button (click)="terminarEdicion('idiomas')" [disabled]="i!==this.numElementoEnEdicion">Terminar edidión</button></td>
+        <button type="button" [disabled]="editandoCampo" (click)="borrarElemento(i)">Borrar</button>
+      <button (click)="terminarEdicion()" [disabled]="i!==this.numElementoEnEdicion">Terminar edidión</button></td>
       </tr>
-  <button type="button" (click)="anyadirElemento ('idioma','')" [disabled]="editandoCampo">Añadir idioma</button>
-  <button routerLink="/profile/alumno">Volver atrás</button>
+  <button type="button" (click)="anyadirElemento ()" [disabled]="editandoCampo">Añadir idioma</button>
+  <button routerLink="/profile/alumno" [disabled]="editandoCampo">Volver atrás</button>
 </table>
 </form>

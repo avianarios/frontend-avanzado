@@ -6,6 +6,5 @@
     clave: <input type="text" formControlName="clave">
   </label>
   <button type="submit" [disabled]="!loginForm.valid">Enviar</button>
-  <button (click)="recordar()" type="button">Recordar clave</button>
-  <!--<a routerLink="/forgot-password"> Recuperar contraseña</a>-->
+  <button routerLink="/forgot-password"> Recuperar contraseña</button>
 </form>

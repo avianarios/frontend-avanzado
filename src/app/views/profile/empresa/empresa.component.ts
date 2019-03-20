@@ -25,25 +25,17 @@ export class EmpresaComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.crearFormularios();
+    this.crearFormulario();
     if (!this._sesion.sesionEstaIniciada())
       this._router.navigateByUrl('/signin');
     else{
-      this._usuarios.devolverUsuarios().subscribe(grupoUsuarios => {
-        for (let i=0; i<grupoUsuarios.length; i++)
-//        data.forEach(usuario=> {    Mejor usar for para salir del bucle en cuanto encuentre al usuario y no tener que recorrerlos todos
-          if (this._sesion.usuarioSesion().id===grupoUsuarios[i]['identificacion'].usuario){
-            this.usuario_actual=grupoUsuarios[i];
-            this.rellenaFormularios();
-            this.terminarEdicion();
-            i=grupoUsuarios.length; //sale del bucle en cuanto encuentre al usuario, ahorrando iteraciones inútiles
-          }
-//        });
-      });
+      this.usuario_actual=this._sesion.usuarioSesion();
+      this.rellenarFormulario();
+      this.deshabilitarFormulario();
     }
   }
 
-  crearFormularios(){
+  crearFormulario(){
     this.formDatosGenerales= this._builder.group({
       nombre: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(255), sinEspacios]),
       razon: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(255), sinEspacios]),
@@ -57,10 +49,9 @@ export class EmpresaComponent implements OnInit {
       telefono: new FormControl('', noSoloNumeros),
       correo: new FormControl('', Validators.email)
     });
-
   }
 
-  rellenaFormularios(){
+  rellenarFormulario(){
     for (let llave in this.usuario_actual['generales'])
         this.formDatosGenerales.controls[llave].setValue(this.usuario_actual['generales'][llave]);
   }
@@ -70,17 +61,15 @@ export class EmpresaComponent implements OnInit {
     this.formDatosGenerales.enable();
   }
 
-  terminarEdicion(){
+  deshabilitarFormulario(){
     this.editandoEmpresa=false;
     this.formDatosGenerales.disable();
   }
 
-  ir(donde){
-    this._router.navigateByUrl(donde);
-  }
-
   guardarCambios(){
     this.usuario_actual['generales']=this.formDatosGenerales.value;
-    this._usuarios.actualizarUsuario(this.usuario_actual);
+    this._usuarios
+      .actualizarUsuario(this.usuario_actual)
+      .subscribe(user => console.log(user));
   }
 }

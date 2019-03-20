@@ -63,7 +63,8 @@
         <button (click)="guardarCambios()" >Guardar</button>
         <button (click)="editarCampo()" [disabled]="editandoEmpresa">Editar</button>
         <button (click)="terminarEdicion()" [disabled]="!editandoEmpresa">Terminar edidión</button>
-        <button (click)="ir('/dashboard')">Volver atrás</button>
+        <button routerLink="/dashboard">Configurar</button>
+
     </li>
       <!--<a routerLink="/forgot-password"> Recuperar contraseña</a>-->
     </ul>

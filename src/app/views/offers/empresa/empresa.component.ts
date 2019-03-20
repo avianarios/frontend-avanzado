@@ -35,23 +35,17 @@ export class EmpresaComponent implements OnInit {
     if (!this._sesion.sesionEstaIniciada())
       this._router.navigateByUrl('/signin');
     else{
-      this._usuarios.devolverUsuarios().subscribe(grupoUsuarios=> {
-        for (let i=0; i<grupoUsuarios.length; i++)
-//        data.forEach(usuario=> {    Mejor usar for para salir del bucle en cuanto encuentre al usuario y no tener que recorrerlos todos
-          if (this._sesion.usuarioSesion().id===grupoUsuarios[i]['identificacion'].usuario){
-            this.usuario_actual=grupoUsuarios[i];
-            this.usuario_actual['ofertas'].forEach (oferta=>{
-              if (this.llavesOfertas.length===0)   //Las llaves solo hay que guardarlas una vez. Son iguales para todas las ofertas
-                Object.keys (oferta).forEach (llave =>{
-                  this.llavesOfertas.push (llave);
-                });
-              this.valoresOfertas.push (Object.values (oferta));
-          });
-          this.rellenaFormularios();
-          this.terminarEdicion('ofertas');
-        }
-      });
-    }
+      this.usuario_actual=this._sesion.usuarioSesion();
+          this.usuario_actual['ofertas'].forEach (oferta=>{
+            if (this.llavesOfertas.length===0)   //Las llaves solo hay que guardarlas una vez. Son iguales para todas las ofertas
+              Object.keys (oferta).forEach (llave =>{
+                this.llavesOfertas.push (llave);
+              });
+            this.valoresOfertas.push (Object.values (oferta));
+        });
+        this.rellenaFormularios();
+        this.terminarEdicion('ofertas');
+      }
   }
 
   crearFormularios(){
