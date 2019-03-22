@@ -23,7 +23,7 @@
           <td><input type="text" formControlName="certificado" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
         <td><button type="button" (click)="editarCampo(i)" [disabled]="editandoCampo">Editar</button>
         <button type="button" (click)="borrarElemento(i)" [disabled]="editandoCampo">Borrar</button>
-        <button (click)="terminarEdicion('idiomas')" [disabled]="i!==this.numElementoEnEdicion">Terminar edidión</button></td>
+        <button (click)="terminarEdicion()" [disabled]="i!==this.numElementoEnEdicion">Terminar edición</button></td>
       </tr>
       <button type="button" (click)="anyadirElemento()" [disabled]="editandoCampo">Añadir formación</button>
       <button routerLink="/profile/alumno" [disabled]="editandoCampo">Volver atrás</button>

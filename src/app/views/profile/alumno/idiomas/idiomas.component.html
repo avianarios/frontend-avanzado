@@ -17,8 +17,9 @@
         <td>
           <select formControlName="idioma">
            <option *ngFor="let id of nombreIdiomas" [ngValue]="id">{{id}}</option>
-         </select></td>
-
+         </select>
+        <input type="text" formControlName="otro" class="editable"/></td>
+<!--         <input type="text" name="otro" [hidden]="!otroIdioma" class="editable"/></td>-->
 
         <td><select formControlName="nivel">
            <option *ngFor="let niv of nivelIdioma" [ngValue]="niv">{{niv}}</option>

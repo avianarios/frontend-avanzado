@@ -64,16 +64,16 @@ export class ExperienciaComponent implements OnInit {
     crearElemento(datos){
       this.numElementoEnEdicion=((<FormArray>this.formulario.controls['datos']).controls.length);
       this.editandoCampo=true;
-      return this._builder.group({
+/*      return this._builder.group({
         empresa:  new FormControl(datos.empresa),
         cargo:  new FormControl(datos.cargo),
         fecha: new FormControl(datos.fecha, formatoFecha)
-      })
-      /*return this._builder.group({
+      })*/
+      return this._builder.group({
         empresa: [datos.empresa],
         cargo: [datos.cargo],
         fecha: [datos.fecha]
-      })*/
+      })
 
   }
 

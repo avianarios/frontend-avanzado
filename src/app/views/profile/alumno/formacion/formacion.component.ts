@@ -83,7 +83,6 @@ export class FormacionComponent implements OnInit {
       this.guardarCambios();
   }
 
-
   borrarElemento(posicion){
     (this.formulario.controls['datos'] as FormArray).removeAt(posicion);
     this.seccion_actual.splice(posicion, 1);
@@ -104,7 +103,6 @@ export class FormacionComponent implements OnInit {
         else
           this._alumno.cambiarVariable('formacion', true);
     });
-
   }
 
   editarCampo (elemento){

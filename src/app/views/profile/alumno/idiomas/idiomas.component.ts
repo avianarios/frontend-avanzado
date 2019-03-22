@@ -14,13 +14,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./idiomas.component.scss']
 })
 export class IdiomasComponent implements OnInit {
-  nombreIdiomas=["Español", "Inglés", "Francés", "Aleḿan", "Italiano"];
+  nombreIdiomas=["Español", "Inglés", "Francés", "Aleḿan", "Italiano", "Otro"];
   nivelIdioma=['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
   formulario: FormGroup;
   usuario_actual: Array<any>=[];
   seccion_actual: Array<any>=[];
   numElementoEnEdicion:number;
   editandoCampo:boolean=false;
+  otroIdioma:boolean=false;
 
   constructor(
     private _builder: FormBuilder,
@@ -41,6 +42,19 @@ export class IdiomasComponent implements OnInit {
       this.rellenarFormulario();
       this.deshabilitarFormulario();
     }
+    this.cuandoCambie();
+  }
+
+  cuandoCambie(){
+    console.log (this.formulario.get('datos'));
+    this.formulario.get('datos').valueChanges.subscribe(valor => {
+      if (valor[0].idioma==="Otro")
+        this.otroIdioma=true;
+//this.formulario.get('datos').setValue(
+
+      else this.otroIdioma=false;
+    });
+
   }
 
   crearFormulario(){
@@ -56,6 +70,7 @@ export class IdiomasComponent implements OnInit {
       });
     }else  //solo se le ha pasado un título
       (this.formulario.controls['datos'] as FormArray).push(this.crearElemento(this.seccion_actual));
+console.log (this.formulario)      ;
   }
 
   anyadirElemento(){
@@ -67,6 +82,7 @@ export class IdiomasComponent implements OnInit {
     this.editandoCampo=true;
     return this._builder.group({
       idioma: [datos.idioma],
+      otro: [""],
       nivel: [datos.nivel],
       fecha: [datos.fecha]
     });
@@ -79,6 +95,7 @@ export class IdiomasComponent implements OnInit {
   }
 
   terminarEdicion(){
+console.log (this.formulario);
       this.deshabilitarFormulario();
       this.guardarCambios();
   }

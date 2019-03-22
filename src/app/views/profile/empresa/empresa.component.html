@@ -1,20 +1,20 @@
 <section id="formulario">
-  <form [formGroup]="formDatosGenerales">
+  <form [formGroup]="formulario">
   <ul>
     <li>
       <label>
         Nombre:
          <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="nombre">
-        <div *ngIf="formDatosGenerales.controls['nombre'].hasError('required')" class="error">Campo obligatorio</div>
-        <div *ngIf="formDatosGenerales.controls['nombre'].hasError('minlength')" class="error">Mínimo 3 letras</div>
-        <div *ngIf="formDatosGenerales.controls['nombre'].hasError('cadenaLimpia')" class="error">No debe haber caracteres especiales ni espacios en blanco al comienzo o al final</div>
+        <div *ngIf="formulario.controls['nombre'].hasError('required')" class="error">Campo obligatorio</div>
+        <div *ngIf="formulario.controls['nombre'].hasError('minlength')" class="error">Mínimo 3 letras</div>
+        <div *ngIf="formulario.controls['nombre'].hasError('cadenaLimpia')" class="error">No debe haber caracteres especiales ni espacios en blanco al comienzo o al final</div>
       </label>
     </li><li>
       <label>
         Razón social: <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="razon">
-        <div *ngIf="formDatosGenerales.controls['razon'].hasError('required')" class="error">Campo obligatorio</div>
-        <div *ngIf="formDatosGenerales.controls['razon'].hasError('minlength')" class="error">Mínimo 3 letras</div>
-        <div *ngIf="formDatosGenerales.controls['razon'].hasError('cadenaLimpia')" class="error">No debe haber caracteres especiales ni espacios en blanco al comienzo o al final</div>
+        <div *ngIf="formulario.controls['razon'].hasError('required')" class="error">Campo obligatorio</div>
+        <div *ngIf="formulario.controls['razon'].hasError('minlength')" class="error">Mínimo 3 letras</div>
+        <div *ngIf="formulario.controls['razon'].hasError('cadenaLimpia')" class="error">No debe haber caracteres especiales ni espacios en blanco al comienzo o al final</div>
       </label>
     </li><li>
       <label>
@@ -51,20 +51,18 @@
     </li><li>
       <label>
         Teléfono: <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="telefono">
-        <div *ngIf="formDatosGenerales.controls['telefono'].hasError('noSoloNumeros')" class="error">El teléfono sólo puede contener números</div>
+        <div *ngIf="formulario.controls['telefono'].hasError('noSoloNumeros')" class="error">El teléfono sólo puede contener números</div>
       </label>
     </li><li>
       <label>
         Correo: <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="correo">
-        <div *ngIf="formDatosGenerales.controls['correo'].hasError('email')" class="error">Formato incorrecto</div>
+        <div *ngIf="formulario.controls['correo'].hasError('email')" class="error">Formato incorrecto</div>
       </label>
     </li>
     <li>
-        <button (click)="guardarCambios()" >Guardar</button>
-        <button (click)="editarCampo()" [disabled]="editandoEmpresa">Editar</button>
-        <button (click)="terminarEdicion()" [disabled]="!editandoEmpresa">Terminar edidión</button>
-        <button routerLink="/dashboard">Configurar</button>
-
+      <button (click)="editarCampo()" [disabled]="editandoEmpresa">Editar</button>
+      <button (click)="deshabilitarFormulario()" [disabled]="!editandoEmpresa">Terminar edidión</button>
+      <button routerLink="/dashboard">Volver atrás</button>
     </li>
       <!--<a routerLink="/forgot-password"> Recuperar contraseña</a>-->
     </ul>

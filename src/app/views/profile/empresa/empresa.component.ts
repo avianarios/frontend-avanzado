@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 export class EmpresaComponent implements OnInit {
   usuario_actual: Array<any>=[];
   listaProvincias=['Almería', 'Cádiz', 'Córdoba', 'Granada', 'Jaén', 'Huelva', 'Málaga', 'Sevilla'];
-  formDatosGenerales: FormGroup;
+  formulario: FormGroup;
   editandoEmpresa:boolean=false;
 
   constructor(
@@ -36,7 +36,7 @@ export class EmpresaComponent implements OnInit {
   }
 
   crearFormulario(){
-    this.formDatosGenerales= this._builder.group({
+    this.formulario= this._builder.group({
       nombre: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(255), sinEspacios]),
       razon: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(255), sinEspacios]),
       cif: new FormControl(''),
@@ -53,21 +53,22 @@ export class EmpresaComponent implements OnInit {
 
   rellenarFormulario(){
     for (let llave in this.usuario_actual['generales'])
-        this.formDatosGenerales.controls[llave].setValue(this.usuario_actual['generales'][llave]);
+        this.formulario.controls[llave].setValue(this.usuario_actual['generales'][llave]);
   }
 
   editarCampo (){
     this.editandoEmpresa=true;
-    this.formDatosGenerales.enable();
+    this.formulario.enable();
   }
 
   deshabilitarFormulario(){
     this.editandoEmpresa=false;
-    this.formDatosGenerales.disable();
+    this.formulario.disable();
+    this.guardarCambios();
   }
 
   guardarCambios(){
-    this.usuario_actual['generales']=this.formDatosGenerales.value;
+    this.usuario_actual['generales'] = this.formulario.value;
     this._usuarios
       .actualizarUsuario(this.usuario_actual)
       .subscribe(user => console.log(user));

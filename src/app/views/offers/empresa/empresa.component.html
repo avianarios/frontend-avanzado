@@ -2,28 +2,27 @@
 </ng-template>
 
 <ng-template #ofertas>
-<form [formGroup]="formOferta" (ngSubmit)="submit()">
+<form [formGroup]="formulario" (ngSubmit)="submit()">
   <div formArrayName="datos">
-    <div *ngFor="let datos of formOferta.get('datos').controls; let i = index;">
+    <div *ngFor="let datos of formulario.get('datos').controls; let i = index;">
       <div [formGroupName]="i">
-        <input type="text" formControlName="idPuesto" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoOferta, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoOferta}">
-        <input type="text" formControlName="puesto" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoOferta, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoOferta}">
-        <input type="text" formControlName="familia" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoOferta, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoOferta}">
-        <input type="text" formControlName="fecha" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoOferta, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoOferta}">
-        <input type="text" formControlName="descripcion" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoOferta, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoOferta}">
-        <input type="text" formControlName="provincia" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoOferta, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoOferta}">
-        <input type="text" formControlName="municipio" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoOferta, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoOferta}">
-        <input type="text" formControlName="titulos" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoOferta, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoOferta}">
-        <button type="button" [disabled]="editandoCampo" (click)="editarCampo('ofertas', i)">Editar</button>
-        <button type="button" [disabled]="editandoCampo" (click)="borrar(this.formOferta, i)">Borrar</button>
-        <button (click)="terminarEdicion('oferta')" [disabled]="!editandoOferta || i!==this.numElementoEnEdicion">Terminar edidión</button>
-        <button (click)="gestionarCandidatos(i)" [disabled]="editandoOferta">Gestionar candidatos</button>
+        <input type="text" formControlName="idPuesto" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}">
+        <input type="text" formControlName="puesto" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}">
+        <input type="text" formControlName="familia" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}">
+        <input type="text" formControlName="fecha" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}">
+        <input type="text" formControlName="descripcion" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}">
+        <input type="text" formControlName="provincia" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}">
+        <input type="text" formControlName="municipio" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}">
+        <input type="text" formControlName="titulos" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}">
+        <td><button type="button" (click)="editarCampo(i)" [disabled]="editandoCampo">Editar</button>
+        <button type="button" (click)="borrarElemento(i)" [disabled]="editandoCampo">Borrar</button>
+        <button (click)="terminarEdicion()" [disabled]="i!==this.numElementoEnEdicion">Terminar edición</button>
+        <button (click)="gestionarCandidatos(i)" [disabled]="editandoCampo">Gestionar candidatos</button>
       </div>
     </div>
   </div>
-  <button type="button" (click)="anyadirElemento ('formacion', '')" [disabled]="editandoCampo">Añadir título</button>
-  <button (click)="guardarCambios()" [disabled]="!editarPersonales || !formDatosPersonales.valid">Guardar cambios</button>
-  <button (click)="ir('/dashboard')" type="button">Atrás</button>
+  <button type="button" (click)="anyadirElemento ()" [disabled]="editandoCampo">Añadir oferta</button>
+  <button routerLink="/dashboard" [disabled]="editandoCampo">Volver atrás</button>
 </form>
 
 
@@ -100,6 +99,7 @@
   </table>
 </div>
 
-<button (click)="irAtras()" type="button">Atrás</button>
+<!--<button routerLink="/offers/empresa" [disabled]="editandoCampo">Volver atrás</button>-->
+<button (click)="cancelarCandidatos()">Volver atrás</button>
 
 </ng-template>

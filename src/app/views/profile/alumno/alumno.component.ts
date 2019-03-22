@@ -21,14 +21,8 @@ export class AlumnoComponent implements OnInit {
   valoresExperiencia: Array<any>=[];
   valoresIdiomas: Array<any>=[];
 
-  hayFormacion:boolean=true;
-  hayIdiomas:boolean=true;
-  hayExperiencia:boolean=true;
-
-
   listaProvincias=['Almería', 'Cádiz', 'Córdoba', 'Granada', 'Jaén', 'Huelva', 'Málaga', 'Sevilla'];
   tipoDocumentos=['NIF', 'Pasaporte', 'NIE'];
-
 
   constructor(private _usuarios: UsuariosService, private _alumno: AlumnoService, private _sesion: SesionService, private _router: Router) { }
 
@@ -43,33 +37,19 @@ export class AlumnoComponent implements OnInit {
           this.valoresPersonales.push (dato);
         });
 
-        this.hayFormacion=this._alumno.consultarVariable('formacion');
-        if (this.hayFormacion===true){
-          this.llavesFormacion.push(Object.keys (this.usuario_actual['formacion'][0]));
-          this.usuario_actual['formacion'].forEach (datos=>{
-
-            this.valoresFormacion.push (Object.values(datos));
-          });
-        }else
-          this.hayFormacion=false;
-
-        this.hayExperiencia=this._alumno.consultarVariable('experiencia');
-        if (this.hayExperiencia===true){
-          this.llavesExperiencia.push(Object.keys (this.usuario_actual['experiencia'][0]));
-          this.usuario_actual['experiencia'].forEach (datos=>{
-            this.valoresExperiencia.push (Object.values(datos));
-          });
-        }else
-          this.hayExperiencia=false;
-
-        this.hayIdiomas=this._alumno.consultarVariable('idiomas');
-        if (this.hayIdiomas===true){
-          this.llavesIdiomas.push(Object.keys (this.usuario_actual['idiomas'][0]));
-          this.usuario_actual['idiomas'].forEach (datos=>{
-            this.valoresIdiomas.push (Object.values(datos));
-          });
-        }else
-          this.hayIdiomas=false;
+        this.cargarDatos(this.llavesFormacion, this.valoresFormacion, 'formacion');
+        this.cargarDatos(this.llavesExperiencia, this.valoresExperiencia, 'experiencia');
+        this.cargarDatos(this.llavesIdiomas, this.valoresIdiomas, 'idiomas');
     }
   }
+
+  cargarDatos(llaves, valores, cual){
+    if (this._alumno.consultarVariable(cual)){
+      llaves.push(Object.keys (this.usuario_actual[cual][0]));
+      this.usuario_actual[cual].forEach (datos=>{
+        valores.push (Object.values(datos));
+      });
+    }
+  }
+
 }

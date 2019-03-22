@@ -114,7 +114,6 @@ export class PersonalesComponent implements OnInit {
   }
 
   guardarCambios() {
-    this.seccion_actual = this.formulario.value;
     this.usuario_actual['datosPersonales'] = this.formulario.value;
     this._usuarios
       .actualizarUsuario(this.usuario_actual)
