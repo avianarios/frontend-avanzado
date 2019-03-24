@@ -8,10 +8,12 @@ import { PersonalesComponent } from './personales/personales.component';
 import { ExperienciaComponent } from './experiencia/experiencia.component';
 import { FormacionComponent } from './formacion/formacion.component';
 import { IdiomasComponent } from './idiomas/idiomas.component';
+import { CicloFormativoComponent } from './formacion/ciclo-formativo/ciclo-formativo.component';
+import { UniversitarioComponent } from './formacion/universitario/universitario.component';
 
 
 @NgModule({
-  declarations: [AlumnoComponent, PersonalesComponent, ExperienciaComponent, IdiomasComponent, FormacionComponent],
+  declarations: [AlumnoComponent, PersonalesComponent, ExperienciaComponent, IdiomasComponent, FormacionComponent, CicloFormativoComponent, UniversitarioComponent],
   imports: [
     CommonModule,
     AlumnoRoutingModule,

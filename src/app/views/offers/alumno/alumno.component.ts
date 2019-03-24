@@ -23,12 +23,10 @@ export class AlumnoComponent implements OnInit {
     if (!this._sesion.sesionEstaIniciada())
       this._router.navigateByUrl('/signin');
     else{
+      this.usuario_actual=this._sesion.usuarioSesion();
       this._usuarios.devolverUsuarios().subscribe(data => {
           data.forEach(usuario => {
-            if (usuario['identificacion'].usuario===this._sesion.usuarioSesion()['id']){
-              this.usuario_actual=usuario;
-//              this.cargaOfertas();
-            }
+
             if (usuario.tipo==='empresa'){
               usuario['ofertas'].forEach(oferta=>{
                 //compruebo si el usuario no está inscrito ya en esa oferta
@@ -51,22 +49,6 @@ export class AlumnoComponent implements OnInit {
       });
     }
   }
-
-  /*cargaOfertas(){
-    for (let i=0; i<this.usuario_actual['inscrito'].length; i++){
-      console.log (this.usuario_actual['inscrito'][i].idPuesto);
-      this._usuarios.devolverUsuarios().subscribe(data=>{
-        data.forEach(usuario=>{
-          if (usuario.tipo==='empresa'){
-            usuario['ofertas'].forEach(oferta=>{
-              if (oferta.idPuesto===this.usuario_actual['inscrito'][i].idPuesto)
-                this.valoresOfertasInscritas.push([oferta.idPuesto, usuario['generales'].nombre, oferta.puesto, oferta.provincia, oferta.municipio, oferta.familia, oferta.descripcion, oferta.familia, oferta.titulos]);
-            });
-          }
-        });
-      });
-    }
-  }*/
 
   solicitarEmpleo(cual){
     this.valoresOfertasInscritas.push(this.valoresOfertasAmpliadas[cual]);

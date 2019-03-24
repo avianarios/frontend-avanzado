@@ -1,4 +1,4 @@
-<form [formGroup]="formulario" (ngSubmit)="submit()">
+<!--<form [formGroup]="formulario" (ngSubmit)="submit()">
   <table border=1>
     <caption id="títuloTabla">Idiomas</caption>
     <thead class="encabezado">
@@ -12,21 +12,18 @@
       <tbody formArrayName="datos">
     <tr *ngFor="let datos of formulario.get('datos').controls; let i = index;"
        [formGroupName]="i">
-<!--        <input type="text" formControlName="empresa" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoIdiomas, 'noEditable': i!==this.numElementoEnEdicion}">-->
-<!--        <input type="text" formControlName="nivel" [ngClass]="{'editable': i===this.numElementoEnEdicion && this.editandoIdiomas, 'noEditable': i!==this.numElementoEnEdicion || !this.editandoIdiomas}">-->
         <td>
           <select formControlName="idioma">
            <option *ngFor="let id of nombreIdiomas" [ngValue]="id">{{id}}</option>
          </select>
-        <input type="text" formControlName="otro" class="editable"/></td>
-<!--         <input type="text" name="otro" [hidden]="!otroIdioma" class="editable"/></td>-->
+         <input type="text" name="otro" [hidden]="!otroIdioma" class="editable"/></td>
 
         <td><select formControlName="nivel">
            <option *ngFor="let niv of nivelIdioma" [ngValue]="niv">{{niv}}</option>
          </select></td>
 
         <td><input type="text" formControlName="fecha" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
-        <td><button type="button" [disabled]="editandoCampo" (click)="editarCampo(i)">Editar</button>
+        <td><button type="button" [disabled]="editandoCampo" (click)="editarElemento(i)">Editar</button>
         <button type="button" [disabled]="editandoCampo" (click)="borrarElemento(i)">Borrar</button>
       <button (click)="terminarEdicion()" [disabled]="i!==this.numElementoEnEdicion">Terminar edidión</button></td>
       </tr>
@@ -34,3 +31,57 @@
   <button routerLink="/profile/alumno" [disabled]="editandoCampo">Volver atrás</button>
 </table>
 </form>
+-->
+
+<div *ngIf="!editandoElemento && !creandoElemento">
+    <table border=1>
+      <caption id="títuloTabla">Formación</caption>
+      <thead class="encabezado">
+          <tr *ngFor="let llave of llaves">
+            <th scope="col" *ngFor="let valor of llave">{{valor}}</th>
+            <th>Acciones</th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let valor of valores; let i=index;">
+          <td *ngFor="let campo of valor">
+          {{campo}}</td>
+          <td>
+            <button type="button" (click)="editarElemento(i)" [disabled]="editandoElemento">Editar</button>
+            <button type="button" (click)="borrarElemento(i)" [disabled]="editandoElemento">Borrar</button>
+        </td>
+        </tr>
+        <button type="button" (click)="nuevoElemento()">Añadir formación</button>
+        <button routerLink="/profile/alumno">Volver atrás</button>
+      </tbody>
+    </table>
+</div>
+
+<div *ngIf="editandoElemento">
+  <form [formGroup]="formulario">
+    <ul>
+      <li>
+        Idioma <select formControlName="idioma" (change)="siIdiomaCambia($event)">
+          <option *ngFor="let nombre of nombreIdiomas" [value]="nombre">{{nombre}}</option>
+        </select>
+      </li>
+      <li>
+        <input type="text" name="otro" [hidden]="!otroIdioma" class="editable"/>
+      </li>
+      <li>
+        Nivel: <select formControlName="nivel">
+           <option *ngFor="let niv of nivelIdioma" [value]="niv">{{niv}}</option>
+         </select>
+      </li>
+      <li>
+        Fecha: <input type="text" formControlName="fecha" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}">
+      </li>
+      <li>
+        <button (click)="guardarCambios()" [disabled]="!formulario.valid">Guardar</button>
+      </li>
+    </ul>
+  </form>
+</div>
+
+<div *ngIf="creandoElemento">
+</div>

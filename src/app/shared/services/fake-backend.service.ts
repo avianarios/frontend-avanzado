@@ -29,19 +29,25 @@ let  usuarios =  [
           },
           formacion: [
               {
-                nivel: 'Ciclo formativo',
-                titulo: 'Desarrollo de aplicaciones web',
-                centro: 'IES Salduba',
-                fecha: '15/07/2018',
+                tipo: 'Ciclo formativo',
                 familia: 'Informática y comunicaciones',
+                centro: 'IES Salduba',
+                nivel: 'Superior',
+                titulo: 'Técnico Superior en Desarrollo de aplicaciones web',
+                fecha: '15/07/2018',
+                dual: 'no',
+                bilingüe: 'no',
                 certificado: 'no'
               },
               {
-                nivel: 'Ciclo formativo',
-                titulo: 'Administracion de sistemas informaticos y redes',
-                centro: 'IES Pedro Espinosa',
+                tipo: 'Ciclo formativo',
                 familia: 'Informática y comunicaciones',
+                centro: 'IES Pedro Espinosa',
+                nivel: 'Superior',
+                titulo: 'Técnico Superior en Administración de sistemas informáticos en red',
                 fecha: '15/07/2018',
+                dual: 'si',
+                bilingüe: 'si',
                 certificado: 'si'
               }
             ],
@@ -104,20 +110,26 @@ let  usuarios =  [
         },
         formacion: [
             {
-              nivel: 'Ciclo formativo',
-              titulo: 'Desarrollo de aplicaciones web',
-              centro: 'IES Politécnico Jesús Marin',
+              tipo: 'Ciclo formativo',
               familia: 'Informática y comunicaciones',
+              centro: 'IES Politécnico Jesús Marin',
+              nivel: 'Superior',
+              titulo: 'Técnico en sistemas microinformáticos y redes',
               fecha: '15/07/2018',
+              dual: 'no',
+              bilingüe: 'no',
               certificado: 'no'
             },
             {
-              nivel: 'Ciclo formativo',
-              titulo: 'Administracion de sistemas informaticos y redes',
-              centro: 'IES Politécnico Jesús Marin',
+              tipo: 'Título universitario',
               familia: 'Informática y comunicaciones',
+              centro: 'Universidad de Granada',
+              nivel: 'Grado',
+              titulo: 'Grado en informática',
               fecha: '15/07/2018',
-              certificado: 'si'
+              dual: 'no',
+              bilingüe: 'no',
+              certificado: 'no'
             }
           ],
           experiencia: [

@@ -14,7 +14,7 @@
         <input type="text" formControlName="provincia" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}">
         <input type="text" formControlName="municipio" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}">
         <input type="text" formControlName="titulos" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}">
-        <td><button type="button" (click)="editarCampo(i)" [disabled]="editandoCampo">Editar</button>
+        <td><button type="button" (click)="editarElemento(i)" [disabled]="editandoCampo">Editar</button>
         <button type="button" (click)="borrarElemento(i)" [disabled]="editandoCampo">Borrar</button>
         <button (click)="terminarEdicion()" [disabled]="i!==this.numElementoEnEdicion">Terminar edición</button>
         <button (click)="gestionarCandidatos(i)" [disabled]="editandoCampo">Gestionar candidatos</button>

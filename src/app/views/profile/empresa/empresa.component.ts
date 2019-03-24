@@ -56,7 +56,7 @@ export class EmpresaComponent implements OnInit {
         this.formulario.controls[llave].setValue(this.usuario_actual['generales'][llave]);
   }
 
-  editarCampo (){
+  editarElemento (){
     this.editandoEmpresa=true;
     this.formulario.enable();
   }

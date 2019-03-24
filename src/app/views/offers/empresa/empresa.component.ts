@@ -152,7 +152,7 @@ export class EmpresaComponent implements OnInit {
     });
   }
 
-  editarCampo (elemento){
+  editarElemento (elemento){
     this.editandoCampo=true;
     this.numElementoEnEdicion=elemento;
     ((<FormArray>this.formulario.get('datos')).controls[elemento]).enable();

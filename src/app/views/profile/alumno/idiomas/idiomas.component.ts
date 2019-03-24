@@ -5,7 +5,7 @@ import { UsuariosService } from '../../../../shared/services/usuarios.service';
 import { SesionService } from '../../../../shared/services/sesion.service';
 import { AlumnoService } from '../alumno.service';
 import { Router } from '@angular/router';
-//import { formatoFecha } from '../../../../shared/validadores';
+import { formatoFecha } from '../../../../shared/validadores';
 
 
 @Component({
@@ -20,8 +20,11 @@ export class IdiomasComponent implements OnInit {
   usuario_actual: Array<any>=[];
   seccion_actual: Array<any>=[];
   numElementoEnEdicion:number;
-  editandoCampo:boolean=false;
+  editandoElemento:boolean=false;
+  creandoElemento:boolean=false;
   otroIdioma:boolean=false;
+  llaves: Array<any>=[];
+  valores:Array<any>=[];
 
   constructor(
     private _builder: FormBuilder,
@@ -39,14 +42,99 @@ export class IdiomasComponent implements OnInit {
     else{
       this.usuario_actual=this._sesion.usuarioSesion();
       this.seccion_actual=this.usuario_actual['idiomas'];
-      this.rellenarFormulario();
-      this.deshabilitarFormulario();
+      this.cargarDatos(this.llaves, this.valores, 'idiomas');
+/*      this.rellenarFormulario();
+      this.deshabilitarFormulario();*/
     }
-    this.cuandoCambie();
+//    this.cuandoCambie();
   }
 
-  cuandoCambie(){
-    console.log (this.formulario.get('datos'));
+    cargarDatos(llaves, valores, cual){
+      llaves.push(Object.keys (this.usuario_actual[cual][0]));
+      this.usuario_actual[cual].forEach (datos=>{
+        valores.push (Object.values(datos));
+      });
+    }
+
+    crearFormulario(){
+     this.formulario=this._builder.group({
+      idioma: new FormControl(''),
+      otro: new FormControl(''),
+      nivel: new FormControl('', Validators.required),
+      fecha: new FormControl('', formatoFecha)
+    });
+   }
+
+   rellenarFormulario(numElemento){
+       this.formulario.controls['idioma'].setValue(this.seccion_actual[numElemento].idioma);
+       this.formulario.controls['nivel'].setValue(this.seccion_actual[numElemento].nivel);
+       this.formulario.controls['fecha'].setValue(this.seccion_actual[numElemento].fecha);
+   }
+
+   siIdiomaCambia(event:any){
+      if (event.target.value==="Otro"){
+        this.otroIdioma=true;
+        this.formulario.controls['otro'].setValidators([Validators.required, Validators.minLength(3), Validators.maxLength(255)]);
+      }
+   }
+
+   terminarEdicion(){
+       this.guardarCambios();
+       this.llaves=[];
+       this.valores=[];
+       this.cargarDatos(this.llaves, this.valores, 'idiomas');
+       this.editandoElemento=false;
+       this.creandoElemento=false;
+   }
+
+   nuevoElemento(){
+     this.editandoElemento=false;
+     this.creandoElemento=true;
+   }
+
+   borrarElemento(posicion){
+     this.usuario_actual['idiomas'].splice(posicion,1);
+     this._usuarios
+       .actualizarUsuario(this.usuario_actual)
+       .subscribe(user => {  //hay que suscribirse para que funcione (por cómo funciona el http de angular)
+         console.log ('');
+     });
+     //Mejora: refrescar el componente actual en vez de volver
+     this._router.navigateByUrl('/profile/alumno');
+   }
+
+   guardarCambios(){
+    let aux="";
+     if (this.formulario.controls['idioma'].value==="Otro")
+       aux={
+         idioma: this.formulario.controls['otro'].value,
+         nivel: this.formulario.controls['nivel'].value,
+         fecha: this.formulario.controls['fecha'].value,
+       };
+     else
+       aux={
+         idioma: this.formulario.controls['idioma'].value,
+         nivel: this.formulario.controls['nivel'].value,
+         fecha: this.formulario.controls['fecha'].value,
+       };
+     this.usuario_actual['idiomas'].splice(this.numElementoEnEdicion, 0, aux);
+     this._usuarios
+       .actualizarUsuario(this.usuario_actual)
+       .subscribe(user => {  //hay que suscribirse para que funcione (por cómo funciona el http de angular)
+         console.log ('');
+     });
+console.log (this.usuario_actual)     ;
+     this._router.navigateByUrl('/profile/alumno');
+   }
+
+   editarElemento (posicionElemento){
+     this.editandoElemento=true;
+     this.numElementoEnEdicion=posicionElemento;
+     this.rellenarFormulario(posicionElemento);
+     this.seccion_actual.splice(posicionElemento,1);
+   }
+
+  /*cuandoCambie(){
     this.formulario.get('datos').valueChanges.subscribe(valor => {
       if (valor[0].idioma==="Otro")
         this.otroIdioma=true;
@@ -55,8 +143,8 @@ export class IdiomasComponent implements OnInit {
       else this.otroIdioma=false;
     });
 
-  }
-
+  }*/
+/*
   crearFormulario(){
     this.formulario= this._builder.group({
       datos: new FormArray([])
@@ -70,7 +158,6 @@ export class IdiomasComponent implements OnInit {
       });
     }else  //solo se le ha pasado un título
       (this.formulario.controls['datos'] as FormArray).push(this.crearElemento(this.seccion_actual));
-console.log (this.formulario)      ;
   }
 
   anyadirElemento(){
@@ -123,9 +210,9 @@ console.log (this.formulario);
     });
   }
 
-  editarCampo (elemento){
+  editarElemento (elemento){
     this.editandoCampo=true;
     this.numElementoEnEdicion=elemento;
     ((<FormArray>this.formulario.get('datos')).controls[elemento]).enable();
-  }
+  }*/
 }

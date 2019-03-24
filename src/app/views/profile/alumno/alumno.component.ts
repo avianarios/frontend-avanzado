@@ -44,12 +44,12 @@ export class AlumnoComponent implements OnInit {
   }
 
   cargarDatos(llaves, valores, cual){
-    if (this._alumno.consultarVariable(cual)){
+//    if (this._alumno.consultarVariable(cual)){
+    if (this.usuario_actual[cual].length>0){
       llaves.push(Object.keys (this.usuario_actual[cual][0]));
       this.usuario_actual[cual].forEach (datos=>{
         valores.push (Object.values(datos));
       });
     }
   }
-
 }

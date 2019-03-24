@@ -12,13 +12,12 @@
       <tbody formArrayName="datos">
     <tr *ngFor="let aux of formulario.get('datos').controls; let i = index;"
        [formGroupName]="i">
-
-{{aux}}
           <td><input type="text" formControlName="empresa" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
           <td><input type="text" formControlName="cargo" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
           <td><input type="text" formControlName="fecha" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
-<!--          <div *ngIf="fecha.hasError('fechaIncorrecta')" class="error">El formato de fecha correcto es: DD/MM/AAAA</div>-->
-        <td><button type="button" [disabled]="editandoCampo" (click)="editarCampo(i)">Editar</button>
+<!--NO FUNCIONA LA VALIDACIÓN
+          <div *ngIf="fecha.hasError('fechaIncorrecta')" class="error">El formato de fecha correcto es: DD/MM/AAAA</div>-->
+        <td><button type="button" [disabled]="editandoCampo" (click)="editarElemento(i)">Editar</button>
         <button type="button" [disabled]="editandoCampo" (click)="borrarElemento(i)">Borrar</button>
       <button (click)="terminarEdicion('idiomas')" [disabled]="i!==this.numElementoEnEdicion">Terminar edidión</button></td>
       </tr>

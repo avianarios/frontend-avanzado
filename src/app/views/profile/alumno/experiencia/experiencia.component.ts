@@ -58,7 +58,7 @@ export class ExperienciaComponent implements OnInit {
     }
 
     anyadirElemento(){
-      (this.formulario.controls['datos'] as FormArray).push(this.crearElemento(["", "", "01/01/1970"]));
+      (this.formulario.controls['datos'] as FormArray).push(this.crearElemento([]));
     }
 
     crearElemento(datos){
@@ -74,7 +74,6 @@ export class ExperienciaComponent implements OnInit {
         cargo: [datos.cargo],
         fecha: [datos.fecha]
       })
-
   }
 
   deshabilitarFormulario(){
@@ -110,7 +109,7 @@ export class ExperienciaComponent implements OnInit {
     });
   }
 
-  editarCampo (elemento){
+  editarElemento (elemento){
     this.editandoCampo=true;
     this.numElementoEnEdicion=elemento;
     ((<FormArray>this.formulario.get('datos')).controls[elemento]).enable();
