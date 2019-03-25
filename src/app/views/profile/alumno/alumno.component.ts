@@ -20,9 +20,6 @@ export class AlumnoComponent implements OnInit {
   valoresExperiencia: Array<any>=[];
   valoresIdiomas: Array<any>=[];
 
-  listaProvincias=['Almería', 'Cádiz', 'Córdoba', 'Granada', 'Jaén', 'Huelva', 'Málaga', 'Sevilla'];
-  tipoDocumentos=['NIF', 'Pasaporte', 'NIE'];
-
   constructor(private _usuarios: UsuariosService, private _sesion: SesionService, private _router: Router) { }
 
   ngOnInit() {

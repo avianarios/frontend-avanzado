@@ -128,10 +128,10 @@ export class FormacionComponent implements OnInit {
    crearFormulario(){
     this.formulario=this._builder.group({
      tipo: new FormControl(''),
-     familia: new FormControl('', Validators.required),
+     familia: new FormControl(''),
      centro: new FormControl(''),
-     nivel: new FormControl('', Validators.required),
-     titulo: new FormControl('', Validators.required),
+     nivel: new FormControl(''),
+     titulo: new FormControl(''),
      fecha: new FormControl('', formatoFecha),
      dual: new FormControl(''),
      bilingüe: new FormControl(''),
@@ -222,7 +222,7 @@ export class FormacionComponent implements OnInit {
     this._usuarios
       .actualizarUsuario(this.usuario_actual)
       .subscribe(user => {  //hay que suscribirse para que funcione (por cómo funciona el http de angular)
-        console.log ('');
+        console.log (user);
     });
     this._router.navigateByUrl('/profile/alumno');
   }

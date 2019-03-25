@@ -5,7 +5,6 @@ import { formatoFecha } from '../../../../shared/validadores';
 import { UsuariosService } from '../../../../shared/services/usuarios.service';
 import { SesionService } from '../../../../shared/services/sesion.service';
 import { Router } from '@angular/router';
-//import { formatoFecha } from '../../../../shared/validadores';
 
 @Component({
   selector: 'app-experiencia',
@@ -21,7 +20,6 @@ export class ExperienciaComponent implements OnInit {
   creandoElemento:boolean=false;
   llaves: Array<any>=[];
   valores:Array<any>=[];
-
 
   constructor(
     private _builder: FormBuilder,
@@ -52,16 +50,20 @@ export class ExperienciaComponent implements OnInit {
 
   crearFormulario(){
    this.formulario=this._builder.group({
-    empresa: new FormControl(''),
-    cargo: new FormControl(''),
-    fecha: new FormControl('', formatoFecha)
+    empresa: new FormControl('', [Validators.minLength(3), Validators.maxLength(255)]),
+    cargo: new FormControl('', [Validators.minLength(3), Validators.maxLength(255)]),
+    inicio: new FormControl('', formatoFecha),
+    fin: new FormControl('', formatoFecha),
+    tareas: new FormControl('')
   });
  }
 
  rellenarFormulario(numElemento){
     this.formulario.controls['empresa'].setValue(this.seccion_actual[numElemento].empresa);
     this.formulario.controls['cargo'].setValue(this.seccion_actual[numElemento].cargo);
-    this.formulario.controls['fecha'].setValue(this.seccion_actual[numElemento].fecha);
+    this.formulario.controls['inicio'].setValue(this.seccion_actual[numElemento].inicio);
+    this.formulario.controls['fin'].setValue(this.seccion_actual[numElemento].fin);
+    this.formulario.controls['tareas'].setValue(this.seccion_actual[numElemento].tareas);
  }
 
  nuevoElemento(){
@@ -75,17 +77,19 @@ export class ExperienciaComponent implements OnInit {
      this._usuarios
        .actualizarUsuario(this.usuario_actual)
        .subscribe(user => {  //hay que suscribirse para que funcione (por cómo funciona el http de angular)
-         console.log ('');
+         console.log (user);
      });
      //Mejora: refrescar el componente actual en vez de volver
      this._router.navigateByUrl('/profile/alumno');
    }
 
    guardarCambios(){
-     let aux={empresa:"", cargo: "", fecha: ""};
+     let aux={empresa:"", cargo: "", inicio: "", fin: "", tareas:""};
      aux.empresa=this.formulario.controls['empresa'].value;
      aux.cargo=this.formulario.controls['cargo'].value;
-     aux.fecha=this.formulario.controls['fecha'].value;
+     aux.inicio=this.formulario.controls['inicio'].value;
+     aux.fin=this.formulario.controls['fin'].value;
+     aux.tareas=this.formulario.controls['tareas'].value;
      this.seccion_actual[this.numElementoEnEdicion]=aux;
      this._usuarios
        .actualizarUsuario(this.usuario_actual)

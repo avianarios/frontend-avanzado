@@ -3,65 +3,74 @@
   <ul>
     <li>
       <label>
-        Nombre:
+        Nombre
+      </label>
          <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="nombre">
         <div *ngIf="formulario.controls['nombre'].hasError('required')" class="error">Campo obligatorio</div>
         <div *ngIf="formulario.controls['nombre'].hasError('minlength')" class="error">Mínimo 3 letras</div>
-        <div *ngIf="formulario.controls['nombre'].hasError('cadenaLimpia')" class="error">No debe haber caracteres especiales ni espacios en blanco al comienzo o al final</div>
-      </label>
+        <div *ngIf="formulario.controls['nombre'].hasError('cadenaSinEspacios')" class="error">No debe haber caracteres especiales ni espacios en blanco al comienzo o al final</div>
     </li><li>
       <label>
-        Razón social: <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="razon">
+        Razón social
+      </label>
+        <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="razon">
         <div *ngIf="formulario.controls['razon'].hasError('required')" class="error">Campo obligatorio</div>
         <div *ngIf="formulario.controls['razon'].hasError('minlength')" class="error">Mínimo 3 letras</div>
-        <div *ngIf="formulario.controls['razon'].hasError('cadenaLimpia')" class="error">No debe haber caracteres especiales ni espacios en blanco al comienzo o al final</div>
-      </label>
+        <div *ngIf="formulario.controls['razon'].hasError('cadenaSinEspacios')" class="error">No debe haber caracteres especiales ni espacios en blanco al comienzo o al final</div>
     </li><li>
       <label>
-        CIF: <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="cif">
+        CIF
       </label>
+        <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="cif">
     </li><li>
       <label>
-        Dirección: <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="direccion">
+        Dirección
       </label>
+       <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="direccion">
     </li><li>
       <label>
-        Provincia: <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="provincia">
-<!--        <select formControlName="provincia">
+        Provincia
+      </label>
+        <select formControlName="provincia">
           <option *ngFor="let nombre of listaProvincias"
           [value]="nombre">{{nombre}}</option>
-        </select>-->
-      </label>
+        </select>
     </li><li>
       <label>
-        Municipio: <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="municipio">
+        Municipio
       </label>
+      <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="municipio">
     </li><li>
       <label>
-        URL: <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="url">
+        URL
       </label>
+         <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="url">
     </li><li>
       <label>
-        Nombre <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="nombre_contacto">
+        Nombre
+       </label>
+        <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="nombre_contacto">
+      </li><li>
+      <label>
+        Apellidos
       </label>
+      <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="apellidos">
     </li><li>
       <label>
-        Apellidos <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="apellidos">
+        Teléfono
       </label>
-    </li><li>
-      <label>
-        Teléfono: <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="telefono">
+        <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="telefono">
         <div *ngIf="formulario.controls['telefono'].hasError('noSoloNumeros')" class="error">El teléfono sólo puede contener números</div>
-      </label>
     </li><li>
       <label>
-        Correo: <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="correo">
-        <div *ngIf="formulario.controls['correo'].hasError('email')" class="error">Formato incorrecto</div>
+        Correo
       </label>
+         <input [className]="editandoEmpresa ? 'editable' : 'noEditable'" type="text" formControlName="correo">
+        <div *ngIf="formulario.controls['correo'].hasError('email')" class="error">Formato incorrecto</div>
     </li>
     <li>
       <button (click)="editarElemento()" [disabled]="editandoEmpresa">Editar</button>
-      <button (click)="deshabilitarFormulario()" [disabled]="!editandoEmpresa">Terminar edidión</button>
+      <button (click)="deshabilitarFormulario()" [disabled]="!editandoEmpresa || !formulario.valid">Terminar edidión</button>
       <button routerLink="/dashboard">Volver atrás</button>
     </li>
       <!--<a routerLink="/forgot-password"> Recuperar contraseña</a>-->

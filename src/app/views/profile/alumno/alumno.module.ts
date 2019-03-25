@@ -9,7 +9,6 @@ import { ExperienciaComponent } from './experiencia/experiencia.component';
 import { FormacionComponent } from './formacion/formacion.component';
 import { IdiomasComponent } from './idiomas/idiomas.component';
 
-
 @NgModule({
   declarations: [AlumnoComponent, PersonalesComponent, ExperienciaComponent, IdiomasComponent, FormacionComponent],
   imports: [

@@ -14,8 +14,8 @@ import { Router } from '@angular/router';
 export class EmpresaComponent implements OnInit {
   usuario_actual:Array<any>=[];
   seccion_actual:Array<any>=[];
-  llavesOfertas: Array<any>=[];
-  valoresOfertas: Array<any>=[];
+  llaves: Array<any>=[];
+  valores: Array<any>=[];
   numOferta: number=-1;
   codPuestoSolicitado:string;
   //tengo que dividir a los candidatos en dos matrices, llaves y valores, porque ngfor solo puede iterar por matrices y no por objetos
@@ -36,13 +36,15 @@ export class EmpresaComponent implements OnInit {
     else{
       this.usuario_actual=this._sesion.usuarioSesion();
       this.seccion_actual=this.usuario_actual["ofertas"];
-      this.usuario_actual['ofertas'].forEach (oferta=>{
-        if (this.llavesOfertas.length===0)   //Las llaves solo hay que guardarlas una vez. Son iguales para todas las ofertas
-          Object.keys (oferta).forEach (llave =>{
-            this.llavesOfertas.push (llave);
-          });
-        this.valoresOfertas.push (Object.values (oferta));
-      });
+/*      Object.keys (this.seccion_actual[0]).forEach (llave=>{
+        this.llaves.push (llave);
+      })*/
+      if (this.seccion_actual.length>0){
+        this.llaves.push(Object.keys (this.seccion_actual[0]));
+        this.seccion_actual.forEach (oferta=>{
+          this.valores.push (Object.values (oferta));
+        });
+      }
       this.rellenarFormulario();
       this.deshabilitarFormulario();
     }
@@ -95,7 +97,7 @@ export class EmpresaComponent implements OnInit {
 
   borrarElemento(posicion){
     (this.formulario.controls['datos'] as FormArray).removeAt(posicion);
-    this.valoresOfertas.splice(posicion, 1);
+    this.valores.splice(posicion, 1);
     this.guardarCambios();
   }
 
@@ -144,11 +146,7 @@ export class EmpresaComponent implements OnInit {
     this._usuarios
       .actualizarUsuario(this.usuario_actual)
       .subscribe(user => {  //hay que suscribirse para que funcione (por cómo funciona el http de angular)
-        console.log ('');
-/*        if (this.usuario_actual['ofertas'].length===0)
-          this._alumno.cambiarVariable('formacion', false);
-        else
-          this._alumno.cambiarVariable('formacion', true);*/
+        console.log ('user');
     });
   }
 

@@ -56,12 +56,16 @@ let  usuarios =  [
               {
                 empresa: 'Suma',
                 cargo: 'Junior',
-                fecha: '15/07/2018'
+                inicio: '15/07/2018',
+                fin: '15/07/2018',
+                tareas: 'hacer aviones de papel, tirar bolitas con cervatanas a mis compañeros'
               },
               {
                 empresa: 'Indra',
                 cargo: 'engineer',
-                fecha: '15/07/2018'
+                inicio: '15/07/2018',
+                fin: '15/07/2018',
+                tareas: 'peinar bombillas, lamer candados'
               }
             ],
           idiomas: [
@@ -89,7 +93,11 @@ let  usuarios =  [
                 idPuesto: 'p5',
                 fecha: '28/01/2019'
               }
-            ]
+            ],
+            configuracion: {
+              idioma: 'español',
+              provincias: ["Granada", "Málaga"]
+            }
         },
         {
         id: 2,
@@ -138,12 +146,16 @@ let  usuarios =  [
               {
                 empresa: 'Suma',
                 cargo: 'Junior',
-                fecha: '15/07/2018'
+                inicio: '15/07/2018',
+                fin: '15/07/2018',
+                tareas: 'buscar fotos de gatos'
               },
               {
                 empresa: 'Indra',
                 cargo: 'engineer',
-                fecha: '15/07/2018'
+                inicio: '15/07/2018',
+                fin: '15/07/2018',
+                tareas: 'contar de 1 a 100 y de 100 a 1 y vuelta a empezar'
               }
             ],
 

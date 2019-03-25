@@ -32,13 +32,15 @@
   <table border=1>
     <caption id="títuloTabla">Oferta de empleo</caption>
     <thead class="encabezado">
-      <tr>
-        <th *ngFor="let llave of llavesOfertas; let i=index;">{{llave}}</th>
+<!--      <tr>
+        <th *ngFor="let llave of llaves; let i=index;">{{llave}}</th>-->
+        <tr *ngFor="let llave of llaves">
+          <th scope="col" *ngFor="let valor of llave">{{valor}}</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td *ngFor="let campo of valoresOfertas[this.numOferta]; let i=index;">
+        <td *ngFor="let campo of valores[this.numOferta]; let i=index;">
         {{campo}}</td>
       </tr>
     </tbody>

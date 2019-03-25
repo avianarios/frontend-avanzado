@@ -14,8 +14,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     if (!this._sesion.sesionEstaIniciada())
       this._router.navigateByUrl('/signin');
-/*let kk=(this._sesion.usuarioSesion());
-console.log (kk['identificacion'].usuario);*/
   }
 
   cerrarSesion(){
