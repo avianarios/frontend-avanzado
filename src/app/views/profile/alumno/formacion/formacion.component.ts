@@ -3,7 +3,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { UsuariosService } from '../../../../shared/services/usuarios.service';
 import { SesionService } from '../../../../shared/services/sesion.service';
-import { AlumnoService } from '../alumno.service';
 import { Router } from '@angular/router';
 import { formatoFecha } from '../../../../shared/validadores';
 
@@ -23,18 +22,14 @@ export class FormacionComponent implements OnInit {
   creandoElemento:boolean=false;
   tipoTitulo=["Ciclo formativo", "Título universitario"];
   nivelUniversidad=["Grado", "Diplomatura", "Licenciatura", "Maestría", "Doctorado"];
-  matrizInstitutos=["IES El saladillo", "IES Pino montano", "IES Aguadulce", "IES Los alcores", "IES Salduba", "IES Pedro Espinosa", "IES Francisco de Burgos"];
+  institutos=["IES El saladillo", "IES Pino montano", "IES Aguadulce", "IES Los alcores", "IES Salduba", "IES Pedro Espinosa", "IES Francisco de Burgos"];
   familiasFP=[];
   titulosFP=[];
 
-/*  familiasProfesionalesFP=[
-    {nombre: "Informática y comunicaciones", titulos: ["redes", "montaje"]},
-    {nombre: "Instalación y mantenimiento", titulos:["electricista", "fontanero"]},
-    {nombre: "Imagen y sonido", titulos:["técnico de sonido", "técnico de cámara"]}
-  ]*/
   matrizTitulos: Array<any>=[];
   matrizNivelesEducativos: Array<any>=[];
 
+  tipoTituloActual: string;
   familiaActual: object;
   nivelActual: object;
   titulosActuales: object;
@@ -42,19 +37,16 @@ export class FormacionComponent implements OnInit {
   familiasProfesionalesFP=[
     {nombre: "Informática y comunicaciones", ciclos: [
       { grado: "Superior", titulos: [
-          "Seleccione uno",
           "Técnico Superior en Desarrollo de aplicaciones web",
           "Técnico Superior en Desarrollo de aplicaciones multiplataforma",
           "Técnico Superior en Administración de sistemas informáticos en red"
         ]
       },
       { grado: "Medio", titulos: [
-          "Seleccione uno",
           "Técnico en sistemas microinformáticos y redes"
         ]
       },
       { grado: "Básico", titulos: [
-          "Seleccione uno",
           "Título profesional básico en Informática de oficina",
           "Título profesional básico en Informática y comunicaciones"
         ]
@@ -64,18 +56,15 @@ export class FormacionComponent implements OnInit {
 
     {nombre: "Actividades físicas y deportivas", ciclos: [
       { grado: "Superior", titulos: [
-          "Seleccione uno",
           "Técnico Superior en Acondicionamiento Físico",
           "Técnico Superior en Enseñanza y Animación Sociodeportiva"
         ]
       },
       { grado: "Medio", titulos: [
-          "Seleccione uno",
           "Técnico en Actividades Ecuestres"
         ]
       },
       { grado: "Básico", titulos: [
-          "Seleccione uno",
           "Título Profesional Básico en Acceso y Conservación en Instalaciones Deportivas"
         ]
       }
@@ -84,13 +73,11 @@ export class FormacionComponent implements OnInit {
 
     {nombre: "Imagen y sonido", ciclos: [
       { grado: "Superior", titulos: [
-          "Seleccione uno",
           "Curso de especialización en Audiodescripcion y Subtitulación",
           "Técnico Superior en Enseñanza y Animación Sociodeportiva"
         ]
       },
       { grado: "Medio", titulos: [
-          "Seleccione uno",
           "Técnico Superior en Sonido para Audiovisuales y Espectáculos",
           "Técnico Superior en Realización de Proyectos Audiovisuales y Espectáculos",
           "Técnico Superior en Producción de Audiovisuales y Espectáculos",
@@ -99,7 +86,6 @@ export class FormacionComponent implements OnInit {
         ]
       },
       { grado: "Básico", titulos: [
-          "Seleccione uno",
           "Técnico en Vídeo Disc-Jockey y Sonido"
         ]
       }
@@ -111,15 +97,14 @@ export class FormacionComponent implements OnInit {
     private _builder: FormBuilder,
     private _usuarios: UsuariosService,
     private _sesion: SesionService,
-    private _alumno: AlumnoService,
     private _router: Router
   ){}
 
   ngOnInit() {
-    this.crearFormulario();
     if (!this._sesion.sesionEstaIniciada())
       this._router.navigateByUrl('/signin');
     else{
+      this.crearFormulario();
       this.usuario_actual=this._sesion.usuarioSesion();
       this.seccion_actual=this.usuario_actual['formacion'];
       this.cargarDatos(this.llaves, this.valores, 'formacion');
@@ -127,10 +112,12 @@ export class FormacionComponent implements OnInit {
   }
 
   cargarDatos(llaves, valores, cual){
-    llaves.push(Object.keys (this.usuario_actual[cual][0]));
-    this.usuario_actual[cual].forEach (datos=>{
-      valores.push (Object.values(datos));
-    });
+    if (this.usuario_actual[cual].length>0){
+      llaves.push(Object.keys (this.usuario_actual[cual][0]));
+      this.usuario_actual[cual].forEach (datos=>{
+        valores.push (Object.values(datos));
+      });
+    }
   }
 
   atras(){
@@ -161,15 +148,18 @@ export class FormacionComponent implements OnInit {
       this.formulario.controls['fecha'].setValue(this.seccion_actual[numElemento].fecha);
       this.formulario.controls['dual'].setValue(this.seccion_actual[numElemento].dual);
       this.formulario.controls['bilingüe'].setValue(this.seccion_actual[numElemento].bilingüe);
-      this.formulario.controls['certificado'].setValue(this.seccion_actual[numElemento].certificado);
+//      this.formulario.controls['certificado'].setValue(this.seccion_actual[numElemento].certificado);
       this.nivelActual=this.seccion_actual[numElemento].nivel;
+  }
+
+  siTipoTituloCambia(event:any){
+    this.tipoTituloActual=event.target.value;
   }
 
   siFamiliaCambia(event:any){
     this.matrizNivelesEducativos=[];
     this.matrizTitulos=[];
-    this.familiaActual=event.target.value;
-    this.cargarMatrizNiveles(this.familiaActual);
+    this.cargarMatrizNiveles(event.target.value);
   }
 
   siNivelCambia(event:any){
@@ -183,6 +173,8 @@ export class FormacionComponent implements OnInit {
     Object.values(this.familiaActual['ciclos']).forEach(value=>{
       this.matrizNivelesEducativos.push(value['grado']);
     });
+    this.formulario.controls['nivel'].setValue(this.matrizNivelesEducativos[0]);
+    this.nivelActual=this.matrizNivelesEducativos[0];
     this.cargarMatrizTitulos(this.nivelActual);
   }
 
@@ -192,24 +184,19 @@ export class FormacionComponent implements OnInit {
     Object.values (this.titulosActuales['titulos']).forEach (valor=>{
       this.matrizTitulos.push(valor);
     });
-  }
-
-  terminarEdicion(){
-      this.guardarCambios();
-      this.llaves=[];
-      this.valores=[];
-      this.cargarDatos(this.llaves, this.valores, 'formacion');
-      this.editandoElemento=false;
-      this.creandoElemento=false;
+    //hay que seleccionarlo porque cuando se cargan los nombres aparecen todos los títulos. Si el usuario quiere seleccionar el que ya sale, podría pensar que no hay que pinchar en él, pero si no lo hace (y no se pone el código de abajo), el sistema no lo registra
+    this.formulario.controls['titulo'].setValue(this.titulosActuales['titulos'][0]);
   }
 
   nuevoElemento(){
     this.editandoElemento=false;
     this.creandoElemento=true;
-  }
+    this.numElementoEnEdicion=this.seccion_actual.length;
+    this.cargarFamilias();
+}
 
   borrarElemento(posicion){
-    this.usuario_actual['formacion'].splice(posicion,1);
+    this.seccion_actual.splice(posicion,1);
     this._usuarios
       .actualizarUsuario(this.usuario_actual)
       .subscribe(user => {  //hay que suscribirse para que funcione (por cómo funciona el http de angular)
@@ -228,10 +215,10 @@ export class FormacionComponent implements OnInit {
       titulo: this.formulario.controls['titulo'].value,
       fecha: this.formulario.controls['fecha'].value,
       dual: this.formulario.controls['dual'].value,
-      bilingüe: this.formulario.controls['bilingüe'].value,
-      certificado: this.formulario.controls['certificado'].value,
+      bilingüe: this.formulario.controls['bilingüe'].value
+//      certificado: this.formulario.controls['certificado'].value,
     };
-    this.usuario_actual['formacion'].splice(this.numElementoEnEdicion, 0, aux);
+    this.seccion_actual[this.numElementoEnEdicion]=aux;
     this._usuarios
       .actualizarUsuario(this.usuario_actual)
       .subscribe(user => {  //hay que suscribirse para que funcione (por cómo funciona el http de angular)
@@ -240,15 +227,19 @@ export class FormacionComponent implements OnInit {
     this._router.navigateByUrl('/profile/alumno');
   }
 
-  editarElemento (posicionElemento){
-    this.editandoElemento=true;
+  cargarFamilias(){
     //cargo la matriz familiasFP con los datos del objeto familiasProfesionalesFP para que lo lea el select
     (Object.values (this.familiasProfesionalesFP)).forEach (valor=>{
       this.familiasFP.push(valor.nombre);
     });
+  }
+
+  editarElemento (posicionElemento){
+    this.editandoElemento=true;
+    this.tipoTituloActual=this.seccion_actual[posicionElemento].tipo;
     this.numElementoEnEdicion=posicionElemento;
+    this.cargarFamilias();
     this.rellenarFormulario(posicionElemento);
-    this.seccion_actual.splice(posicionElemento,1);
     this.cargarMatrizNiveles(this.seccion_actual[posicionElemento].familia);
     this.cargarMatrizTitulos(this.seccion_actual[posicionElemento].nivel);
   }

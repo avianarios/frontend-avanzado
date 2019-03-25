@@ -1,7 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { UsuariosService } from '../../../shared/services/usuarios.service';
 import { SesionService } from '../../../shared/services/sesion.service';
-import { AlumnoService } from './alumno.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -24,7 +23,7 @@ export class AlumnoComponent implements OnInit {
   listaProvincias=['Almería', 'Cádiz', 'Córdoba', 'Granada', 'Jaén', 'Huelva', 'Málaga', 'Sevilla'];
   tipoDocumentos=['NIF', 'Pasaporte', 'NIE'];
 
-  constructor(private _usuarios: UsuariosService, private _alumno: AlumnoService, private _sesion: SesionService, private _router: Router) { }
+  constructor(private _usuarios: UsuariosService, private _sesion: SesionService, private _router: Router) { }
 
   ngOnInit() {
     if (!this._sesion.sesionEstaIniciada())
@@ -44,7 +43,6 @@ export class AlumnoComponent implements OnInit {
   }
 
   cargarDatos(llaves, valores, cual){
-//    if (this._alumno.consultarVariable(cual)){
     if (this.usuario_actual[cual].length>0){
       llaves.push(Object.keys (this.usuario_actual[cual][0]));
       this.usuario_actual[cual].forEach (datos=>{

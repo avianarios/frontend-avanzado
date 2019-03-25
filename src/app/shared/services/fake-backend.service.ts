@@ -17,6 +17,7 @@ let  usuarios =  [
             clave: 'avm'
           },
           datosPersonales: {
+            imagen: 'fichero.gif',
             nombre: 'Antonio Jesús',
             apellidos: 'Vázquez Muñoz',
             correo: 'asdf@asdf.es',
@@ -98,6 +99,7 @@ let  usuarios =  [
           clave: 'dpp'
         },
         datosPersonales: {
+          imagen: 'fichero.gif',
           nombre: 'Don Pimpón',
           apellidos: 'pimponero',
           correo: 'dp@dp.es',

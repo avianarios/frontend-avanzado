@@ -64,6 +64,7 @@ export class PersonalesComponent implements OnInit {
 
   crearFormulario() {
     this.formulario = this._builder.group({
+      imagen: new FormControl(''),
       nombre: new FormControl('', [
         Validators.required,
         Validators.minLength(3),
@@ -118,6 +119,7 @@ export class PersonalesComponent implements OnInit {
     this._usuarios
       .actualizarUsuario(this.usuario_actual)
       .subscribe(user => console.log(user));
+    this._router.navigateByUrl('/profile/alumno');
   }
 
   editarFormulario() {

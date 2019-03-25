@@ -4,7 +4,6 @@ import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@ang
 import { formatoFecha } from '../../../../shared/validadores';
 import { UsuariosService } from '../../../../shared/services/usuarios.service';
 import { SesionService } from '../../../../shared/services/sesion.service';
-import { AlumnoService } from '../alumno.service';
 import { Router } from '@angular/router';
 //import { formatoFecha } from '../../../../shared/validadores';
 
@@ -18,14 +17,16 @@ export class ExperienciaComponent implements OnInit {
   usuario_actual: Array<any>=[];
   seccion_actual: Array<any>=[];
   numElementoEnEdicion:number;
-  editandoCampo:boolean=false;
+  editandoElemento:boolean=false;
+  creandoElemento:boolean=false;
+  llaves: Array<any>=[];
+  valores:Array<any>=[];
 
 
   constructor(
     private _builder: FormBuilder,
     private _usuarios: UsuariosService,
     private _sesion: SesionService,
-    private _alumno: AlumnoService,
     private _router: Router
   ){}
 
@@ -36,83 +37,69 @@ export class ExperienciaComponent implements OnInit {
     else{
       this.usuario_actual=this._sesion.usuarioSesion();
       this.seccion_actual=this.usuario_actual['experiencia'];
-      this.rellenarFormulario();
-      this.deshabilitarFormulario();
+      this.cargarDatos(this.llaves, this.valores, 'experiencia');
     }
   }
 
-    crearFormulario(){
-      this.formulario= this._builder.group({
-        datos: new FormArray([])
+  cargarDatos(llaves, valores, cual){
+    if (this.usuario_actual[cual].length>0){
+      llaves.push(Object.keys (this.usuario_actual[cual][0]));
+      this.usuario_actual[cual].forEach (datos=>{
+        valores.push (Object.values(datos));
       });
     }
-
-    rellenarFormulario(){
-      if ((Object.keys (this.seccion_actual)[0])==="0"){ //si la primera llave es un número es porque se le ha pasado una matriz con más de un título donde cada fila es un título
-        this.seccion_actual.forEach (elemento =>{
-          (this.formulario.controls['datos'] as FormArray).push(this.crearElemento(elemento));
-        });
-      }else { //solo se le ha pasado un título
-        (this.formulario.controls['datos'] as FormArray).push(this.crearElemento(this.seccion_actual));
-      }
-    }
-
-    anyadirElemento(){
-      (this.formulario.controls['datos'] as FormArray).push(this.crearElemento([]));
-    }
-
-    crearElemento(datos){
-      this.numElementoEnEdicion=((<FormArray>this.formulario.controls['datos']).controls.length);
-      this.editandoCampo=true;
-/*      return this._builder.group({
-        empresa:  new FormControl(datos.empresa),
-        cargo:  new FormControl(datos.cargo),
-        fecha: new FormControl(datos.fecha, formatoFecha)
-      })*/
-      return this._builder.group({
-        empresa: [datos.empresa],
-        cargo: [datos.cargo],
-        fecha: [datos.fecha]
-      })
   }
 
-  deshabilitarFormulario(){
-    this.numElementoEnEdicion=-1;
-    this.editandoCampo=false;
-    this.formulario.disable();
-  }
+  crearFormulario(){
+   this.formulario=this._builder.group({
+    empresa: new FormControl(''),
+    cargo: new FormControl(''),
+    fecha: new FormControl('', formatoFecha)
+  });
+ }
 
-  terminarEdicion(){
-      this.deshabilitarFormulario();
-      this.guardarCambios();
-  }
+ rellenarFormulario(numElemento){
+    this.formulario.controls['empresa'].setValue(this.seccion_actual[numElemento].empresa);
+    this.formulario.controls['cargo'].setValue(this.seccion_actual[numElemento].cargo);
+    this.formulario.controls['fecha'].setValue(this.seccion_actual[numElemento].fecha);
+ }
 
-  borrarElemento(posicion){
-    (this.formulario.controls['datos'] as FormArray).removeAt(posicion);
-    this.seccion_actual.splice(posicion, 1);
-    this.guardarCambios();
-  }
+ nuevoElemento(){
+   this.editandoElemento=false;
+   this.creandoElemento=true;
+   this.numElementoEnEdicion=this.seccion_actual.length;
+}
 
-  guardarCambios(){
-    this.usuario_actual['experiencia']=[];
-    this.formulario.controls['datos'].value.forEach(valor=>{
-        this.usuario_actual['experiencia'].push(valor);
-    });
-    this._usuarios
-      .actualizarUsuario(this.usuario_actual)
-      .subscribe(user => {  //hay que suscribirse para que funcione (por cómo funciona el http de angular)
-        console.log ('');
-        if (this.usuario_actual['experiencia'].length===0)
-          this._alumno.cambiarVariable('experiencia', false);
-        else
-          this._alumno.cambiarVariable('experiencia', true);
-    });
-  }
+   borrarElemento(posicion){
+     this.seccion_actual.splice(posicion,1);
+     this._usuarios
+       .actualizarUsuario(this.usuario_actual)
+       .subscribe(user => {  //hay que suscribirse para que funcione (por cómo funciona el http de angular)
+         console.log ('');
+     });
+     //Mejora: refrescar el componente actual en vez de volver
+     this._router.navigateByUrl('/profile/alumno');
+   }
 
-  editarElemento (elemento){
-    this.editandoCampo=true;
-    this.numElementoEnEdicion=elemento;
-    ((<FormArray>this.formulario.get('datos')).controls[elemento]).enable();
-  }
+   guardarCambios(){
+     let aux={empresa:"", cargo: "", fecha: ""};
+     aux.empresa=this.formulario.controls['empresa'].value;
+     aux.cargo=this.formulario.controls['cargo'].value;
+     aux.fecha=this.formulario.controls['fecha'].value;
+     this.seccion_actual[this.numElementoEnEdicion]=aux;
+     this._usuarios
+       .actualizarUsuario(this.usuario_actual)
+       .subscribe(user => {  //hay que suscribirse para que funcione (por cómo funciona el http de angular)
+         console.log ('');
+     });
+     this.cargarDatos(this.llaves, this.valores, 'idiomas');
+     this._router.navigateByUrl('/profile/alumno');
+   }
+
+   editarElemento (posicionElemento){
+     this.editandoElemento=true;
+     this.numElementoEnEdicion=posicionElemento;
+     this.rellenarFormulario(posicionElemento);
+   }
 
 }

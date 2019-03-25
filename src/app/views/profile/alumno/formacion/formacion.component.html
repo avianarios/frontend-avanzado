@@ -1,42 +1,4 @@
 <div *ngIf="!editandoElemento && !creandoElemento">
-
-<!--  <form [formGroup]="formulario" (ngSubmit)="submit()">
-    <table border=1>
-      <caption id="títuloTabla">Experiencia</caption>
-      <thead class="encabezado">
-          <tr>
-            <th>tipo</th>
-            <th>familia</th>
-            <th>centro</th>
-            <th>nivel</th>
-            <th>titulo</th>
-            <th>fecha</th>
-            <th>dual</th>
-            <th>bilingüe</th>
-            <th>certificado</th>
-          </tr>
-        </thead>
-        <tbody formArrayName="datos">
-      <tr *ngFor="let aux of formulario.get('datos').controls; let i = index;"
-         [formGroupName]="i">
-            <td><input type="text" formControlName="tipo" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
-            <td><input type="text" formControlName="familia" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
-            <td><input type="text" formControlName="centro" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
-            <td><input type="text" formControlName="nivel" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
-            <td><input type="text" formControlName="titulo" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
-            <td><input type="text" formControlName="fecha" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
-            <td><input type="text" formControlName="dual" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
-            <td><input type="text" formControlName="bilingüe" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
-            <td><input type="text" formControlName="certificado" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>
-          <td><button type="button" [disabled]="editandoCampo" (click)="editarElemento(i)">Editar</button>
-          <button type="button" [disabled]="editandoCampo" (click)="borrarElemento(i)">Borrar</button>
-        <button (click)="terminarEdicion('idiomas')" [disabled]="i!==this.numElementoEnEdicion">Terminar edidión</button></td>
-        </tr>
-        <button type="button" (click)="anyadirElemento()" [disabled]="editandoCampo">Añadir formación</button>
-        <button routerLink="/profile/alumno" [disabled]="editandoCampo">Volver atrás</button>
-  </table>
-</form>-->
-
   <table border=1>
     <caption id="títuloTabla">Formación</caption>
     <thead class="encabezado">
@@ -58,92 +20,73 @@
   </table>
 </div>
 
-<div *ngIf="editandoElemento">
+<div *ngIf="editandoElemento || creandoElemento">
   <form [formGroup]="formulario">
     <ul>
       <li>
-        Tipo: <input type="text" formControlName="tipo" class="editable">
+        <label>Tipo</label>
+        <select formControlName="tipo" (change)="siTipoTituloCambia($event)">
+          <option *ngFor="let tipo of tipoTitulo" [value]="tipo">{{tipo}}</option></select>
       </li>
-      <li>
-        Familia <select formControlName="familia" (change)="siFamiliaCambia($event)">
-          <option *ngFor="let fam of familiasFP" [value]="fam">{{fam}}</option>
-          <div *ngIf="formulario.controls['familia'].hasError('required')" class="error">Campo obligatorio</div>
-        </select>
-      </li>
-      <li>
-        Nivel: <select formControlName="nivel" (change)="siNivelCambia($event)">
-          <option *ngFor="let nivel of matrizNivelesEducativos" [value]="nivel">{{nivel}}</option>
-          <div *ngIf="formulario.controls['nivel'].hasError('required')" class="error">Campo obligatorio</div>
-        </select>
-      </li>
-      <li>
-        Título: <select formControlName="titulo">
-          <option *ngFor="let titulo of matrizTitulos" [value]="titulo">{{titulo}}</option>
+      <div *ngIf="tipoTituloActual==='Ciclo formativo'">
+        <li>
+          <label>Familia</label>
+           <select formControlName="familia" (change)="siFamiliaCambia($event)">
+            <option *ngFor="let fam of familiasFP" [value]="fam">{{fam}}</option>
+            <div *ngIf="formulario.controls['familia'].hasError('required')" class="error">Campo obligatorio</div>
           </select>
-          <div *ngIf="formulario.controls['titulo'].hasError('required')" class="error">Campo obligatorio</div>
-      </li>
-      <li>
-        Centro: <select formControlName="centro">
-          <option *ngFor="let cent of matrizInstitutos" [value]="cent">{{cent}}</option>
-          <div *ngIf="formulario.controls['centro'].hasError('required')" class="error">Campo obligatorio</div>
+        </li>
+        <li>
+          <label>Nivel</label>
+           <select formControlName="nivel" (change)="siNivelCambia($event)">
+            <option *ngFor="let nivel of matrizNivelesEducativos" [value]="nivel">{{nivel}}</option>
+            <div *ngIf="formulario.controls['nivel'].hasError('required')" class="error">Campo obligatorio</div>
           </select>
-      </li>
-      <li>
-      </li>
-      <li>
-        Fecha: <input type="text" formControlName="fecha" class="editable">
-        <div *ngIf="formulario.controls['fecha'].hasError('fechaIncorrecta')" class="error">El formato de fecha correcto es: DD/MM/AAAA</div>
-      </li>
-      <li>
-        Dual: <input type="checkbox" formControlName="dual" class="editable">
-      </li>
-        Bilingüe: <input type="checkbox" formControlName="bilingüe" class="editable">
-      <li>
-        Certificado: <input type="checkbox" value="" formControlName="certificado" class="editable">
-      </li>
+        </li>
+        <li>
+          <label>Título</label>
+          <select formControlName="titulo">
+            <option *ngFor="let titulo of matrizTitulos" [value]="titulo">{{titulo}}</option>
+            </select>
+            <div *ngIf="formulario.controls['titulo'].hasError('required')" class="error">Campo obligatorio</div>
+        </li>
+        <li>
+          <label>Centro</label>
+          <select formControlName="centro">
+            <option *ngFor="let cent of institutos" [value]="cent">{{cent}}</option>
+            <div *ngIf="formulario.controls['centro'].hasError('required')" class="error">Campo obligatorio</div>
+            </select>
+        </li><li>
+          <label>Dual</label>
+          <input type="checkbox" formControlName="dual" class="editable">
+        </li>
+      </div>
+      <div *ngIf="tipoTituloActual==='Título universitario'">
+        <li>
+          <label>Título</label>
+          <input type="text" formControlName="titulo" class="editable">
+        </li>
+      </div>
+        <li>
+          <label>Fecha</label>
+          <input type="text" formControlName="fecha" class="editable">
+          <div *ngIf="formulario.controls['fecha'].hasError('fechaIncorrecta')" class="error">El formato de fecha correcto es: DD/MM/AAAA</div>
+        </li><li>
+          <label>Bilingüe</label>
+          <input type="checkbox" formControlName="bilingüe" class="editable">
+        </li><li>
+          <label>Certificado</label>
+          <input type="file"
+          id="certificado" formControlName="certificado"
+          accept="image/png, image/jpeg" class="editable">
+        </li>
       <li>
         <button (click)="guardarCambios()" [disabled]="!formulario.valid">Guardar</button>
       </li>
     </ul>
   </form>
-</div>
 
 
-<div *ngIf="creandoElemento">
-  <form [formGroup]="formulario">
-    <ul>
-      <li>Tipo: <select formControlName="tipo">
-            <!--ngValue guarda el índice-->
-            <option *ngFor="let id of tipoTitulo" [value]="id">{{id}}</option>
-          </select>
-      </li><li>
-            Familia: <select formControlName="familia" (change)="siFamiliaCambia($event, i)">
-              <option *ngFor="let fam of familiasFP" [value]="fam">{{fam}}</option>
-            </select>
-      </li><li>
-          Nivel: <select formControlName="nivel" (change)="siNivelCambia($event, i)">
-            <option *ngFor="let nivel of matrizNivelesEducativos" [value]="nivel">{{nivel}}</option>
-          </select>
-        </li><li>
-          Título: <select formControlName="titulo">
-            <option *ngFor="let tit of matrizTitulos" [value]="tit">{{tit}}</option>
-          </select>
-        </li><li>
-          Centro: <input type="text" formControlName="centro" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}">
-        </li><li>
-        <!--          <td><input type="text" formControlName="titulo" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>-->
-          Fecha: <input type="text" formControlName="fecha" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}">
-        </li><li>
-          Dual: <input type="checkbox" formControlName="dual" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}">
-        </li><li>
-          Bilingüe: <input type="checkbox" formControlName="bilingüe" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}">
-        <!--          <td><input type="text" formControlName="certificado" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}"></td>-->
-        </li><li>
-          Certificado <input type="checkbox" formControlName="certificado" [ngClass]="{'editable': i===this.numElementoEnEdicion, 'noEditable': i!==this.numElementoEnEdicion}">
-        </li><li>
-          <button (click)="terminarEdicion()">Terminar edición</button>
-          <button (click)="atras()">Volver atrás</button>
-        </li>
-      </ul>
-    </form>
+
+
 </div>
