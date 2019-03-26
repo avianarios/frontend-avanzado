@@ -16,6 +16,7 @@ import { SesionService } from '../../shared/services/sesion.service';
 })
 export class SigninComponent implements OnInit {
   usuarios: any[] = [];
+//  usuario_actual: Array<any>=[];
   loginForm: FormGroup = this._builder.group({
     usuario: new FormControl('', [
       Validators.required,
@@ -45,7 +46,8 @@ export class SigninComponent implements OnInit {
     };
     const user = this.usuarios.find(_user => this.isUser(_user, credentials));
     if (user) {
-      this._sesion.iniciarSesion(user['identificacion'].usuario, user.tipo);
+//      this._sesion.iniciarSesion(user['identificacion'].usuario, user.tipo);
+      this._sesion.iniciarSesion(user);
       this._router.navigateByUrl('/dashboard');
     }
     /*     for (const usuario of this.usuarios) {
@@ -61,10 +63,6 @@ export class SigninComponent implements OnInit {
         this._router.navigateByUrl('/dashboard');
       }
     } */
-  }
-
-  recordar() {
-    this._router.navigateByUrl('/forgot-password');
   }
 
   ngOnInit() {

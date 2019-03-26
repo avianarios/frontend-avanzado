@@ -12,12 +12,12 @@ Idioma:<select formControlName="idioma">
   </label>
 </li><li>
   <label>
-    <input type="checkbox" formControlName="selectAll">
+    <input type="checkbox" formControlName="seleccionarTodos">
     Marcar/Desmarcar todas
   </label>
 </li><li>
 
   <button>Enviar</button>
-  <button (click)="ir('/dashboard')">Volver atrás</button>
+  <button routerLink="/dashboard">Volver atrás</button>
 </li>
 </form></ul>

@@ -17,6 +17,7 @@ let  usuarios =  [
             clave: 'avm'
           },
           datosPersonales: {
+            imagen: 'fichero.gif',
             nombre: 'Antonio Jesús',
             apellidos: 'Vázquez Muñoz',
             correo: 'asdf@asdf.es',
@@ -29,19 +30,25 @@ let  usuarios =  [
           },
           formacion: [
               {
-                nivel: 'Ciclo formativo',
-                titulo: 'Desarrollo de aplicaciones web',
-                centro: 'IES Salduba',
-                fecha: '15/07/2018',
+                tipo: 'Ciclo formativo',
                 familia: 'Informática y comunicaciones',
+                centro: 'IES Salduba',
+                nivel: 'Superior',
+                titulo: 'Técnico Superior en Desarrollo de aplicaciones web',
+                fecha: '15/07/2018',
+                dual: 'no',
+                bilingüe: 'no',
                 certificado: 'no'
               },
               {
-                nivel: 'Ciclo formativo',
-                titulo: 'Administracion de sistemas informaticos y redes',
-                centro: 'IES Pedro Espinosa',
+                tipo: 'Ciclo formativo',
                 familia: 'Informática y comunicaciones',
+                centro: 'IES Pedro Espinosa',
+                nivel: 'Superior',
+                titulo: 'Técnico Superior en Administración de sistemas informáticos en red',
                 fecha: '15/07/2018',
+                dual: 'si',
+                bilingüe: 'si',
                 certificado: 'si'
               }
             ],
@@ -49,12 +56,16 @@ let  usuarios =  [
               {
                 empresa: 'Suma',
                 cargo: 'Junior',
-                fecha: '15/07/2018'
+                inicio: '15/07/2018',
+                fin: '15/07/2018',
+                tareas: 'hacer aviones de papel, tirar bolitas con cervatanas a mis compañeros'
               },
               {
                 empresa: 'Indra',
                 cargo: 'engineer',
-                fecha: '15/07/2018'
+                inicio: '15/07/2018',
+                fin: '15/07/2018',
+                tareas: 'peinar bombillas, lamer candados'
               }
             ],
           idiomas: [
@@ -82,7 +93,11 @@ let  usuarios =  [
                 idPuesto: 'p5',
                 fecha: '28/01/2019'
               }
-            ]
+            ],
+            configuracion: {
+              idioma: 'español',
+              provincias: ["Granada", "Málaga"]
+            }
         },
         {
         id: 2,
@@ -92,6 +107,7 @@ let  usuarios =  [
           clave: 'dpp'
         },
         datosPersonales: {
+          imagen: 'fichero.gif',
           nombre: 'Don Pimpón',
           apellidos: 'pimponero',
           correo: 'dp@dp.es',
@@ -104,32 +120,42 @@ let  usuarios =  [
         },
         formacion: [
             {
-              nivel: 'Ciclo formativo',
-              titulo: 'Desarrollo de aplicaciones web',
-              centro: 'IES Politécnico Jesús Marin',
+              tipo: 'Ciclo formativo',
               familia: 'Informática y comunicaciones',
+              centro: 'IES Politécnico Jesús Marin',
+              nivel: 'Superior',
+              titulo: 'Técnico en sistemas microinformáticos y redes',
               fecha: '15/07/2018',
+              dual: 'no',
+              bilingüe: 'no',
               certificado: 'no'
             },
             {
-              nivel: 'Ciclo formativo',
-              titulo: 'Administracion de sistemas informaticos y redes',
-              centro: 'IES Politécnico Jesús Marin',
+              tipo: 'Título universitario',
               familia: 'Informática y comunicaciones',
+              centro: 'Universidad de Granada',
+              nivel: 'Grado',
+              titulo: 'Grado en informática',
               fecha: '15/07/2018',
-              certificado: 'si'
+              dual: 'no',
+              bilingüe: 'no',
+              certificado: 'no'
             }
           ],
           experiencia: [
               {
                 empresa: 'Suma',
                 cargo: 'Junior',
-                fecha: '15/07/2018'
+                inicio: '15/07/2018',
+                fin: '15/07/2018',
+                tareas: 'buscar fotos de gatos'
               },
               {
                 empresa: 'Indra',
                 cargo: 'engineer',
-                fecha: '15/07/2018'
+                inicio: '15/07/2018',
+                fin: '15/07/2018',
+                tareas: 'contar de 1 a 100 y de 100 a 1 y vuelta a empezar'
               }
             ],
 

@@ -13,111 +13,99 @@ import { Router } from '@angular/router';
 })
 export class EmpresaComponent implements OnInit {
   usuario_actual:Array<any>=[];
-  llavesOfertas: Array<any>=[];
-  valoresOfertas: Array<any>=[];
+  seccion_actual:Array<any>=[];
+  llaves: Array<any>=[];
+  valores: Array<any>=[];
   numOferta: number=-1;
   codPuestoSolicitado:string;
   //tengo que dividir a los candidatos en dos matrices, llaves y valores, porque ngfor solo puede iterar por matrices y no por objetos
   llavesCandidatos: Array<any>=[];
-    valoresCandidatos: Array<any>=[];
-  formOferta: FormGroup;
+  valoresCandidatos: Array<any>=[];
+  formulario: FormGroup;
   numElementoEnEdicion:number;
-  editandoOferta:boolean=false;
   editandoCampo:boolean=false;
-  editandoPersonales:boolean=false;
   valoresCandidatosSeleccionados: Array<any>=[];
   valoresCandidatosDescartados: Array<any>=[];
 
   constructor( private _builder: FormBuilder, private _usuarios: UsuariosService, private _sesion: SesionService, private _router: Router) { }
 
   ngOnInit() {
-    this.crearFormularios();
+    this.crearFormulario();
     if (!this._sesion.sesionEstaIniciada())
       this._router.navigateByUrl('/signin');
     else{
-      this._usuarios.devolverUsuarios().subscribe(grupoUsuarios=> {
-        for (let i=0; i<grupoUsuarios.length; i++)
-//        data.forEach(usuario=> {    Mejor usar for para salir del bucle en cuanto encuentre al usuario y no tener que recorrerlos todos
-          if (this._sesion.usuarioSesion().id===grupoUsuarios[i]['identificacion'].usuario){
-            this.usuario_actual=grupoUsuarios[i];
-            this.usuario_actual['ofertas'].forEach (oferta=>{
-              if (this.llavesOfertas.length===0)   //Las llaves solo hay que guardarlas una vez. Son iguales para todas las ofertas
-                Object.keys (oferta).forEach (llave =>{
-                  this.llavesOfertas.push (llave);
-                });
-              this.valoresOfertas.push (Object.values (oferta));
-          });
-          this.rellenaFormularios();
-          this.terminarEdicion('ofertas');
-        }
-      });
+      this.usuario_actual=this._sesion.usuarioSesion();
+      this.seccion_actual=this.usuario_actual["ofertas"];
+/*      Object.keys (this.seccion_actual[0]).forEach (llave=>{
+        this.llaves.push (llave);
+      })*/
+      if (this.seccion_actual.length>0){
+        this.llaves.push(Object.keys (this.seccion_actual[0]));
+        this.seccion_actual.forEach (oferta=>{
+          this.valores.push (Object.values (oferta));
+        });
+      }
+      this.rellenarFormulario();
+      this.deshabilitarFormulario();
     }
   }
 
-  crearFormularios(){
-    this.formOferta= this._builder.group({
+  crearFormulario(){
+    this.formulario= this._builder.group({
       datos: new FormArray([])
     });
   }
 
-  rellenaFormularios(){
-    this.anyadirElemento ("ofertas", this.usuario_actual['ofertas']);
+  rellenarFormulario(){
+    if ((Object.keys (this.seccion_actual)[0])==="0"){ //si la primera llave es un número es porque se le ha pasado una matriz con más de un título donde cada fila es un título
+      this.seccion_actual.forEach (elemento =>{
+        (this.formulario.controls['datos'] as FormArray).push(this.crearOferta(elemento));
+      });
+    }else  //solo se le ha pasado un título
+      (this.formulario.controls['datos'] as FormArray).push(this.crearOferta(this.seccion_actual));
   }
 
-    anyadirElemento(tipo, matriz){
-      if  (matriz===undefined)
-        (this.formOferta.controls['datos'] as FormArray).push(this.crearOferta(["", "", "", "", ""]));
-      else
-        if ((Object.keys (matriz)[0])==="0"){ //si la primera llave es un número es porque se le ha pasado una matriz con más de un título donde cada fila es un título
-          for (let i=0; i<matriz.length; i++)
-            (this.formOferta.controls['datos'] as FormArray).push(this.crearOferta(matriz[i]));
-        }else  //solo se le ha pasado un título
-          (this.formOferta.controls['datos'] as FormArray).push(this.crearOferta(matriz));
-    }
+  anyadirElemento(tipo, matriz){
+    (this.formulario.controls['datos'] as FormArray).push(this.crearOferta(["", "", "", "", "", "", ""]));
+  }
 
+  crearOferta(datos){
+    this.numElementoEnEdicion=((<FormArray>this.formulario.controls['datos']).controls.length);
+    this.editandoCampo=true;
+    return this._builder.group({
+      idPuesto: [datos.idPuesto],
+      puesto: [datos.puesto],
+      familia: [datos.familia],
+      fecha: [datos.fecha],
+      descripcion: [datos.descripcion],
+      provincia: [datos.provincia],
+      municipio: [datos.municipio],
+      titulos: [datos.titulos]
+    })
+  }
 
-    crearOferta(datosOferta){
-        if (datosOferta.nivel===undefined){
-          this.numElementoEnEdicion=((<FormArray>this.formOferta.controls['datos']).controls.length);
-          this.editandoOferta=true;
-          this.editandoCampo=true;
-        }
-        return this._builder.group({
-          idPuesto: [datosOferta.idPuesto],
-          puesto: [datosOferta.puesto],
-          familia: [datosOferta.familia],
-          fecha: [datosOferta.fecha],
-          descripcion: [datosOferta.descripcion],
-          provincia: [datosOferta.provincia],
-          municipio: [datosOferta.municipio],
-          titulos: [datosOferta.titulos]
-        })
-    }
+  deshabilitarFormulario(){
+    this.numElementoEnEdicion=-1;
+    this.editandoCampo=false;
+    this.formulario.disable();
+  }
 
-    borrar(form, posicion){
-      (form.controls['datos'] as FormArray).removeAt(posicion);
-      this.valoresOfertas.splice(posicion, 1);
-      console.log (this.formOferta);
-    }
+  terminarEdicion(){
+      this.deshabilitarFormulario();
+      this.guardarCambios();
+  }
 
-    terminarEdicion(cual){
-      this.editandoOferta=false;
-      this.editandoCampo=false;
-      this.formOferta.disable();
-    }
+  borrarElemento(posicion){
+    (this.formulario.controls['datos'] as FormArray).removeAt(posicion);
+    this.valores.splice(posicion, 1);
+    this.guardarCambios();
+  }
 
-
-    editarCampo (form, elemento){
-      this.editandoCampo=true;
-      this.editandoOferta=true;
-      ((<FormArray>this.formOferta.get('datos')).controls[elemento]).enable();
-      this.numElementoEnEdicion=elemento;
-    }
 
   gestionarCandidatos(cual){
     this.valoresCandidatos=[];
     this.numOferta=cual;
-    this.codPuestoSolicitado=((<FormArray>this.formOferta.get('datos')).controls[cual].value['idPuesto']);
+    this.codPuestoSolicitado=((<FormArray>this.formulario.get('datos')).controls[cual].value['idPuesto']);
 
     this._usuarios.devolverUsuarios().subscribe(data => {
       data.forEach(usuario => {
@@ -136,13 +124,8 @@ export class EmpresaComponent implements OnInit {
     });
   }
 
-  irAtras() {
+  cancelarCandidatos(){
     this.numOferta=-1;
-  }
-
-  ir(donde){
-    this.numOferta=-1;
-    this._router.navigateByUrl(donde);
   }
 
   seleccionar(cual){
@@ -156,6 +139,20 @@ export class EmpresaComponent implements OnInit {
   }
 
   guardarCambios(){
+    this.usuario_actual['ofertas']=[];
+    this.formulario.controls['datos'].value.forEach(valor=>{
+        this.usuario_actual['ofertas'].push(valor);
+    });
+    this._usuarios
+      .actualizarUsuario(this.usuario_actual)
+      .subscribe(user => {  //hay que suscribirse para que funcione (por cómo funciona el http de angular)
+        console.log ('user');
+    });
+  }
 
+  editarElemento (elemento){
+    this.editandoCampo=true;
+    this.numElementoEnEdicion=elemento;
+    ((<FormArray>this.formulario.get('datos')).controls[elemento]).enable();
   }
 }

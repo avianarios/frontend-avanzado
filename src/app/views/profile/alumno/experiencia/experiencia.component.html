@@ -1,0 +1,59 @@
+<div *ngIf="!editandoElemento && !creandoElemento">
+    <table border=1>
+      <caption id="títuloTabla">Experiencia</caption>
+      <thead class="encabezado">
+          <tr *ngFor="let llave of llaves">
+            <th scope="col" *ngFor="let valor of llave">{{valor}}</th>
+            <th>Acciones</th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let valor of valores; let i=index;">
+          <td *ngFor="let campo of valor">
+          {{campo}}</td>
+          <td>
+            <button type="button" (click)="editarElemento(i)" [disabled]="editandoElemento">Editar</button>
+            <button type="button" (click)="borrarElemento(i)" [disabled]="editandoElemento">Borrar</button>
+        </td>
+        </tr>
+        <button type="button" (click)="nuevoElemento()">Añadir experiencia</button>
+        <button routerLink="/profile/alumno">Volver atrás</button>
+      </tbody>
+    </table>
+</div>
+
+<div *ngIf="editandoElemento || creandoElemento">
+  <form [formGroup]="formulario">
+    <ul>
+      <li>
+        <label>Empresa</label>
+          <input type="text" formControlName="empresa" class="editable"/>
+          <div *ngIf="formulario.controls['empresa'].hasError('minlength')" class="error">Mínimo 3 letras</div>
+          <div *ngIf="formulario.controls['empresa'].hasError('maxlength')" class="error">Máximo 255 letras</div>
+      </li>
+      <li>
+        <label>Cargo</label>
+        <input type="text" formControlName="cargo" class="editable"/>
+        <div *ngIf="formulario.controls['cargo'].hasError('minlength')" class="error">Mínimo 3 letras</div>
+        <div *ngIf="formulario.controls['cargo'].hasError('maxlength')" class="error">Máximo 255 letras</div>
+      </li>
+      <li>
+        <label>Fecha de inicio</label>
+         <input type="text" formControlName="inicio" class="editable">
+        <div *ngIf="formulario.controls['inicio'].hasError('fechaIncorrecta')" class="error">El formato de fecha correcto es: DD/MM/AAAA</div>
+      </li>
+      <li>
+        <label>Fecha de fin</label>
+         <input type="text" formControlName="fin" class="editable">
+        <div *ngIf="formulario.controls['fin'].hasError('fechaIncorrecta')" class="error">El formato de fecha correcto es: DD/MM/AAAA</div>
+      </li>
+      <li>
+        <label>Tareas</label>
+         <input type="text" formControlName="tareas" class="editable">
+      </li>
+      <li>
+        <button (click)="guardarCambios()" [disabled]="!formulario.valid">Guardar</button>
+      </li>
+    </ul>
+  </form>
+</div>

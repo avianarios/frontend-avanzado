@@ -1,0 +1,52 @@
+<div *ngIf="!editandoElemento && !creandoElemento">
+    <table border=1>
+      <caption id="títuloTabla">Idiomas</caption>
+      <thead class="encabezado">
+          <tr *ngFor="let llave of llaves">
+            <th scope="col" *ngFor="let valor of llave">{{valor}}</th>
+            <th>Acciones</th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let valor of valores; let i=index;">
+          <td *ngFor="let campo of valor">
+          {{campo}}</td>
+          <td>
+            <button type="button" (click)="editarElemento(i)" [disabled]="editandoElemento">Editar</button>
+            <button type="button" (click)="borrarElemento(i)" [disabled]="editandoElemento">Borrar</button>
+        </td>
+        </tr>
+        <button type="button" (click)="nuevoElemento()">Añadir idioma</button>
+        <button routerLink="/profile/alumno">Volver atrás</button>
+      </tbody>
+    </table>
+</div>
+
+<div *ngIf="editandoElemento || creandoElemento">
+  <form [formGroup]="formulario">
+    <ul>
+      <li>
+        Idioma <select formControlName="idioma" (change)="siIdiomaCambia($event)">
+          <option *ngFor="let nombre of matrizNombreIdiomas" [value]="nombre">{{nombre}}</option>
+        </select>
+      </li>
+      <li>
+        <input type="text" formControlName="otro" [hidden]="!otroIdioma" class="editable"/>
+        <div *ngIf="formulario.controls['otro'].hasError('minlength')" class="error">Mínimo 3 letras</div>
+        <div *ngIf="formulario.controls['otro'].hasError('maxlength')" class="error">Máximo 255 caracteres</div>
+      </li>
+      <li>
+        Nivel: <select formControlName="nivel">
+           <option *ngFor="let niv of matrizNivelIdioma" [value]="niv">{{niv}}</option>
+         </select>
+      </li>
+      <li>
+        Fecha: <input type="text" formControlName="fecha" class="editable">
+        <div *ngIf="formulario.controls['fecha'].hasError('fechaIncorrecta')" class="error">El formato de fecha correcto es: DD/MM/AAAA</div>
+      </li>
+      <li>
+        <button (click)="guardarCambios()" [disabled]="!formulario.valid">Guardar</button>
+      </li>
+    </ul>
+  </form>
+</div>

@@ -1,7 +1,4 @@
 import { Component, OnInit} from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { cadenaLimpia, formatoFecha, formatoPasaporte, formatoNIF, formatoNIE, noSoloNumeros } from '../../../shared/validadores';
 import { UsuariosService } from '../../../shared/services/usuarios.service';
 import { SesionService } from '../../../shared/services/sesion.service';
 import { Router } from '@angular/router';
@@ -12,346 +9,42 @@ import { Router } from '@angular/router';
   styleUrls: ['./alumno.component.scss']
 })
 export class AlumnoComponent implements OnInit {
-  numElementoEnEdicion:number;
-  elementoEnEdicion:number;
   usuario_actual: Array<any>=[];
+  llavesPersonales: Array<any>=[];
+  llavesFormacion: Array<any>=[];
+  llavesExperiencia: Array<any>=[];
+  llavesIdiomas: Array<any>=[];
 
-  listaProvincias=['Almería', 'Cádiz', 'Córdoba', 'Granada', 'Jaén', 'Huelva', 'Málaga', 'Sevilla'];
+  valoresPersonales: Array<any>=[];
+  valoresFormacion: Array<any>=[];
+  valoresExperiencia: Array<any>=[];
+  valoresIdiomas: Array<any>=[];
 
-  tipoDocumentos=['NIF', 'Pasaporte', 'NIE'];
-
-  nombreIdiomas=["Español", "Inglés", "Francés", "Aleḿan", "Italiano"];
-  nivelIdioma=['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
-
-  formDatosPersonales: FormGroup;
-  formDatosFormacion: FormGroup;
-  formDatosExperiencia: FormGroup;
-  formDatosIdiomas: FormGroup;
-
-  editandoCampo:boolean=false;
-  editandoPersonales:boolean=false;
-  editandoFormacion:boolean=false;
-  editandoExperiencia:boolean=false;
-  editandoIdiomas:boolean=false;
-
-  constructor(private _builder: FormBuilder, private _usuarios: UsuariosService, private _sesion: SesionService, private _router: Router) { }
+  constructor(private _usuarios: UsuariosService, private _sesion: SesionService, private _router: Router) { }
 
   ngOnInit() {
-    this.crearFormularios();
     if (!this._sesion.sesionEstaIniciada())
       this._router.navigateByUrl('/signin');
     else{
-      this.crearValidadores();
-      this._usuarios.devolverUsuarios().subscribe(grupoUsuarios=> {
-        for (let i=0; i<grupoUsuarios.length; i++)
-//        data.forEach(usuario=> {    Mejor usar for para salir del bucle en cuanto encuentre al usuario y no tener que recorrerlos todos
-          if (this._sesion.usuarioSesion().id===grupoUsuarios[i]['identificacion'].usuario){
-            this.usuario_actual=grupoUsuarios[i];
-            this.rellenaFormularios();
-            this.terminarEdicion("todos");
-//            this.escucharCambios();
-          }
-        });
-      }
-  }
+        this.usuario_actual=this._sesion.usuarioSesion();
 
-  crearFormularios(){
-    this.formDatosPersonales= this._builder.group({
-      nombre: new FormControl('', [Validators.required, Validators.minLength(3), cadenaLimpia]),
-      apellidos: new FormControl('', [Validators.required, Validators.minLength(3), cadenaLimpia]),
-      correo: new FormControl('', [Validators.required, Validators.email]),
-      nacimiento: new FormControl('', formatoFecha),
-      telefono: new FormControl('', noSoloNumeros),
-      telefonoAlt: new FormControl('', noSoloNumeros),
-      tipoDocumento: new FormControl(''),
-      numeroDocumento: new FormControl(''),
-      direccion: new FormControl(''),
-      provincia: new FormControl(''),
-      municipio: new FormControl(''),
-      mas: new FormControl(''),
-      competencias: new FormControl(''),
-      conducir: new FormControl('')
-    });
-
-    this.formDatosFormacion= this._builder.group({
-      datos: new FormArray([])
-    });
-
-    this.formDatosExperiencia= this._builder.group({
-      datos: new FormArray([])
-    });
-
-    this.formDatosIdiomas= this._builder.group({
-      datos: new FormArray([])
-    });
-
-/*CÓMO AÑADIR UN SOLO CAMPO Y DESHABILITARLO
-    this.formDatosFormacion = new FormGroup({
-          datos: new FormArray([])
+        this.llavesPersonales.push(Object.keys (this.usuario_actual['datosPersonales']));
+        Object.values (this.usuario_actual['datosPersonales']).forEach (dato=>{
+          this.valoresPersonales.push (dato);
         });
 
-/*        const nivel = new FormControl('', Validators.required);
-        (<FormArray>this.formDatosFormacion2.get('datos')).push(nivel);
-        (<FormArray>this.formDatosFormacion2.get('datos')).controls[0].setValue('adios');
-
-
-    (<FormArray>this.formDatosFormacion2.get('datos'))
-      .controls
-      .forEach(control => {
-        control.disable();
-      })*/
-
-/*FIN*/
-
-  }
-
-  rellenaFormularios(){
-      /*rellena el formulario de datos personales*/
-      for (let llave in this.usuario_actual['datosPersonales'])
-        if (llave in (this.formDatosPersonales.controls))  //puede que hubiera campos en la BBDD que no se mostrasen por pantalla
-          this.formDatosPersonales.controls[llave].setValue(this.usuario_actual['datosPersonales'][llave]);
-
-      this.anyadirElemento ("formacion", this.usuario_actual['formacion']);
-      this.anyadirElemento ("experiencia", this.usuario_actual['experiencia']);
-      this.anyadirElemento ("idioma", this.usuario_actual['idiomas']);
-  }
-
-  /*VOY POR AQUÍ. INTENTANDO FUSIONAR*/
-/*la idea era llamar a la misma función variando los parámetros para ahorrar código:
- Para crear un idioma: anayadirElemento2(this.formDatosIdiomas, idiomas, crearTituloIdiomas)
-Para crear una formación: anayadirElemento2(this.formDatosFormacion, formacion, crearTituloFormacion)
-Así me ahorro los horrorosos "switch-case"
- */
-    anyadirElemento2(form, matriz, funcion){
-    console.log (form);
-      (form.controls['datos'] as FormArray).push(funcion.bind(form, matriz));
-    }
-
-    crearTitulo2 (form, datos){
-      console.log (form);
-      console.log (datos);
-      if (datos===undefined){
-        this.numElementoEnEdicion=((<FormArray>form.controls['datos']).controls.length);
-        this.editandoFormacion=true;
-        this.editandoCampo=true;
-      }
-      return this._builder.group({
-        nivel: [''],
-        titulo: [''],
-        centro: [''],
-        fecha: [''],
-        certificado: ['']
-      })
-    }
-/**********************/
-
-  anyadirElemento(tipo, matriz){
-    switch (tipo){
-      case "formacion":
-        if  (matriz===undefined)
-        (this.formDatosFormacion.controls['datos'] as FormArray).push(this.crearTitulo(["", "", "", "", ""]));
-        else
-        if ((Object.keys (matriz)[0])==="0"){ //si la primera llave es un número es porque se le ha pasado una matriz con más de un título donde cada fila es un título
-          for (let i=0; i<matriz.length; i++)
-            (this.formDatosFormacion.controls['datos'] as FormArray).push(this.crearTitulo(matriz[i]));
-        }else  //solo se le ha pasado un título
-          (this.formDatosFormacion.controls['datos'] as FormArray).push(this.crearTitulo(matriz));
-        break;
-      case "experiencia":
-        if  (matriz===undefined)
-        (this.formDatosExperiencia.controls['datos'] as FormArray).push(this.crearExperiencia(["", "", ""]));
-        else
-        if ((Object.keys (matriz)[0])==="0"){ //si la primera llave es un número es porque se le ha pasado una matriz con más de un título donde cada fila es un título
-          for (let i=0; i<matriz.length; i++)
-            (this.formDatosExperiencia.controls['datos'] as FormArray).push(this.crearExperiencia(matriz[i]));
-        }else  //solo se le ha pasado un título
-          (this.formDatosExperiencia.controls['datos'] as FormArray).push(this.crearExperiencia(matriz));
-        break;
-      case "idioma":
-        if  (matriz===undefined)
-        (this.formDatosIdiomas.controls['datos'] as FormArray).push(this.crearIdioma(["", "", ""]));
-        else
-        if ((Object.keys (matriz)[0])==="0"){ //si la primera llave es un número es porque se le ha pasado una matriz con más de un título donde cada fila es un título
-          for (let i=0; i<matriz.length; i++)
-            (this.formDatosIdiomas.controls['datos'] as FormArray).push(this.crearIdioma(matriz[i]));
-        }else  //solo se le ha pasado un título
-          (this.formDatosIdiomas.controls['datos'] as FormArray).push(this.crearIdioma(matriz));
-        break;
-
-      default:
-        break;
-    }
-
-  }
-
-  crearTitulo(datosTitulo){
-      if (datosTitulo.nivel===undefined){
-        this.numElementoEnEdicion=((<FormArray>this.formDatosFormacion.controls['datos']).controls.length);
-        this.editandoFormacion=true;
-        this.editandoCampo=true;
-      }
-      return this._builder.group({
-        nivel: [datosTitulo.nivel],
-        titulo: [datosTitulo.titulo],
-        centro: [datosTitulo.centro],
-        familia: [datosTitulo.familia],
-        fecha: [datosTitulo.fecha],
-        certificado: [datosTitulo.certificado]
-      })
-  }
-
-  crearExperiencia(datosExperiencia){
-    if (datosExperiencia.nivel===undefined){
-      this.numElementoEnEdicion=((<FormArray>this.formDatosExperiencia.controls['datos']).controls.length);
-      this.editandoExperiencia=true;
-      this.editandoCampo=true;
-    }
-    return this._builder.group({
-      empresa: [datosExperiencia.empresa],
-      cargo: [datosExperiencia.cargo],
-      fecha: [datosExperiencia.fecha]
-    });
-  }
-
-  crearIdioma(datosIdioma){
-    if (datosIdioma.nivel===undefined){
-      this.numElementoEnEdicion=((<FormArray>this.formDatosIdiomas.controls['datos']).controls.length);
-      this.editandoIdiomas=true;
-      this.editandoCampo=true;
-    }
-    return this._builder.group({
-      idioma: [datosIdioma.idioma],
-      nivel: [datosIdioma.nivel],
-      fecha: [datosIdioma.fecha]
-    });
-  }
-
-
-/*  guardarFormacion(){
-    this.editandoFormacion=false;
-    //    this.tituloAnyadido=true;
-    /*console.log (this.formDatosFormacionAntiguo.controls);
-    Object.keys (this.formDatosFormacionAntiguo.controls).forEach ( aux=>{
-    console.log (this.formDatosFormacionAntiguo.controls[aux].value);
-  });
-  this.valoresDatosFormacion.push([this.formDatosFormacionAntiguo.get('nivel').value, this.formDatosFormacionAntiguo.get('titulo').value, this.formDatosFormacionAntiguo.get('centro').value, this.formDatosFormacionAntiguo.get('fecha').value, this.formDatosFormacionAntiguo.get('certificado').value]);
-  this.llavesDatosFormacion.forEach( aux=> {
-    this.formDatosFormacionAntiguo.controls[aux].setValue('');
-  });
-}*/
-
-  borrar(form, elemento){
-    (form.controls['datos'] as FormArray).removeAt(elemento);
-  }
-
-  guardarCambios(){
-    this.usuario_actual['datosPersonales']=this.formDatosPersonales.value;
-    this.usuario_actual['formacion']=this.formDatosFormacion.value;
-    this.usuario_actual['experiencia']=this.formDatosExperiencia.value;
-    this.usuario_actual['idiomas']=this.formDatosIdiomas.value;
-    this._usuarios.actualizarUsuario(this.usuario_actual);
-  }
-
-  terminarEdicion(cual){
-    this.editandoCampo=false;
-    switch (cual){
-      case "personales":
-        this.editandoPersonales=false;
-        this.formDatosPersonales.disable();
-/*        Object.keys(this.formDatosPersonales.controls).forEach(campo=>{
-          this.formDatosPersonales.controls[campo].disable();
-        });*/
-        break;
-      case "formacion":
-        this.editandoFormacion=false;
-        this.numElementoEnEdicion=-1;
-        this.formDatosFormacion.disable();
-/*        (<FormArray>this.formDatosFormacion.get('datos'))
-          .controls
-          .forEach(control => {
-            control.disable();
-          });*/
-        break;
-      case "experiencia":
-          this.editandoExperiencia=false;
-          this.numElementoEnEdicion=-1;
-          this.formDatosExperiencia.disable();
-        break;
-      case "idiomas":
-          this.editandoIdiomas=false;
-          this.numElementoEnEdicion=-1;
-          this.formDatosIdiomas.disable();
-        break;
-      default:
-          this.terminarEdicion("personales");
-          this.terminarEdicion("formacion");
-          this.terminarEdicion("experiencia");
-          this.terminarEdicion("idiomas");
-        break;
+        this.cargarDatos(this.llavesFormacion, this.valoresFormacion, 'formacion');
+        this.cargarDatos(this.llavesExperiencia, this.valoresExperiencia, 'experiencia');
+        this.cargarDatos(this.llavesIdiomas, this.valoresIdiomas, 'idiomas');
     }
   }
 
-editarCampo (form, elemento){
-  this.editandoCampo=true;
-  switch (form){
-    case "personales":
-      this.editandoPersonales=true;
-      this.formDatosPersonales.enable();
-  /*    Object.keys(this.formDatosPersonales.controls).forEach(campo=>{
-        this.formDatosPersonales.controls[campo].enable();
-      });*/
-      break;
-    case "formacion":
-      this.numElementoEnEdicion=elemento;
-      this.editandoFormacion=true;
-  /*    (<FormArray>this.formDatosFormacion.get('datos'))
-        .controls
-        .forEach(control => {
-          control.enable();
-        });
-        ((<FormArray>this.formDatosFormacion.get('datos')).controls[elemento]).disable();*/
-        ((<FormArray>this.formDatosFormacion.get('datos')).controls[elemento]).enable();
-        //this.formDatosFormacion.disable();
-      break;
-    case "experiencia":
-      this.editandoExperiencia=true;
-      this.numElementoEnEdicion=elemento;
-      ((<FormArray>this.formDatosExperiencia.get('datos')).controls[elemento]).enable();
-      break;
-    case "idiomas":
-      this.editandoIdiomas=true;
-      this.numElementoEnEdicion=elemento;
-      ((<FormArray>this.formDatosIdiomas.get('datos')).controls[elemento]).enable();
-      break;
-  }
-}
-
-  ir(donde){
-    this._router.navigateByUrl(donde);
-  }
-
-
-/*  escucharCambios(){
-    this.formDatosPersonales.valueChanges.subscribe( campo => {
-      this.usuario_actual['datosPersonales'] = Object.assign(this.usuario_actual['datosPersonales'], campo);
-    });
-  }*/
-
-  crearValidadores(): void {
-    this.formDatosPersonales.get('tipoDocumento').valueChanges.subscribe(
-    (result) => {
-        switch (result){
-          case "Pasaporte":
-            this.formDatosPersonales.get('numeroDocumento').setValidators([Validators.required, formatoPasaporte]);
-            break;
-          case "NIF":
-            this.formDatosPersonales.get('numeroDocumento').setValidators([Validators.required, formatoNIF]);
-            break;
-          case "NIE":
-            this.formDatosPersonales.get('numeroDocumento').setValidators([Validators.required, formatoNIE]);
-            break;
-        }
+  cargarDatos(llaves, valores, cual){
+    if (this.usuario_actual[cual].length>0){
+      llaves.push(Object.keys (this.usuario_actual[cual][0]));
+      this.usuario_actual[cual].forEach (datos=>{
+        valores.push (Object.values(datos));
+      });
     }
-   );
   }
 }

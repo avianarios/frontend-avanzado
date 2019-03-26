@@ -1,0 +1,12 @@
+Formación: nuevo
+
+Experiencia: 
+	-fecha de fin
+	-validadores 3-255 en empresa y puesto
+	-campo tareas realizadas
+
+revisar año del validador fecha
+
+Perfil de empresa:
+	-mi perfil: no espacios en blanco en el nombre ni razón social
+	-campos desplegables en provincia
