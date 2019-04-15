@@ -1,0 +1,20 @@
+<h2>
+  Offers Detail
+</h2>
+
+<pre>{{ offer | json }} </pre>
+
+<button
+  *ngIf="!isSubscribe()"
+  class="btn btn-primary"
+  (click)="subscribeOffer()"
+>
+  Inscribirse
+</button>
+<button
+  *ngIf="isSubscribe()"
+  class="btn btn-danger"
+  (click)="unsubscribeOffer()"
+>
+  Eliminar oferta
+</button>

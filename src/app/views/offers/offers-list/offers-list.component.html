@@ -1,0 +1,56 @@
+<h3>Cumple con la Titulación (Familia)</h3>
+
+<table class="table table-bordered table-striped">
+  <thead class="thead-light">
+    <tr>
+      <th>Puesto</th>
+      <th>Empresa</th>
+      <th>Familia</th>
+      <th>Fecha</th>
+      <th>Provincia</th>
+      <th>Municipio</th>
+      <th>Inscrito</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let offer of offersStudy">
+      <td>{{ offer.job.name }}</td>
+      <td>{{ offer.company.name }}</td>
+      <td>{{ offer.category.name }}</td>
+      <td>{{ offer.date }}</td>
+      <td>{{ offer.province.name }}</td>
+      <td>{{ offer.municipe.name }}</td>
+      <td>{{ offer.subscribe ? 'Sí' : 'No' }}</td>
+      <td>
+        <a style="cursor:pointer" [routerLink]="[offer.id]">Ver Detalle</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Otras Ofertas</h3>
+
+<table class="table table-bordered table-striped">
+  <thead class="thead-light">
+    <tr>
+      <th>Puesto</th>
+      <th>Empresa</th>
+      <th>Familia</th>
+      <th>Fecha</th>
+      <th>Provincia</th>
+      <th>Municipio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let offer of offersOther">
+      <td>{{ offer.job.name }}</td>
+      <td>{{ offer.company.name }}</td>
+      <td>{{ offer.category.name }}</td>
+      <td>{{ offer.date }}</td>
+      <td>{{ offer.province.name }}</td>
+      <td>{{ offer.municipe.name }}</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

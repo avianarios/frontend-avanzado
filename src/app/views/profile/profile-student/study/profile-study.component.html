@@ -1,0 +1,27 @@
+<form [formGroup]="studiesForm" (submit)="submit()">
+  <select
+    class="col-sm-10 form-control"
+    [compareWith]="compareOption"
+    formControlName="option"
+  >
+    <option selected>---</option>
+
+    <option [ngValue]="option" *ngFor="let option of options">{{
+      option.name
+    }}</option>
+  </select>
+
+  <app-vocational-form
+    *ngIf="isSelectVocational()"
+    [study]="study"
+    (onSave)="saveOrUpdate($event)"
+    (onExit)="exit($event)"
+  ></app-vocational-form>
+
+  <app-university-degree-form
+    *ngIf="isSelectUniversity()"
+    [study]="study"
+    (onSave)="saveOrUpdate($event)"
+    (onExit)="exit($event)"
+  ></app-university-degree-form>
+</form>

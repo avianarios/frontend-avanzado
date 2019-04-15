@@ -1,0 +1,143 @@
+<div id="contenido">
+  <div class="float-left" id="foto-perfil">
+    <div>
+      <img
+        class="img-fluid img-profile rounded-circle mx-auto mb-2"
+        src="{{ user.avatar_hash }}"
+      />
+    </div>
+    <div class="text-center pr-5">
+      {{ user.name + ' ' + user.surname }}
+    </div>
+  </div>
+
+  <section id="datosPersonales" class="float-left">
+    <table>
+      <tbody>
+        <tr>
+          <th>Email</th>
+          <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+          <th>Fecha de nacimiento</th>
+          <td>{{ user.birthdate }}</td>
+        </tr>
+        <tr>
+          <th>Tel&eacute;fono</th>
+          <td>{{ user.phone }}</td>
+        </tr>
+        <tr>
+          <th>NIF/NIE</th>
+          <td>{{ user.documentNumber }}</td>
+        </tr>
+        <tr>
+          <th>Permisos de conducir</th>
+          <td>{{ user.license }}</td>
+        </tr>
+        <tr>
+          <th>Direccion</th>
+          <td>{{ user.address | json }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <a [routerLink]="['/admin/profile/profile-student/account']">Modificar</a>
+  </section>
+  <div id="otra_info" class="float-left">
+    <form>
+      <div class="float-left">
+        <label for="about-me">Acerca de mi...</label><br />
+        <textarea readonly="true" id="about-me" name="about-me">{{
+          user.aboutMe
+        }}</textarea>
+      </div>
+      <div class="float-left">
+        <label for="other">Otras competencias</label> <br />
+
+        <textarea readonly="true" id="other" name="other">{{
+          user.otherCompetences
+        }}</textarea>
+      </div>
+    </form>
+  </div>
+
+  <section style="clear:both;padding-bottom:4em;"></section>
+
+  <h2>Formaci&oacute;n acad&eacute;mica</h2>
+  <section id="formacion_academica">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-light">
+        <th>Tipo</th>
+        <th>Nivel</th>
+        <th>T&iacute;tulo</th>
+        <th>Centro</th>
+        <th>Fecha</th>
+        <th>Certificado</th>
+        <th>Bilingüe</th>
+        <th>Dual</th>
+        <th>Acciones</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let study of user.studies; let i = index">
+          <td>{{ study.level.name }}</td>
+          <td>{{ study.grade?.name }}</td>
+
+          <td>{{ study.title.name || study.title }}</td>
+          <td>{{ study.institution.name || study.institution }}</td>
+          <td>{{ study.date }}</td>
+          <td>{{ study.certificate ? 'Sí' : 'No' }}</td>
+          <td>{{ study.bilingue ? 'Sí' : 'No' }}</td>
+          <td>{{ study.dual ? 'Sí' : 'No' }}</td>
+
+          <td>
+            <a
+              [routerLink]="['/admin/profile/profile-student/study', study.uid]"
+              >Editar</a
+            >
+            |
+            <a style="cursor:pointer" (click)="deleteStudy(study.uid)"
+              >Borrar</a
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <a [routerLink]="['/admin/profile/profile-student/study']"
+      >Nueva formación</a
+    >
+  </section>
+
+  <h2>Idiomas</h2>
+  <section id="languages">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-light">
+        <th>Nivel</th>
+        <th>Idioma</th>
+        <th>Fecha</th>
+        <th>Acciones</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let language of user.languages">
+          <td>{{ language.level.name }}</td>
+          <td>{{ language.name.name }}</td>
+          <td>{{ language.date }}</td>
+          <td>
+            <a
+              [routerLink]="[
+                '/admin/profile/profile-student/language',
+                language.uid
+              ]"
+              >Editar</a
+            >
+            |
+            <a style="cursor:pointer" (click)="deleteLanguage(language.uid)"
+              >Borrar</a
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <a [routerLink]="['/admin/profile/profile-student/language']"
+      >Nuevo idioma</a
+    >
+  </section>
+</div>
