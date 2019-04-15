@@ -6,7 +6,7 @@ import { AccionesUsuario } from '../actions/user.actions';
 export function userReducer (state= initialUserState, action: AccionesUsuario){
   switch (action.type) {
     case AccionesUsuario.Cargar:
-      return {...state, users: action.payload};
+      return {  ...state, users: action.payload};
     default:
       return state;
   }
