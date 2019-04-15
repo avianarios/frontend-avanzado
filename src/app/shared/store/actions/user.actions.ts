@@ -27,11 +27,13 @@ export class GetUserSuccess implements Action{
 export type AccionesUsuario = GetUser | GetUserSuccess;
 */
 
-export enum AccionesUsuario{
+export enum EAccionesUsuario{
   Cargar= '[Usuario] Cargar'
 }
 
 export class Cargar implements Action{
-  public readonly type= AccionesUsuario.Cargar;
+  public readonly type= EAccionesUsuario.Cargar;
   constructor (public payload: User){}
 }
+
+export type AccionesUsuario = Cargar;
