@@ -18,10 +18,15 @@ export class ProfileService {
   get user() {
     return this._user;
   }
-  loadProfile(): Observable<any /* UserOptions */> {
+
+  /*getUser():Observable<User>{
+    return this._user;
+  }*/
+  
+  /*loadProfile(): Observable<any> {
     return of(this.user as any);
     //return this.http.get<UserOptions>(AppSettings.API_ENDPOINT_USER_ME);
-  }
+  }*/
   logout(): void {
     /*  this.store$.dispatch(new UserActions.Logout()); */
   }

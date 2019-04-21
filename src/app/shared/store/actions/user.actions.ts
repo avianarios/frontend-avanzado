@@ -28,12 +28,17 @@ export type AccionesUsuario = GetUser | GetUserSuccess;
 */
 
 export enum EAccionesUsuario{
-  Cargar= '[Usuario] Cargar'
+  CargarUsuario= '[Usuario] Cargar Usuario',
+  CargarUsuarioExito='[Usuario] Cargar Usuario Exito'
 }
 
-export class Cargar implements Action{
-  public readonly type= EAccionesUsuario.Cargar;
-  constructor (public payload: User){}
+export class CargarUsuario implements Action{
+  public readonly type= EAccionesUsuario.CargarUsuario;
 }
 
-export type AccionesUsuario = Cargar;
+export class CargarUsuarioExito implements Action{
+  public readonly type= EAccionesUsuario.CargarUsuarioExito;
+  constructor (public payload: {personales, formacion, idiomas, experiencia, ofertas}){}
+}
+
+export type AccionesUsuario = CargarUsuario | CargarUsuarioExito;

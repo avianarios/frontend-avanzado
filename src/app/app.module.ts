@@ -10,14 +10,16 @@ import { FakeBackendService } from './shared/inmemory-db/fake-backend.service';
 
 //ngrx
 import { StoreModule } from '@ngrx/store';
-//import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-//import { EffectsModule } from '@ngrx/effects';
+import { EffectsModule } from '@ngrx/effects';
 import { userReducer } from './shared/store/reducers/user.reducers';
+import { autenticacionReducers } from './shared/store/reducers/aut.reducers';
 //import { appReducers } from './shared/store/reducers/app.reducers';
 
 //import { appReducers } from './shared/store/reducers/app.reducers';
-//import { UserEffects } from './shared/store/effects/user.effects';
+import { AutEffects } from './shared/store/effects/aut.effects';
+import { UserEffects } from './shared/store/effects/user.effects';
 //import { AppRoutingModule } from './app-routing.module';
 
 //import { reducers, metaReducers } from './shared/state/user';
@@ -33,11 +35,11 @@ import { environment } from '../environments/environment';
     HttpClientInMemoryWebApiModule.forRoot(FakeBackendService, {
       dataEncapsulation: false
     }),
-    StoreModule.forRoot(userReducer),
-//    EffectsModule.forRoot([UserEffects, ConfigEffects]),
-//    StoreRouterConnectingModule.forRoot({stateKey:'router'}),
+    StoreModule.forRoot(autenticacionReducers),
+    EffectsModule.forRoot([UserEffects, AutEffects]),
+    StoreRouterConnectingModule.forRoot({stateKey:'router'}),
     !environment.production ? StoreDevtoolsModule.instrument() : []
-  //  AppRoutingModule
+    //AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

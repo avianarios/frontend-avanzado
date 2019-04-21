@@ -1,16 +1,19 @@
 import { RouterReducerState } from '@ngrx/router-store';
 import { UserState, initialUserState } from './user.state';
-import { initialAuthState, AuthState } from './auth.state';
+import { AccionesAutenticacion, EAccionesAutenticacion } from '../actions/aut.actions';
+import { estadoAut, estadoInicialAut } from './aut.state';
+
+
 
 export interface AppState{
   router?: RouterReducerState;
   user: UserState;
-  auth: AuthState;
+  auth: estadoAut;
 }
 
 export const initialAppState: AppState={
   user: initialUserState,
-  auth: initialAuthState
+  auth: estadoInicialAut
 };
 
 export function getInitialState(): AppState{
