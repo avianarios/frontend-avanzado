@@ -1,0 +1,173 @@
+<form [formGroup]="rForm" (submit)="save()">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input
+      type="text"
+      name="name"
+      class="col-sm-10 form-control"
+      formControlName="name"
+    />
+  </div>
+  <div class="form-group">
+    <label for="birthdate">surname</label>
+    <input
+      type="text"
+      name="surname"
+      class="col-sm-10 form-control"
+      formControlName="surname"
+    />
+  </div>
+  <div class="form-group">
+    <label for="birthdate">birthdate</label>
+    <input
+      type="text"
+      name="birthdate"
+      class="col-sm-10 form-control"
+      formControlName="birthdate"
+    />
+  </div>
+  <div class="form-group">
+    <label for="phone">phone</label>
+    <input
+      type="text"
+      name="phone"
+      class="col-sm-10 form-control"
+      formControlName="phone"
+    />
+  </div>
+  <div class="form-group">
+    <label for="phone2">phone2</label>
+    <input
+      type="text"
+      name="phone2"
+      class="col-sm-10 form-control"
+      formControlName="phone2"
+    />
+  </div>
+  <div class="form-group">
+    <label for="level">Tipo de documento</label>
+    <select
+      [compareWith]="compareByUID"
+      class="col-sm-10 form-control"
+      name="documentType"
+      formControlName="documentType"
+    >
+      <option
+        [ngValue]="documentType"
+        *ngFor="let documentType of documentsType"
+      >
+        {{ documentType.name }}</option
+      >
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="documentNumber">documentNumber</label>
+    <input
+      type="text"
+      name="documentNumber"
+      class="col-sm-10 form-control"
+      formControlName="documentNumber"
+    />
+  </div>
+  <div class="form-group">
+    <label for="street">Calle</label>
+    <input
+      type="text"
+      name="street"
+      class="col-sm-10 form-control"
+      formControlName="street"
+    />
+  </div>
+  <div class="form-group">
+    <label for="level">Provincia</label>
+    <select
+      [compareWith]="compareByUID"
+      class="col-sm-10 form-control"
+      name="province"
+      formControlName="province"
+    >
+      <option [ngValue]="province" *ngFor="let province of provinces">
+        {{ province.name }}</option
+      >
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="level">Municipio</label>
+    <select
+      [compareWith]="compareByUID"
+      class="col-sm-10 form-control"
+      name="municipe"
+      formControlName="municipe"
+    >
+      <option [ngValue]="municipe" *ngFor="let municipe of municipes">
+        {{ municipe.name }}</option
+      >
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="aboutMe">Acerca de mi</label>
+    <textarea
+      name="aboutMe"
+      class="col-sm-10 form-control"
+      formControlName="aboutMe"
+    ></textarea>
+  </div>
+  <div class="form-group">
+    <label for="otherCompetences">Otras competencias</label>
+    <textarea
+      name="otherCompetences"
+      class="col-sm-10 form-control"
+      formControlName="otherCompetences"
+    ></textarea>
+  </div>
+  <div class="form-group">
+    <label for="license">Licencias</label>
+    <textarea
+      name="license"
+      class="col-sm-10 form-control"
+      formControlName="license"
+    ></textarea>
+  </div>
+  <!--   <div class="form-group">
+    <label for="level">Nivel</label>
+    <select
+      [compareWith]="compareLevel"
+      class="col-sm-10 form-control"
+      name="level"
+      formControlName="level"
+    >
+      <option [ngValue]="level" *ngFor="let level of languageLevels">
+        {{ level.name }}</option
+      >
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="name">Idioma</label>
+    <select
+      class="col-sm-10 form-control"
+      name="name"
+      formControlName="name"
+      [compareWith]="compareName"
+    >
+      <option [ngValue]="name" *ngFor="let name of languageNames">
+        {{ name.name }}</option
+      >
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="date">Fecha de obtención del título</label>
+    <input
+      type="text"
+      name="date"
+      class="col-sm-10 form-control"
+      formControlName="date"
+    />
+  </div> -->
+
+  <button class="btn btn-primary" type="submit" [disabled]="rForm.invalid">
+    Guardar
+  </button>
+</form>

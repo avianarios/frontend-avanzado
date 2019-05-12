@@ -1,0 +1,32 @@
+<!-- <div class="app-admin-wrap" [dir]="layoutConf.dir"> -->
+<!-- Header for top navigation layout -->
+<!-- ONLY REQUIRED FOR **TOP** NAVIGATION LAYOUT -->
+<!--   <app-header-top
+    *ngIf="layoutConf.navigationPos === 'top'"
+    [notificPanel]="notificationPanel"
+  >
+  </app-header-top> -->
+
+
+  <mat-drawer-container class="sidenav-container">
+    <mat-drawer mode="side" opened class="sidenav">
+      <div class="row">
+        <div class="col-3">
+          <ul>
+            <li><button mat-button color="primary" routerLink="/forgot-password">Recordar clave</button></li>
+            <li><button mat-button color="primary" routerLink="/admin/">Panel</button></li>
+            <li><button mat-button color="primary" routerLink="/admin/profile">Perfil</button></li>
+            <li><button mat-button color="primary" routerLink="/admin/offers">Ofertas</button></li>
+            <li><button mat-button color="primary" routerLink="/admin/config">Configuración</button></li>
+            <li><button mat-button color="primary" [routerLink]="['/admin/offers/my-offers']">Mis ofertas</button></li>
+            <li><button mat-button color="warn" routerLink="/">Salir</button></li>
+          </ul>
+        </div>
+        <div class="col-9">
+        </div>
+      </div>
+      </mat-drawer>
+      <mat-drawer-content class="area-central">
+        <router-outlet></router-outlet>
+      </mat-drawer-content>
+  </mat-drawer-container>

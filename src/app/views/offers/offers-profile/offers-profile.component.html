@@ -1,0 +1,30 @@
+<h3>Mis Ofertas</h3>
+
+<table class="table table-bordered table-striped">
+  <thead class="thead-light">
+    <tr>
+      <th>Puesto</th>
+      <th>Empresa</th>
+      <th>Familia</th>
+      <th>Fecha</th>
+      <th>Provincia</th>
+      <th>Municipio</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let offer of offers">
+      <td>{{ offer.job.name }}</td>
+      <td>{{ offer.company.name }}</td>
+      <td>{{ offer.category.name }}</td>
+      <td>{{ offer.date }}</td>
+      <td>{{ offer.province.name }}</td>
+      <td>{{ offer.municipe.name }}</td>
+      <td>
+        <a style="cursor:pointer" [routerLink]="['/admin/offers/', offer.id]"
+          >Ver Detalle</a
+        >
+      </td>
+    </tr>
+  </tbody>
+</table>
