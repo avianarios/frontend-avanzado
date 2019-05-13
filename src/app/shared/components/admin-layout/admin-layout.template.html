@@ -8,25 +8,34 @@
   </app-header-top> -->
 
 
-  <mat-drawer-container class="sidenav-container">
-    <mat-drawer mode="side" opened class="sidenav">
-      <div class="row">
-        <div class="col-3">
-          <ul>
-            <li><button mat-button color="primary" routerLink="/forgot-password">Recordar clave</button></li>
-            <li><button mat-button color="primary" routerLink="/admin/">Panel</button></li>
-            <li><button mat-button color="primary" routerLink="/admin/profile">Perfil</button></li>
-            <li><button mat-button color="primary" routerLink="/admin/offers">Ofertas</button></li>
-            <li><button mat-button color="primary" routerLink="/admin/config">Configuración</button></li>
-            <li><button mat-button color="primary" [routerLink]="['/admin/offers/my-offers']">Mis ofertas</button></li>
-            <li><button mat-button color="warn" routerLink="/">Salir</button></li>
-          </ul>
+  <mat-drawer-container class="vh">
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-xs>
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span class="example-spacer"></span>
+        <div fxShow="true" fxHide.lt-sm="true">
+          <button mat-button routerLink="/admin/"><mat-icon>home</mat-icon>Panel</button>
+          <button mat-button routerLink="/admin/profile"><mat-icon>account_box</mat-icon>Perfil</button>
+          <button mat-button routerLink="/admin/offers"><mat-icon>message</mat-icon>Ofertas</button>
+          <button mat-button routerLink="/admin/config"><mat-icon>settings</mat-icon>Configuración</button>
+          <button mat-button routerLink="/"><mat-icon>close</mat-icon>Salir</button>
         </div>
-        <div class="col-9">
-        </div>
-      </div>
-      </mat-drawer>
-      <mat-drawer-content class="area-central">
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-sidenav-container fxFlexFill>
+      <mat-sidenav #sidenav>
+        <mat-nav-list fxLayout="column">
+          <button mat-button routerLink="/admin/"><mat-icon>home</mat-icon>Panel</button>
+          <button mat-button routerLink="/admin/profile"><mat-icon>account_box</mat-icon>Perfil</button>
+          <button mat-button routerLink="/admin/offers"><mat-icon>message</mat-icon>Ofertas</button>
+          <button mat-button routerLink="/admin/config"><mat-icon>settings</mat-icon>Configuración</button>
+          <button mat-button routerLink="/"><mat-icon>close</mat-icon>Salir</button>
+        </mat-nav-list>
+      </mat-sidenav>
+      <mat-sidenav-content fxFlexFill>
         <router-outlet></router-outlet>
-      </mat-drawer-content>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
   </mat-drawer-container>

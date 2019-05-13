@@ -1,65 +1,65 @@
 <div fxLayout="column" fxLayoutAlign="space-around center" >
-  <div *ngIf="user" id="contenido" class="datos-personales" fxLayout="row" fxLayoutAlign="space-around center">
-    <div id="foto-perfil">
-      <div>
-        <img
-          class="img-fluid img-profile rounded-circle mx-auto mb-2"
-          src="{{ user.avatar_hash }}"
-        />
+
+  <div *ngIf="user" id="contenido" class="datos-personales" fxLayout="column" fxLayoutAlign="space-around center">
+    <div fxLayout.lt-md="column" fxLayoutAlign="space-around center" fxLayout.gt-md="row">
+      <div id="foto-perfil">
+          <img
+            class="img-fluid img-profile rounded-circle mx-auto mb-2"
+            src="{{ user.avatar_hash }}"/>
+        <p class="text-center pr-5">
+          {{ user.name + ' ' + user.surname }}
+        </p>
       </div>
-      <div class="text-center pr-5">
-        {{ user.name + ' ' + user.surname }}
-      </div>
+
+
+      <section id="datos_personales" fxLayout="column" fxLayoutAlign="space-around center">
+         <table mat-table [dataSource]="datosPersonales" class="tabla_personales">
+
+            <ng-container matColumnDef="correo">
+              <th mat-header-cell *matHeaderCellDef> Correo-e </th>
+              <td mat-cell *matCellDef="let usuario" data-label="correo"> {{usuario.correo}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="nacimiento">
+              <th mat-header-cell *matHeaderCellDef> Fecha de nacimiento </th>
+              <td mat-cell *matCellDef="let usuario" data-label="nacimiento"> {{usuario.nacimiento}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="telefono">
+              <th mat-header-cell *matHeaderCellDef> Teléfono </th>
+              <td mat-cell *matCellDef="let usuario" data-label="Teléfono"> {{usuario.telefono}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="NIF">
+              <th mat-header-cell *matHeaderCellDef> NIF/NIE </th>
+              <td mat-cell *matCellDef="let usuario" data-label="NIF"> {{usuario.NIF}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="conducir">
+              <th mat-header-cell *matHeaderCellDef> Permisos de conducir </th>
+              <td mat-cell *matCellDef="let usuario" data-label="Permiso de conducir"> {{usuario.conducir}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="direccion">
+              <th mat-header-cell *matHeaderCellDef> Dirección </th>
+              <td mat-cell *matCellDef="let usuario" data-label="dirección"> {{usuario.direccion | json}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="sobreMi">
+              <th mat-header-cell *matHeaderCellDef> Más sobre mí </th>
+              <td mat-cell *matCellDef="let usuario" data-label="Sobre mí"> {{usuario.sobreMi}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="competencias">
+              <th mat-header-cell *matHeaderCellDef> Otras competencias </th>
+              <td mat-cell *matCellDef="let usuario" data-label="Otras competencias"> {{usuario.competencias}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnasPersonales"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnasPersonales;"></tr>
+          </table>
+        </section>
     </div>
-
-
-    <section id="datos_personales" fxLayout="column" fxLayoutAlign="space-around center">
-       <table mat-table [dataSource]="datosPersonales" class="tabla_personales">
-
-          <ng-container matColumnDef="correo">
-            <th mat-header-cell *matHeaderCellDef> Correo-e </th>
-            <td mat-cell *matCellDef="let usuario"> {{usuario.correo}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="nacimiento">
-            <th mat-header-cell *matHeaderCellDef> Fecha de nacimiento </th>
-            <td mat-cell *matCellDef="let usuario"> {{usuario.nacimiento}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="telefono">
-            <th mat-header-cell *matHeaderCellDef> Teléfono </th>
-            <td mat-cell *matCellDef="let usuario"> {{usuario.telefono}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="NIF">
-            <th mat-header-cell *matHeaderCellDef> NIF/NIE </th>
-            <td mat-cell *matCellDef="let usuario"> {{usuario.NIF}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="conducir">
-            <th mat-header-cell *matHeaderCellDef> Permisos de conducir </th>
-            <td mat-cell *matCellDef="let usuario"> {{usuario.conducir}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="direccion">
-            <th mat-header-cell *matHeaderCellDef> Dirección </th>
-            <td mat-cell *matCellDef="let usuario"> {{usuario.direccion | json}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="sobreMi">
-            <th mat-header-cell *matHeaderCellDef> Más sobre mí </th>
-            <td mat-cell *matCellDef="let usuario"> {{usuario.sobreMi}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="competencias">
-            <th mat-header-cell *matHeaderCellDef> Otras competencias </th>
-            <td mat-cell *matCellDef="let usuario"> {{usuario.competencias}} </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="columnasPersonales"></tr>
-          <tr mat-row *matRowDef="let row; columns: columnasPersonales;"></tr>
-        </table>
-      </section>
 
 
 

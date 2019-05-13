@@ -27,7 +27,6 @@ export class OffersListComponent implements OnChanges {
 
   ngOnInit(){
     this.datosOfertas=new MatTableDataSource(this.offers);
-    this.datosOtrasOfertas=new MatTableDataSource(this.offersOther);
   }
 
   constructor() {}

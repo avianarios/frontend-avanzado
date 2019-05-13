@@ -7,12 +7,12 @@ html, body { height: 100;}
 
 body{
   margin: 0;
-  font-family: Roboto,"Helvetica Neue",sans-serif;
-  //font-family:  'Sniglet', sans-serif;
+//  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-family:  'Sniglet', sans-serif;
 }
 
-.titulo{
-  //font-family:  'Alegreya Sans SC', sans-serif;
+h1, h2, h3{
+  font-family:  'Alegreya Sans SC', sans-serif;
 }
 
 
@@ -28,21 +28,14 @@ body{
   width: 60%;
 }
 
-
 .botones{
   display: flex;
   justify-content: center;
 }
 
-
-.sidenav-container {
+.vh {
   height: 100vh;
-  width: 100%;
-}
-
-.sidenav {
-    width: 200px;
-    box-shadow: 3px 0 6px rgba(0, 0, 0, 0.24);
+  //width: 100%;
 }
 
 .area-central{
@@ -50,18 +43,8 @@ body{
 }
 
 
-
-ul{
-  padding: 0px;
-}
-
-li {list-style-type: none;}
-
 .text-center{
   text-align: center;
-}
-
-.tabla_formacion{
 }
 
 .mat-cell:first-child, .mat-header-cell:first-child{
