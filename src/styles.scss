@@ -2,7 +2,10 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 @import '~@angular/material/theming';
 
-html, body { height: 100;}
+html, body {
+  box-sizing: border-box;
+//height: 100;
+}
 //body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 body{
@@ -15,17 +18,20 @@ h1, h2, h3{
   font-family:  'Alegreya Sans SC', sans-serif;
 }
 
-
-.centrado {
+.formulario, .form1{
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 500px;
   justify-content: center;
+  height: 100vh;
 }
 
-.centrado>* {
-  width: 60%;
+.formulario>*, .form1>* {
+  width: 60vw;
+}
+
+.form-inicio{
+  height: 90vh;
 }
 
 .botones{

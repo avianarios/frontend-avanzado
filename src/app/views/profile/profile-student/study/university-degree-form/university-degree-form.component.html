@@ -1,44 +1,36 @@
 <form [formGroup]="rForm" (submit)="submit()">
-  <div class="form-group">
-    <label for="institution">Centro educativo</label>
-    <input
-      type="text"
-      class="col-sm-10 form-control"
-      name="institution"
-      formControlName="institution"
-    />
-  </div>
+  <div class="formulario-interior">
+    <mat-form-field>
+      <mat-label for="institution">Centro educativo</mat-label>
+      <input matInput
+        name="institution"
+        formControlName="institution"
+      />
+    </mat-form-field>
 
-  <div class="form-group">
-    <label for="title">Título</label>
-    <input
-      type="text"
-      class="col-sm-10 form-control"
-      name="title"
-      formControlName="title"
-    />
-  </div>
+    <mat-form-field>
+      <mat-label for="title">Título</mat-label>
+      <input matInput
+        name="title"
+        formControlName="title"
+      />
+    </mat-form-field>
 
-  <div class="form-group">
-    <label for="date">Fecha de obtención del título</label>
-    <input
-      type="text"
-      name="date"
-      class="col-sm-10 form-control"
-      formControlName="date"
-    />
-  </div>
-  <div class="form-group">
-    <label for="bilingue">Bilingue</label>
-    <input
-      type="checkbox"
+    <mat-form-field>
+      <mat-label for="date">Fecha de obtención del título</mat-label>
+      <input matInput
+        name="date"
+        formControlName="date"
+      />
+    </mat-form-field>
+
+    <mat-checkbox
       name="bilingue"
-      class="form-check-input"
-      formControlName="bilingue"
-    />
-  </div>
+      formControlName="bilingue">Bilingue
+    </mat-checkbox>
 
-  <button class="btn btn-primary" type="submit" [disabled]="rForm.invalid">
-    Guardar
-  </button>
+    <button mat-button color="primary" type="submit" [disabled]="rForm.invalid">
+      Guardar
+    </button>
+  </div>
 </form>

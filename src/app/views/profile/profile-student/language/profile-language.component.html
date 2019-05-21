@@ -1,43 +1,35 @@
 <form [formGroup]="rForm" (submit)="submit()">
-  <div class="form-group">
-    <label for="level">Nivel</label>
-    <select
-      [compareWith]="compareLevel"
-      class="col-sm-10 form-control"
-      name="level"
-      formControlName="level"
-    >
-      <option [ngValue]="level" *ngFor="let level of languageLevels">
-        {{ level.name }}</option
-      >
-    </select>
-  </div>
+  <div class="form1">
 
-  <div class="form-group">
-    <label for="name">Idioma</label>
-    <select
-      class="col-sm-10 form-control"
-      name="name"
-      formControlName="name"
-      [compareWith]="compareName"
-    >
-      <option [ngValue]="name" *ngFor="let name of languageNames">
-        {{ name.name }}</option
-      >
-    </select>
-  </div>
+    <mat-form-field>
+      <mat-label for="level">Nivel</mat-label>
+      <mat-select
+        [compareWith]="compareLevel"
+        name="level"
+        formControlName="level">
+        <mat-option [value]="level" *ngFor="let level of languageLevels">
+          {{ level.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <div class="form-group">
-    <label for="date">Fecha de obtención del título</label>
-    <input
-      type="text"
-      name="date"
-      class="col-sm-10 form-control"
-      formControlName="date"
-    />
-  </div>
+    <mat-form-field>
+      <mat-label for="name">Idioma</mat-label>
+      <mat-select
+        name="name"
+        formControlName="name"
+        [compareWith]="compareName">
+        <mat-option [value]="name" *ngFor="let name of languageNames">
+          {{ name.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <button class="btn btn-primary" type="submit" [disabled]="rForm.invalid">
-    Guardar
-  </button>
+    <mat-form-field>
+      <mat-label for="date">Fecha de obtención del título</mat-label>
+      <input matInput
+        name="date"
+        formControlName="date"/>
+    </mat-form-field>
+
+    <button mat-button color="primary" type="submit" [disabled]="rForm.invalid">Guardar</button>
+  </div>
 </form>

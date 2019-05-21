@@ -13,7 +13,8 @@ import { dateValidator } from 'src/app/shared/directives/date-validator.directiv
 
 @Component({
   selector: 'app-university-degree-form',
-  templateUrl: './university-degree-form.component.html'
+  templateUrl: './university-degree-form.component.html',
+  styleUrls: ['../profile-study.component.scss']
 })
 export class UniversityDegreeComponent implements OnInit, OnChanges {
   @Output() onSave: EventEmitter<CollegeStudy> = new EventEmitter();

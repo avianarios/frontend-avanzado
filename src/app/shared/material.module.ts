@@ -10,6 +10,7 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatSelectModule,
+  MatCheckboxModule,
   MatTableModule
 } from '@angular/material';
 
@@ -24,6 +25,7 @@ import {
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatCheckboxModule,
     MatTableModule
   ],
   exports: [
@@ -36,6 +38,7 @@ import {
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatCheckboxModule,
     MatTableModule
   ]
 })

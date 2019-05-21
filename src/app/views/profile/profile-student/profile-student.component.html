@@ -58,57 +58,9 @@
             <tr mat-header-row *matHeaderRowDef="columnasPersonales"></tr>
             <tr mat-row *matRowDef="let row; columns: columnasPersonales;"></tr>
           </table>
+          <button mat-button color="primary" [routerLink]="['/admin/profile/profile-student/account']">Modificar</button>
         </section>
     </div>
-
-
-
-<!--
-    <section id="datosPersonales">
-      <table>
-        <tbody>
-          <tr>
-            <th>Email</th>
-            <td>{{ user.email }}</td>
-          </tr>
-          <tr>
-            <th>Fecha de nacimiento</th>
-            <td>{{ user.birthdate }}</td>
-          </tr>
-          <tr>
-            <th>Tel&eacute;fono</th>
-            <td>{{ user.phone }}</td>
-          </tr>
-          <tr>
-            <th>NIF/NIE</th>
-            <td>{{ user.documentNumber }}</td>
-          </tr>
-          <tr>
-            <th>Permisos de conducir</th>
-            <td>{{ user.license }}</td>
-          </tr>
-          <tr>
-            <th>Direccion</th>
-            <td>{{ user.address | json }}</td>
-          </tr>
-          <tr>
-            <th>Acerca de mí...</th>
-            <td>{{ user.aboutMe}}</td>
-          </tr>
-          <tr>
-            <th>Otras competencias</th>
-            <td>{{user.otherCompetences}}</td>
-          </tr>
-        </tbody>
-        <tfoot class="text-center">
-          <tr>
-            <td colspan="2">
-              <button mat-button color="primary" [routerLink]="['/admin/profile/profile-student/account']">Modificar</button>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </section>-->
   </div>
 
   <section id="formacion_academica" fxLayout="column" fxLayoutAlign="space-around center">
@@ -213,7 +165,7 @@
           <tr mat-row *matRowDef="let row; columns: columnasIdiomas;"></tr>
       </table>
       <div>
-        <button mat-button color="primary" [routerLink]="['/admin/profile/profile-student/study']">Nuevo idioma</button>
+        <button mat-button color="primary" [routerLink]="['/admin/profile/profile-student/language']">Nuevo idioma</button>
       </div>
     </section>
 
