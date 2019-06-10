@@ -1,0 +1,25 @@
+body {
+  background-color: #50cdf3;
+  color: black;
+}
+.vertical-container {
+  height: 100px;
+  display: -webkit-flex;
+  display:         flex;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+h1.vertical-container {
+  font-size: 275%;
+}
+
+.contenedor-imagen{
+  display:flex;
+  justify-content: center;
+}
+
+img{
+  border-radius: 10px;
+}
