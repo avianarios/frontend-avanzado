@@ -1,0 +1,87 @@
+<form [formGroup]="rForm" (submit)="submit()">
+  <div class="form-group">
+    <label for="institution">Centro educativo</label>
+    <select
+      [compareWith]="compareInstitution"
+      class="col-sm-10 form-control"
+      name="institution"
+      formControlName="institution"
+    >
+      <option [ngValue]="institution" *ngFor="let institution of institutions">
+        {{ institution.name }}</option
+      >
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="category">Familia profesional</label>
+    <select
+      class="col-sm-10 form-control"
+      name="category"
+      formControlName="category"
+      [compareWith]="compareCategory"
+    >
+      <option [ngValue]="category" *ngFor="let category of categories">
+        {{ category.name }}</option
+      >
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="grade">Nivel</label>
+    <select
+      class="col-sm-10 form-control"
+      name="grade"
+      formControlName="grade"
+      [compareWith]="compareGrade"
+    >
+      <option [ngValue]="grade" *ngFor="let grade of grades">
+        {{ grade.name }}</option
+      >
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="title">Título</label>
+    <select
+      class="col-sm-10 form-control"
+      name="title"
+      formControlName="title"
+      [compareWith]="compareTitle"
+    >
+      <option [ngValue]="title" *ngFor="let title of titles">
+        {{ title.name }}</option
+      >
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="date">Fecha de obtención del título</label>
+    <input
+      type="text"
+      name="date"
+      class="col-sm-10 form-control"
+      formControlName="date"
+    />
+  </div>
+  <div class="form-group">
+    <label for="bilingue">Bilingue</label>
+    <input
+      type="checkbox"
+      name="bilingue"
+      class="form-check-input"
+      formControlName="bilingue"
+    />
+  </div>
+  <div class="form-group">
+    <label for="dual">Dual</label>
+    <input
+      type="checkbox"
+      name="dual"
+      class="form-check-input"
+      formControlName="dual"
+    />
+  </div>
+  <button class="btn btn-primary" type="submit" [disabled]="rForm.invalid">
+    Guardar
+  </button>
+</form>
