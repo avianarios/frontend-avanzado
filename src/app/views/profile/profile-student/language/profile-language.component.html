@@ -1,0 +1,35 @@
+<form [formGroup]="rForm" (submit)="submit()">
+  <div class="form1">
+
+    <mat-form-field>
+      <mat-label for="level">Nivel</mat-label>
+      <mat-select
+        [compareWith]="compareLevel"
+        name="level"
+        formControlName="level">
+        <mat-option [value]="level" *ngFor="let level of languageLevels">
+          {{ level.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="name">Idioma</mat-label>
+      <mat-select
+        name="name"
+        formControlName="name"
+        [compareWith]="compareName">
+        <mat-option [value]="name" *ngFor="let name of languageNames">
+          {{ name.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="date">Fecha de obtención del título</mat-label>
+      <input matInput
+        name="date"
+        formControlName="date"/>
+    </mat-form-field>
+
+    <button mat-button color="primary" type="submit" [disabled]="rForm.invalid">Guardar</button>
+  </div>
+</form>
