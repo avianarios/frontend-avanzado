@@ -1,17 +1,16 @@
-import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import { SharedModule } from './shared/shared.module';
-import { CoreModule } from './shared/core.module';
-import { RouterModule } from '@angular/router';
-import { rootRouterConfig } from './app-routing';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { FakeBackendService } from './shared/inmemory-db/fake-backend.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreModule } from './shared/core.module';
+import { FakeBackendService } from './shared/inmemory-db/fake-backend.service';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './shared/material.module';
-import { FontSizeDirective } from './shared/directives/fontsize.directive';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { SharedModule } from './shared/shared.module';
 import { environment } from '../environments/environment';
+import { rootRouterConfig } from './app-routing';
 
 @NgModule({
   imports: [
@@ -24,9 +23,11 @@ import { environment } from '../environments/environment';
     }),
     BrowserAnimationsModule,
     MaterialModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production
+    })
   ],
-  declarations: [FontSizeDirective,AppComponent],
+  declarations: [AppComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

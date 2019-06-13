@@ -1,27 +1,29 @@
 import {
+  Category,
+  CollegeStudy,
+  Grade,
+  Institution,
+  TitleStudy,
+  VocationalStudy
+} from 'src/app/shared/models/study.model';
+import {
   Component,
-  Output,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
-  SimpleChanges,
-  OnChanges
+  Output,
+  SimpleChanges
 } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {
-  VocationalStudy,
-  Institution,
-  Category,
-  TitleStudy,
-  Grade,
-  CollegeStudy
-} from 'src/app/shared/models/study.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 import { MockData } from 'src/app/shared/mock-data';
 import { dateValidator } from 'src/app/shared/directives/date-validator.directive';
 
 @Component({
   selector: 'app-vocational-form',
-  templateUrl: './vocational-form.component.html'
+  templateUrl: './vocational-form.component.html',
+  styleUrls: ['../profile-study.component.scss']
 })
 export class VocationalFormComponent implements OnInit, OnChanges {
   @Output() onSave: EventEmitter<VocationalStudy> = new EventEmitter();

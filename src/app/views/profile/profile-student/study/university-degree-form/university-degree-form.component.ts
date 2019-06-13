@@ -1,19 +1,21 @@
 import {
   Component,
-  Output,
   EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges
 } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 import { CollegeStudy } from 'src/app/shared/models/study.model';
 import { dateValidator } from 'src/app/shared/directives/date-validator.directive';
 
 @Component({
   selector: 'app-university-degree-form',
-  templateUrl: './university-degree-form.component.html'
+  templateUrl: './university-degree-form.component.html',
+  styleUrls: ['../profile-study.component.scss']
 })
 export class UniversityDegreeComponent implements OnInit, OnChanges {
   @Output() onSave: EventEmitter<CollegeStudy> = new EventEmitter();

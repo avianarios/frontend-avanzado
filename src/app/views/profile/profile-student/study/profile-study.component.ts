@@ -1,17 +1,18 @@
 import {
+  CollegeStudy,
+  Study,
+  VocationalStudy
+} from 'src/app/shared/models/study.model';
+import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
-  SimpleChanges,
   Output,
-  EventEmitter
+  SimpleChanges
 } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {
-  Study,
-  VocationalStudy,
-  CollegeStudy
-} from 'src/app/shared/models/study.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 import { MockData } from 'src/app/shared/mock-data';
 import { User } from 'src/app/shared/models/user.model';
 
@@ -87,5 +88,9 @@ export class ProfileStudyComponent implements OnChanges {
   public isSelectUniversity(): boolean {
     const value = this.rForm.get('option').value;
     return value && value.uid === MockData.TYPE_STUDIES[1].uid;
+  }
+
+  public submit() {
+    console.log('enviando');
   }
 }
