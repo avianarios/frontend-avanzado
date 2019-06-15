@@ -1,0 +1,19 @@
+<div fxFlex fxLayout="column" fxLayoutAlign="center center">
+<h2>
+  Perfil
+</h2>
+<!-- <div *ngIf="userRol === 'student'"> -->
+
+<app-profile-student
+  [user]="user$ | async"
+  (onDeleteStudy)="updateUser($event)"
+  (onDeleteLanguage)="updateUser($event)"
+>
+</app-profile-student>
+</div>
+<!-- </div> -->
+
+<!-- <div *ngIf="userRol === 'company'">
+	<app-profile-company> </app-profile-company>
+
+</div> -->

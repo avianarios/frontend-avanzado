@@ -1,0 +1,27 @@
+<form [formGroup]="rForm" (submit)="submit()">
+  <div class="form1">
+
+    <mat-form-field>
+      <mat-label>Tipo de formación</mat-label>
+      <mat-select formControlName="option" [compareWith]="compareOption">
+        <mat-option *ngFor="let option of options" [value]="option">
+          {{option.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <app-vocational-form
+      *ngIf="isSelectVocational()"
+      [study]="study"
+      (onSave)="saveOrUpdate($event)"
+      (onExit)="exit($event)"
+    ></app-vocational-form>
+
+    <app-university-degree-form
+      *ngIf="isSelectUniversity()"
+      [study]="study"
+      (onSave)="saveOrUpdate($event)"
+      (onExit)="exit($event)"
+    ></app-university-degree-form>
+  </div>
+</form>
