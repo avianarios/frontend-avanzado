@@ -1,0 +1,12 @@
+Coincidencia en el archivo binario assets/img/perfil.png
+app/views/offers/offers-list/offers-list.component.html:  <h2>Cumple con la Titulación (Familia)</h2>
+app/views/offers/offers-list/offers-list.component.html:  <h2>Otras Ofertas</h2>
+app/views/offers/offers.component.html:<h2>
+app/views/offers/offers.component.html:</h2>
+app/views/offers/offers-detail/offers-detail.component.html:<h2>
+app/views/offers/offers-detail/offers-detail.component.html:</h2>
+app/views/profile/profile.component.html:<h2>
+app/views/profile/profile.component.html:</h2>
+app/views/profile/profile-student/profile-student.component.html:    <h2>Formaci&oacute;n acad&eacute;mica</h2>
+app/views/profile/profile-student/profile-student.component.html:      <h2>Idiomas</h2>
+app/views/profile/profile-student/profile-student.component.scss:h2{

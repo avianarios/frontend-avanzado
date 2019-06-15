@@ -1,0 +1,40 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div *ngIf="errorLogin" class="alert alert-danger">
+    <button type="button" class="close" data-dismiss="alert">
+      &times;
+    </button>
+
+    There is an error in email or password
+  </div>
+
+  <div class="formulario form-inicio">
+      <mat-form-field>
+        <input matInput
+          id="email"
+          formControlName="email"
+          class="form-control"
+          [ngClass]="{
+            'is-invalid': submitted && loginForm.controls.email.errors
+          }"
+          placeholder="Correo-e"/>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput
+          type="password"
+          id="password"
+          formControlName="password"
+          class="form-control"
+          [ngClass]="{
+            'is-invalid': submitted && loginForm.controls.password.errors
+          }"
+          placeholder="Clave"/>
+        </mat-form-field>
+        <div class="botones">
+          <button mat-button color="primary" [disabled]="loginForm.invalid">
+            Login
+          </button>
+          <button mat-button color="primary" routerLink="/forgot-password">Recordar clave</button>
+        </div>
+  </div>
+</form>

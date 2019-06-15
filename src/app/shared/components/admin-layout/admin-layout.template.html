@@ -1,0 +1,41 @@
+<!-- <div class="app-admin-wrap" [dir]="layoutConf.dir"> -->
+<!-- Header for top navigation layout -->
+<!-- ONLY REQUIRED FOR **TOP** NAVIGATION LAYOUT -->
+<!--   <app-header-top
+    *ngIf="layoutConf.navigationPos === 'top'"
+    [notificPanel]="notificationPanel"
+  >
+  </app-header-top> -->
+
+
+  <mat-drawer-container class="vh">
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-xs>
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span class="example-spacer"></span>
+        <div fxShow="true" fxHide.lt-sm="true">
+          <button mat-button routerLink="/admin/"><mat-icon>home</mat-icon>Panel</button>
+          <button mat-button routerLink="/admin/profile"><mat-icon>account_box</mat-icon>Perfil</button>
+          <button mat-button routerLink="/admin/offers"><mat-icon>message</mat-icon>Ofertas</button>
+          <button mat-button routerLink="/admin/config"><mat-icon>settings</mat-icon>Configuración</button>
+          <button mat-button routerLink="/"><mat-icon>close</mat-icon>Salir</button>
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-sidenav-container fxFlexFill>
+      <mat-sidenav #sidenav>
+        <mat-nav-list fxLayout="column">
+          <button mat-button routerLink="/admin/"><mat-icon>home</mat-icon>Panel</button>
+          <button mat-button routerLink="/admin/profile"><mat-icon>account_box</mat-icon>Perfil</button>
+          <button mat-button routerLink="/admin/offers"><mat-icon>message</mat-icon>Ofertas</button>
+          <button mat-button routerLink="/admin/config"><mat-icon>settings</mat-icon>Configuración</button>
+          <button mat-button routerLink="/"><mat-icon>close</mat-icon>Salir</button>
+        </mat-nav-list>
+      </mat-sidenav>
+      <mat-sidenav-content fxFlexFill>
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </mat-drawer-container>
