@@ -1,0 +1,61 @@
+<form [formGroup]="rForm" (submit)="submit()">
+
+<div class="formulario-interior">
+  <mat-form-field>
+    <mat-label for="institution">Centro educativo</mat-label>
+    <mat-select
+      [compareWith]="compareInstitution"
+      name="institution"
+      formControlName="institution">
+      <mat-option [value]="institution" *ngFor="let institution of institutions">
+        {{ institution.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label for="institution">Familia profesional</mat-label>
+    <mat-select [compareWith]="compareCategory" name="category" formControlName="category">
+      <mat-option [value]="category" *ngFor="let category of categories">
+        {{ category.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label for="grade">Nivel</mat-label>
+    <mat-select name="grade" formControlName="grade" [compareWith]="compareGrade">
+    <mat-option [value]="grade" *ngFor="let grade of grades">
+      {{ grade.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label for="title">Título</mat-label>
+    <mat-select
+    name="title"
+    formControlName="title"
+    [compareWith]="compareTitle">
+    <mat-option [value]="title" *ngFor="let title of titles">
+      {{ title.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label for="date">Fecha de obtención del título</mat-label>
+    <input matInput
+      name="date"
+      formControlName="date">
+  </mat-form-field>
+
+    <mat-checkbox
+      name="bilingue"
+      formControlName="bilingue">Bilingue
+    </mat-checkbox>
+
+    <mat-checkbox
+      name="dual"
+      formControlName="dual">Dual
+    </mat-checkbox>
+
+    <button mat-button color="primary" type="submit" [disabled]="rForm.invalid">Guardar</button>
+  </div>
+</form>

@@ -1,0 +1,122 @@
+<form [formGroup]="rForm" (submit)="save()">
+  <div class="form1">
+    <mat-form-field>
+      <mat-label for="name">Nombre</mat-label>
+      <input matInput
+        name="name"
+        formControlName="name"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="surname">Apellidos</mat-label>
+      <input matInput
+        name="surname"
+        formControlName="surname"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="birthdate">Cumpleaños</mat-label>
+      <input matInput
+        name="birthdate"
+        formControlName="birthdate"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="phone">Teléfono</mat-label>
+      <input matInput
+        name="phone"
+        formControlName="phone"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="phone2">Teléfono 2</mat-label>
+      <input matInput
+        name="phone2"
+        formControlName="phone2"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="level">Tipo de documento</mat-label>
+      <mat-select
+        [compareWith]="compareByUID"
+        name="documentType"
+        formControlName="documentType">
+        <mat-option
+          [value]="documentType"
+          *ngFor="let documentType of documentsType">
+          {{ documentType.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="documentNumber">Número</mat-label>
+      <input matInput
+        name="documentNumber"
+        formControlName="documentNumber"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="street">Calle</mat-label>
+      <input matInput
+        name="street"
+        formControlName="street"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="level">Provincia</mat-label>
+      <mat-select
+        [compareWith]="compareByUID"
+        name="province"
+        formControlName="province">
+        <mat-option [value]="province" *ngFor="let province of provinces">
+          {{ province.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="level">Municipio</mat-label>
+      <mat-select
+        [compareWith]="compareByUID"
+        name="municipe"
+        formControlName="municipe">
+        <mat-option [value]="municipe" *ngFor="let municipe of municipes">
+          {{ municipe.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="aboutMe">Acerca de mi</mat-label>
+      <textarea matInput
+        name="aboutMe"
+        formControlName="aboutMe"
+      ></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="otherCompetences">Otras competencias</mat-label>
+      <textarea matInput
+        name="otherCompetences"
+        formControlName="otherCompetences"
+      ></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="license">Licencias</mat-label>
+      <textarea matInput
+        name="license"
+        formControlName="license"
+      ></textarea>
+    </mat-form-field>
+
+    <button mat-button color="primary" type="submit" [disabled]="rForm.invalid">
+      Guardar
+    </button>
+  </div>
+</form>

@@ -1,0 +1,36 @@
+<form [formGroup]="rForm" (submit)="submit()">
+  <div class="formulario-interior">
+    <mat-form-field>
+      <mat-label for="institution">Centro educativo</mat-label>
+      <input matInput
+        name="institution"
+        formControlName="institution"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="title">Título</mat-label>
+      <input matInput
+        name="title"
+        formControlName="title"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="date">Fecha de obtención del título</mat-label>
+      <input matInput
+        name="date"
+        formControlName="date"
+      />
+    </mat-form-field>
+
+    <mat-checkbox
+      name="bilingue"
+      formControlName="bilingue">Bilingue
+    </mat-checkbox>
+
+    <button mat-button color="primary" type="submit" [disabled]="rForm.invalid">
+      Guardar
+    </button>
+  </div>
+</form>

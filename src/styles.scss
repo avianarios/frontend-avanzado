@@ -1,0 +1,66 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~@angular/material/theming';
+
+html, body {
+  box-sizing: border-box;
+//height: 100;
+}
+//body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+body{
+  margin: 0;
+//  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-family:  'Sniglet', sans-serif;
+}
+
+h1, h2, h3{
+  font-family:  'Alegreya Sans SC', sans-serif;
+}
+
+.formulario, .form1{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.formulario>*, .form1>* {
+  width: 60vw;
+}
+
+.form-inicio{
+  height: 90vh;
+}
+
+.botones{
+  display: flex;
+  justify-content: center;
+}
+
+.vh {
+  height: 100vh;
+  //width: 100%;
+}
+
+.area-central{
+  padding: 0px 20px;
+}
+
+
+.text-center{
+  text-align: center;
+}
+
+.mat-cell:first-child, .mat-header-cell:first-child{
+  padding: 10px 0px 10px 10px !important;
+}
+.mat-cell, .mat-header-cell {
+  min-height:auto; // overrides the 'inherit' that set the min height of the row
+  padding: 10px 10px 10px 10px !important;
+}
+
+.mat-header-cell{
+  text-align: center !important;
+}
