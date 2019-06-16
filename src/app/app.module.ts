@@ -21,7 +21,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { SharedModule } from './shared/shared.module';
 import { Store } from '@ngrx/store';
 import { environment } from '../environments/environment';
-import { rootRouterConfig } from './app-routing';
+//import { rootRouterConfig } from './app-routing';
+import { AppRoutingModule } from './app-routing.module';
+
 
 //import { HeaderComponent } from './shared/header/header.component';
 
@@ -31,7 +33,8 @@ export const NGRX_STATE = makeStateKey('NGRX_STATE');
   imports: [
     SharedModule,
     CoreModule,
-    RouterModule.forRoot(rootRouterConfig, { useHash: false }),
+    AppRoutingModule,
+    //RouterModule.forRoot(rootRouterConfig, { useHash: false }),
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(FakeBackendService, {
       dataEncapsulation: false

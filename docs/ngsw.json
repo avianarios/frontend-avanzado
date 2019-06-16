@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1560603368520,
+  "timestamp": 1560683917776,
   "index": "/UOCJob/index.html",
   "assetGroups": [
     {
@@ -18,7 +18,7 @@
         "/UOCJob/common.a86ce67a620f4e99de32.js",
         "/UOCJob/favicon.ico",
         "/UOCJob/index.html",
-        "/UOCJob/main.d24e3efee18d73f8408b.js",
+        "/UOCJob/main.d2222e0fffe0810e1096.js",
         "/UOCJob/polyfills.4c5b9e56bee37e622d5a.js",
         "/UOCJob/runtime.86d6cfd097d041b6581c.js",
         "/UOCJob/styles.3ff18f3c98ba4eb84b86.css"
@@ -65,8 +65,8 @@
     "/UOCJob/assets/img/uoc_logo.png": "a8268228316a687fc11a0ecbedb2507aedcccf39",
     "/UOCJob/common.a86ce67a620f4e99de32.js": "fcf259ee9de9b050ebc8099de6b0e0745fe0495c",
     "/UOCJob/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "/UOCJob/index.html": "c88a03cd52250cba33c191249d3f3b6ed29940b5",
-    "/UOCJob/main.d24e3efee18d73f8408b.js": "6f45a14c469ca018ce67679471ff7b379caed110",
+    "/UOCJob/index.html": "036059a5a100a731526c66256a196d7674014100",
+    "/UOCJob/main.d2222e0fffe0810e1096.js": "6904182a908a9df8df5e2497f65943d4762b0dab",
     "/UOCJob/polyfills.4c5b9e56bee37e622d5a.js": "ad54388e3f78ff96aaa4c3808b17569aa45c16c4",
     "/UOCJob/runtime.86d6cfd097d041b6581c.js": "21cb2cf332fddf035448499712d090e3f898eaba",
     "/UOCJob/styles.3ff18f3c98ba4eb84b86.css": "d210f28f5704ab0adb7592e8764675551ee00310"
