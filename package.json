@@ -11,7 +11,8 @@
     "compile:server": "webpack --config webpack.server.config.js --progress --colors",
     "serve:ssr": "node dist/server",
     "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server",
-    "build:client-and-server-bundles": "ng build --prod && ng run UOCJob:server:production"
+    "build:client-and-server-bundles": "ng build --prod && ng run UOCJob:server:production",
+    "stats": "webpack-bundle-analyzer dist/browser/stats.json"
   },
   "private": true,
   "dependencies": {
@@ -65,10 +66,12 @@
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.4.0",
+    "source-map-explorer": "^2.0.0",
     "ts-loader": "^5.2.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "typescript": "~3.2.4",
+    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.1.0"
   }
 }
